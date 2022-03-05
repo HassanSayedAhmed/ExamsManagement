@@ -1,0 +1,871 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="edlib2021Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="courses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="min_grade" Type="float" />
+          <Property Name="max_grade" Type="float" />
+          <Property Name="sho3ba_id" Type="int" />
+          <Property Name="shada_id" Type="int" />
+          <Property Name="year_id" Type="int" />
+          <Property Name="is_main" Type="bit" />
+        </EntityType>
+        <EntityType Name="destinations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="destination" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="edducyears">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iyear" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="eeducon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="educon" Type="nvarchar" MaxLength="70" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="eeduecert">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Master" Type="nvarchar(max)" />
+          <Property Name="Ikey" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="eeduecesub">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Masersubce" Type="nchar" MaxLength="50" />
+          <Property Name="Ikey" Type="nchar" MaxLength="10" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="eeduppx0">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eedupp0" Type="nvarchar" MaxLength="50" />
+          <Property Name="cert_id" Type="int" />
+        </EntityType>
+        <EntityType Name="eedusection">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="ikey" Type="nvarchar" MaxLength="10" />
+          <Property Name="eedusection" Type="nvarchar" MaxLength="50" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="eexmmaster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eegov" Type="nvarchar(max)" />
+          <Property Name="eedusection" Type="nvarchar(max)" />
+          <Property Name="eschool" Type="nvarchar(max)" />
+          <Property Name="elevel" Type="nvarchar(max)" />
+          <Property Name="estatus" Type="nvarchar(max)" />
+          <Property Name="eyear" Type="nvarchar(max)" />
+          <Property Name="eeduppx0" Type="nvarchar(max)" />
+          <Property Name="edocref" Type="nvarchar(max)" />
+          <Property Name="epage" Type="int" />
+          <Property Name="erowref" Type="nvarchar(max)" />
+          <Property Name="estudentfrom" Type="int" />
+          <Property Name="estudentto" Type="int" />
+          <Property Name="eedulictype" Type="nvarchar(max)" />
+          <Property Name="eebook" Type="nvarchar(max)" />
+          <Property Name="eeCount" Type="nvarchar(max)" />
+          <Property Name="DocThere" Type="bit" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="IUserDateTime" Type="datetime" />
+          <Property Name="IUserStamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="egov">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="egovname" Type="nvarchar" MaxLength="150" />
+          <Property Name="ikey" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="eschool">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eschool" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="grades">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="grade" Type="float" />
+          <Property Name="student_id" Type="int" />
+          <Property Name="course_id" Type="int" />
+        </EntityType>
+        <EntityType Name="requests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="student_id" Type="int" />
+          <Property Name="destination_id" Type="int" />
+          <Property Name="count" Type="int" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="max_grade" Type="float" />
+          <Property Name="total_grade" Type="float" />
+          <Property Name="amount" Type="float" />
+          <Property Name="registrationNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="transfer_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="type" Type="int" />
+        </EntityType>
+        <EntityType Name="students">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="seat_number" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" />
+          <Property Name="id_no14" Type="nvarchar" MaxLength="50" />
+          <Property Name="attachment_file" Type="varchar(max)" />
+          <Property Name="attachment_description" Type="nvarchar(max)" />
+          <Property Name="eexmaster_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Table_1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="AAA" Type="nvarchar" MaxLength="250" />
+          <Property Name="Ikey" Type="nvarchar" MaxLength="50" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'edlib2021.dbo.User_Log_Table' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="User_Log_Table">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserLogName" Type="nchar" MaxLength="50" />
+          <Property Name="Login_System" Type="datetime" />
+          <Property Name="Logout_From_System" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserSecuirtyTable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IUser_Name" Type="nvarchar(max)" />
+          <Property Name="IUser_Login" Type="nvarchar(max)" />
+          <Property Name="IUser_Password" Type="nvarchar(max)" />
+          <Property Name="IUser_Enabled" Type="bit" />
+          <Property Name="IUser_New_Form" Type="bit" />
+          <Property Name="IUser_Query_From" Type="bit" />
+          <Property Name="IUser_Notes_Load" Type="bit" />
+          <Property Name="IUser_Print" Type="bit" />
+          <Property Name="IUser_C_Date" Type="timestamp" StoreGeneratedPattern="Computed" />
+          <Property Name="IUser_Type" Type="int" />
+        </EntityType>
+        <Association Name="FK_courses_edducyears">
+          <End Role="edducyears" Type="Self.edducyears" Multiplicity="0..1" />
+          <End Role="courses" Type="Self.courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="edducyears">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="courses">
+              <PropertyRef Name="year_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_courses_eeduecert">
+          <End Role="eeduecert" Type="Self.eeduecert" Multiplicity="0..1" />
+          <End Role="courses" Type="Self.courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eeduecert">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="courses">
+              <PropertyRef Name="shada_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_courses_eeduppx0">
+          <End Role="eeduppx0" Type="Self.eeduppx0" Multiplicity="0..1" />
+          <End Role="courses" Type="Self.courses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eeduppx0">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="courses">
+              <PropertyRef Name="sho3ba_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_grades_students">
+          <End Role="students" Type="Self.students" Multiplicity="0..1" />
+          <End Role="grades" Type="Self.grades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="students">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="grades">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requests_destinations">
+          <End Role="destinations" Type="Self.destinations" Multiplicity="0..1" />
+          <End Role="requests" Type="Self.requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="destinations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="destination_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requests_students">
+          <End Role="students" Type="Self.students" Multiplicity="0..1" />
+          <End Role="requests" Type="Self.requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="students">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="requests">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_students_eexmmaster">
+          <End Role="eexmmaster" Type="Self.eexmmaster" Multiplicity="0..1" />
+          <End Role="students" Type="Self.students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eexmmaster">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="students">
+              <PropertyRef Name="eexmaster_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="edlib2021ModelStoreContainer">
+          <EntitySet Name="courses" EntityType="Self.courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="destinations" EntityType="Self.destinations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="edducyears" EntityType="Self.edducyears" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eeducon" EntityType="Self.eeducon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eeduecert" EntityType="Self.eeduecert" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eeduecesub" EntityType="Self.eeduecesub" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eeduppx0" EntityType="Self.eeduppx0" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eedusection" EntityType="Self.eedusection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eexmmaster" EntityType="Self.eexmmaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="egov" EntityType="Self.egov" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eschool" EntityType="Self.eschool" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="grades" EntityType="Self.grades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="requests" EntityType="Self.requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="students" EntityType="Self.students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_1" EntityType="Self.Table_1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserSecuirtyTable" EntityType="Self.UserSecuirtyTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Log_Table" EntityType="Self.User_Log_Table" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [User_Log_Table].[id] AS [id], 
+    [User_Log_Table].[UserLogName] AS [UserLogName], 
+    [User_Log_Table].[Login_System] AS [Login_System], 
+    [User_Log_Table].[Logout_From_System] AS [Logout_From_System]
+    FROM [dbo].[User_Log_Table] AS [User_Log_Table]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_courses_edducyears" Association="Self.FK_courses_edducyears">
+            <End Role="edducyears" EntitySet="edducyears" />
+            <End Role="courses" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_courses_eeduecert" Association="Self.FK_courses_eeduecert">
+            <End Role="eeduecert" EntitySet="eeduecert" />
+            <End Role="courses" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_courses_eeduppx0" Association="Self.FK_courses_eeduppx0">
+            <End Role="eeduppx0" EntitySet="eeduppx0" />
+            <End Role="courses" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_grades_students" Association="Self.FK_grades_students">
+            <End Role="students" EntitySet="students" />
+            <End Role="grades" EntitySet="grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requests_destinations" Association="Self.FK_requests_destinations">
+            <End Role="destinations" EntitySet="destinations" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requests_students" Association="Self.FK_requests_students">
+            <End Role="students" EntitySet="students" />
+            <End Role="requests" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_students_eexmmaster" Association="Self.FK_students_eexmmaster">
+            <End Role="eexmmaster" EntitySet="eexmmaster" />
+            <End Role="students" EntitySet="students" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="edlib2021Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="edducyear">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iyear" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="courses" Relationship="edlib2021Model.FK_courses_edducyears" FromRole="edducyear" ToRole="cours" />
+        </EntityType>
+        <EntityType Name="eeducon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="educon" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="eeduecert">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Master" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ikey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="courses" Relationship="edlib2021Model.FK_courses_eeduecert" FromRole="eeduecert" ToRole="cours" />
+        </EntityType>
+        <EntityType Name="eeduecesub">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="Masersubce" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Ikey" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="eeduppx0">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eedupp0" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="courses" Relationship="edlib2021Model.FK_courses_eeduppx0" FromRole="eeduppx0" ToRole="cours" />
+          <Property Name="cert_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="eedusection">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="ikey" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="eedusection1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="eexmmaster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eegov" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eedusection" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eschool" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="elevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="estatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eyear" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eeduppx0" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="edocref" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="epage" Type="Int32" />
+          <Property Name="erowref" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="estudentfrom" Type="Int32" />
+          <Property Name="estudentto" Type="Int32" />
+          <Property Name="eedulictype" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eebook" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="eeCount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DocThere" Type="Boolean" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="IUserDateTime" Type="DateTime" Precision="3" />
+          <Property Name="IUserStamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="students" Relationship="Self.FK_students_eexmmaster" FromRole="eexmmaster" ToRole="students" />
+        </EntityType>
+        <EntityType Name="egov">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="egovname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ikey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="eschool">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eschool1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="seat_number" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="eexmaster_id" Type="Int32" />
+          <NavigationProperty Name="eexmmaster" Relationship="Self.FK_students_eexmmaster" FromRole="students" ToRole="eexmmaster" />
+          <NavigationProperty Name="grades" Relationship="edlib2021Model.FK_grades_students" FromRole="student" ToRole="grade" />
+          <Property Name="id_no14" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="attachment_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="attachment_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="requests" Relationship="edlib2021Model.FK_requests_students" FromRole="student" ToRole="request" />
+        </EntityType>
+        <EntityType Name="Table_1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="AAA" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Ikey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="UserSecuirtyTable">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IUser_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IUser_Login" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IUser_Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IUser_Enabled" Type="Boolean" />
+          <Property Name="IUser_New_Form" Type="Boolean" />
+          <Property Name="IUser_Query_From" Type="Boolean" />
+          <Property Name="IUser_Notes_Load" Type="Boolean" />
+          <Property Name="IUser_Print" Type="Boolean" />
+          <Property Name="IUser_C_Date" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="IUser_Type" Type="Int32" />
+        </EntityType>
+        <EntityType Name="User_Log_Table">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserLogName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Login_System" Type="DateTime" Precision="3" />
+          <Property Name="Logout_From_System" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_students_eexmmaster">
+          <End Role="eexmmaster" Type="Self.eexmmaster" Multiplicity="0..1" />
+          <End Role="students" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eexmmaster">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="students">
+              <PropertyRef Name="eexmaster_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ministryEducationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="edducyears" EntityType="Self.edducyear" />
+          <EntitySet Name="eeducons" EntityType="Self.eeducon" />
+          <EntitySet Name="eeduecerts" EntityType="Self.eeduecert" />
+          <EntitySet Name="eeduecesubs" EntityType="Self.eeduecesub" />
+          <EntitySet Name="eeduppx0" EntityType="Self.eeduppx0" />
+          <EntitySet Name="eedusections" EntityType="Self.eedusection" />
+          <EntitySet Name="eexmmasters" EntityType="Self.eexmmaster" />
+          <EntitySet Name="egovs" EntityType="Self.egov" />
+          <EntitySet Name="eschools" EntityType="Self.eschool" />
+          <EntitySet Name="students" EntityType="Self.student" />
+          <EntitySet Name="Table_1" EntityType="Self.Table_1" />
+          <EntitySet Name="UserSecuirtyTables" EntityType="Self.UserSecuirtyTable" />
+          <EntitySet Name="User_Log_Table" EntityType="Self.User_Log_Table" />
+          <AssociationSet Name="FK_students_eexmmaster" Association="Self.FK_students_eexmmaster">
+            <End Role="eexmmaster" EntitySet="eexmmasters" />
+            <End Role="students" EntitySet="students" />
+          </AssociationSet>
+          <EntitySet Name="courses" EntityType="edlib2021Model.cours" />
+          <EntitySet Name="grades" EntityType="edlib2021Model.grade" />
+          <AssociationSet Name="FK_courses_edducyears" Association="edlib2021Model.FK_courses_edducyears">
+            <End Role="edducyear" EntitySet="edducyears" />
+            <End Role="cours" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_courses_eeduecert" Association="edlib2021Model.FK_courses_eeduecert">
+            <End Role="eeduecert" EntitySet="eeduecerts" />
+            <End Role="cours" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_courses_eeduppx0" Association="edlib2021Model.FK_courses_eeduppx0">
+            <End Role="eeduppx0" EntitySet="eeduppx0" />
+            <End Role="cours" EntitySet="courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_grades_students" Association="edlib2021Model.FK_grades_students">
+            <End Role="student" EntitySet="students" />
+            <End Role="grade" EntitySet="grades" />
+          </AssociationSet>
+          <EntitySet Name="destinations" EntityType="edlib2021Model.destination" />
+          <EntitySet Name="requests" EntityType="edlib2021Model.request" />
+          <AssociationSet Name="FK_requests_destinations" Association="edlib2021Model.FK_requests_destinations">
+            <End Role="destination" EntitySet="destinations" />
+            <End Role="request" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requests_students" Association="edlib2021Model.FK_requests_students">
+            <End Role="student" EntitySet="students" />
+            <End Role="request" EntitySet="requests" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="cours">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="min_grade" Type="Double" />
+          <Property Name="max_grade" Type="Double" />
+          <Property Name="sho3ba_id" Type="Int32" />
+          <Property Name="shada_id" Type="Int32" />
+          <Property Name="year_id" Type="Int32" />
+          <NavigationProperty Name="edducyear" Relationship="edlib2021Model.FK_courses_edducyears" FromRole="cours" ToRole="edducyear" />
+          <NavigationProperty Name="eeduecert" Relationship="edlib2021Model.FK_courses_eeduecert" FromRole="cours" ToRole="eeduecert" />
+          <NavigationProperty Name="eeduppx0" Relationship="edlib2021Model.FK_courses_eeduppx0" FromRole="cours" ToRole="eeduppx0" />
+          <Property Name="is_main" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="grade">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="grade1" Type="Double" />
+          <Property Name="student_id" Type="Int32" />
+          <Property Name="course_id" Type="Int32" />
+          <NavigationProperty Name="student" Relationship="edlib2021Model.FK_grades_students" FromRole="grade" ToRole="student" />
+        </EntityType>
+        <Association Name="FK_courses_edducyears">
+          <End Type="edlib2021Model.edducyear" Role="edducyear" Multiplicity="0..1" />
+          <End Type="edlib2021Model.cours" Role="cours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="edducyear">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cours">
+              <PropertyRef Name="year_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_courses_eeduecert">
+          <End Type="edlib2021Model.eeduecert" Role="eeduecert" Multiplicity="0..1" />
+          <End Type="edlib2021Model.cours" Role="cours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eeduecert">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cours">
+              <PropertyRef Name="shada_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_courses_eeduppx0">
+          <End Type="edlib2021Model.eeduppx0" Role="eeduppx0" Multiplicity="0..1" />
+          <End Type="edlib2021Model.cours" Role="cours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eeduppx0">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cours">
+              <PropertyRef Name="sho3ba_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_grades_students">
+          <End Type="edlib2021Model.student" Role="student" Multiplicity="0..1" />
+          <End Type="edlib2021Model.grade" Role="grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="grade">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="destination">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="destination1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="requests" Relationship="edlib2021Model.FK_requests_destinations" FromRole="destination" ToRole="request" />
+        </EntityType>
+        <EntityType Name="request">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="student_id" Type="Int32" />
+          <Property Name="destination_id" Type="Int32" />
+          <Property Name="count" Type="Int32" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="max_grade" Type="Double" />
+          <Property Name="total_grade" Type="Double" />
+          <Property Name="amount" Type="Double" />
+          <Property Name="registrationNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="transfer_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="type" Type="Int32" />
+          <NavigationProperty Name="destination" Relationship="edlib2021Model.FK_requests_destinations" FromRole="request" ToRole="destination" />
+          <NavigationProperty Name="student" Relationship="edlib2021Model.FK_requests_students" FromRole="request" ToRole="student" />
+        </EntityType>
+        <Association Name="FK_requests_destinations">
+          <End Type="edlib2021Model.destination" Role="destination" Multiplicity="0..1" />
+          <End Type="edlib2021Model.request" Role="request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="destination">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="request">
+              <PropertyRef Name="destination_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requests_students">
+          <End Type="edlib2021Model.student" Role="student" Multiplicity="0..1" />
+          <End Type="edlib2021Model.request" Role="request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="request">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="edlib2021ModelStoreContainer" CdmEntityContainer="ministryEducationEntities">
+          <EntitySetMapping Name="edducyears">
+            <EntityTypeMapping TypeName="edlib2021Model.edducyear">
+              <MappingFragment StoreEntitySet="edducyears">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="iyear" ColumnName="iyear" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eeducons">
+            <EntityTypeMapping TypeName="edlib2021Model.eeducon">
+              <MappingFragment StoreEntitySet="eeducon">
+                <ScalarProperty Name="educon" ColumnName="educon" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eeduecerts">
+            <EntityTypeMapping TypeName="edlib2021Model.eeduecert">
+              <MappingFragment StoreEntitySet="eeduecert">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Master" ColumnName="Master" />
+                <ScalarProperty Name="Ikey" ColumnName="Ikey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eeduecesubs">
+            <EntityTypeMapping TypeName="edlib2021Model.eeduecesub">
+              <MappingFragment StoreEntitySet="eeduecesub">
+                <ScalarProperty Name="Masersubce" ColumnName="Masersubce" />
+                <ScalarProperty Name="Ikey" ColumnName="Ikey" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eeduppx0">
+            <EntityTypeMapping TypeName="edlib2021Model.eeduppx0">
+              <MappingFragment StoreEntitySet="eeduppx0">
+                <ScalarProperty Name="cert_id" ColumnName="cert_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="eedupp0" ColumnName="eedupp0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eedusections">
+            <EntityTypeMapping TypeName="edlib2021Model.eedusection">
+              <MappingFragment StoreEntitySet="eedusection">
+                <ScalarProperty Name="ikey" ColumnName="ikey" />
+                <ScalarProperty Name="eedusection1" ColumnName="eedusection" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eexmmasters">
+            <EntityTypeMapping TypeName="edlib2021Model.eexmmaster">
+              <MappingFragment StoreEntitySet="eexmmaster">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="eegov" ColumnName="eegov" />
+                <ScalarProperty Name="eedusection" ColumnName="eedusection" />
+                <ScalarProperty Name="eschool" ColumnName="eschool" />
+                <ScalarProperty Name="elevel" ColumnName="elevel" />
+                <ScalarProperty Name="estatus" ColumnName="estatus" />
+                <ScalarProperty Name="eyear" ColumnName="eyear" />
+                <ScalarProperty Name="eeduppx0" ColumnName="eeduppx0" />
+                <ScalarProperty Name="edocref" ColumnName="edocref" />
+                <ScalarProperty Name="epage" ColumnName="epage" />
+                <ScalarProperty Name="erowref" ColumnName="erowref" />
+                <ScalarProperty Name="estudentfrom" ColumnName="estudentfrom" />
+                <ScalarProperty Name="estudentto" ColumnName="estudentto" />
+                <ScalarProperty Name="eedulictype" ColumnName="eedulictype" />
+                <ScalarProperty Name="eebook" ColumnName="eebook" />
+                <ScalarProperty Name="eeCount" ColumnName="eeCount" />
+                <ScalarProperty Name="DocThere" ColumnName="DocThere" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IUserDateTime" ColumnName="IUserDateTime" />
+                <ScalarProperty Name="IUserStamp" ColumnName="IUserStamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="egovs">
+            <EntityTypeMapping TypeName="edlib2021Model.egov">
+              <MappingFragment StoreEntitySet="egov">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="egovname" ColumnName="egovname" />
+                <ScalarProperty Name="ikey" ColumnName="ikey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eschools">
+            <EntityTypeMapping TypeName="edlib2021Model.eschool">
+              <MappingFragment StoreEntitySet="eschool">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="eschool1" ColumnName="eschool" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="students">
+            <EntityTypeMapping TypeName="edlib2021Model.student">
+              <MappingFragment StoreEntitySet="students">
+                <ScalarProperty Name="attachment_description" ColumnName="attachment_description" />
+                <ScalarProperty Name="attachment_file" ColumnName="attachment_file" />
+                <ScalarProperty Name="id_no14" ColumnName="id_no14" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="seat_number" ColumnName="seat_number" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="eexmaster_id" ColumnName="eexmaster_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_1">
+            <EntityTypeMapping TypeName="edlib2021Model.Table_1">
+              <MappingFragment StoreEntitySet="Table_1">
+                <ScalarProperty Name="AAA" ColumnName="AAA" />
+                <ScalarProperty Name="Ikey" ColumnName="Ikey" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSecuirtyTables">
+            <EntityTypeMapping TypeName="edlib2021Model.UserSecuirtyTable">
+              <MappingFragment StoreEntitySet="UserSecuirtyTable">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="IUser_Name" ColumnName="IUser_Name" />
+                <ScalarProperty Name="IUser_Login" ColumnName="IUser_Login" />
+                <ScalarProperty Name="IUser_Password" ColumnName="IUser_Password" />
+                <ScalarProperty Name="IUser_Enabled" ColumnName="IUser_Enabled" />
+                <ScalarProperty Name="IUser_New_Form" ColumnName="IUser_New_Form" />
+                <ScalarProperty Name="IUser_Query_From" ColumnName="IUser_Query_From" />
+                <ScalarProperty Name="IUser_Notes_Load" ColumnName="IUser_Notes_Load" />
+                <ScalarProperty Name="IUser_Print" ColumnName="IUser_Print" />
+                <ScalarProperty Name="IUser_C_Date" ColumnName="IUser_C_Date" />
+                <ScalarProperty Name="IUser_Type" ColumnName="IUser_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Log_Table">
+            <EntityTypeMapping TypeName="edlib2021Model.User_Log_Table">
+              <MappingFragment StoreEntitySet="User_Log_Table">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UserLogName" ColumnName="UserLogName" />
+                <ScalarProperty Name="Login_System" ColumnName="Login_System" />
+                <ScalarProperty Name="Logout_From_System" ColumnName="Logout_From_System" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="courses">
+            <EntityTypeMapping TypeName="edlib2021Model.cours">
+              <MappingFragment StoreEntitySet="courses">
+                <ScalarProperty Name="is_main" ColumnName="is_main" />
+                <ScalarProperty Name="year_id" ColumnName="year_id" />
+                <ScalarProperty Name="shada_id" ColumnName="shada_id" />
+                <ScalarProperty Name="sho3ba_id" ColumnName="sho3ba_id" />
+                <ScalarProperty Name="max_grade" ColumnName="max_grade" />
+                <ScalarProperty Name="min_grade" ColumnName="min_grade" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="grades">
+            <EntityTypeMapping TypeName="edlib2021Model.grade">
+              <MappingFragment StoreEntitySet="grades">
+                <ScalarProperty Name="course_id" ColumnName="course_id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="grade1" ColumnName="grade" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="destinations">
+            <EntityTypeMapping TypeName="edlib2021Model.destination">
+              <MappingFragment StoreEntitySet="destinations">
+                <ScalarProperty Name="destination1" ColumnName="destination" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requests">
+            <EntityTypeMapping TypeName="edlib2021Model.request">
+              <MappingFragment StoreEntitySet="requests">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="transfer_number" ColumnName="transfer_number" />
+                <ScalarProperty Name="registrationNumber" ColumnName="registrationNumber" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="total_grade" ColumnName="total_grade" />
+                <ScalarProperty Name="max_grade" ColumnName="max_grade" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="destination_id" ColumnName="destination_id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

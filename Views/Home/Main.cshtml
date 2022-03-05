@@ -1,0 +1,375 @@
+﻿
+@{
+    ViewBag.Title = "Main";
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+<div class="page-content">
+    <div class="page-content-inner">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption font-red-sunglo">
+                            <i class="icon-settings font-red-sunglo"></i>
+                            <span class="caption-subject bold uppercase">بحث عن ملف</span>
+                            @if (Session["userType"].ToString() == "3")
+                            {
+                                <a href="@Url.Action("uploadFiles", "Home")"> (اضافه ملف جديد)</a>
+                            }
+
+                        </div>
+
+                    </div>
+                    <div class="portlet-body">
+                        <form id="searchForm" class="form-inline" method="get" style="margin-bottom:10px;">
+
+                            <input type="hidden" name="iColumns" value="12" />
+                            <input type="hidden" name="iDisplayLength" value="10" />
+                            <input type="hidden" name="iDisplayStart" value="0" />
+                            <input type="hidden" name="iSortCol_0" value="0" />
+                            <input type="hidden" name="iSortingCols" value="1" />
+                            <input type="hidden" name="sColumns" value=",,,,,,,,id" />
+                            <input type="hidden" name="sEcho" value="1" />
+                            <input type="hidden" name="sSortDir_0" value="asc" />
+
+
+                            <div class="form-group">
+                                @Html.DropDownList("gov", new SelectList(ViewBag.gov, "egovname", "egovname"), "أختر المحافظة", new { @class = "js-example-responsive selectize", @name = "state", @style = "width:150px", @id = "govId" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("section", new SelectList(ViewBag.section, "eedusection1", "eedusection1"), "أختر المنطقة", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "sectionId" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("school", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "schoolId" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("section", new SelectList(ViewBag.level, "Value", "Text"), "أختر الدور", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "levelId" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("year", new SelectList(ViewBag.year, "iyear", "iyear"), "أختر السنة", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "yearId" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("sho3ba", new SelectList(ViewBag.sho3ba, "eedupp0", "eedupp0"), "أختر الشعبة", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "sho3baId" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("cert", new SelectList(ViewBag.cert, "Master", "Master"), "أختر الشهادة", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "certId" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("control", new SelectList(ViewBag.control, "educon", "educon"), "أختر الكنترول", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "controlId" })
+                            </div>
+
+                            <div class="form-group">
+                                <input style="width:150px" type="text" class="form-control" id="seatNo" name="pageNumber" placeholder="رقم الجلوس" />
+                            </div>
+                            <input type="button" id="search_button" value="بحث" class="btn btn-primary" />
+                            <input type="button" id="reset_button" value="اعاده تعيين" class="btn btn-danger" />
+
+                        </form>
+
+                        <table class="table table-bordered table-striped table-hover" id="data_table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+
+
+    function showTable() {
+        alert("In");
+        debugger
+        var datatable = $('#data_table')
+            .DataTable({
+                "sAjaxSource": "/Home/getMainData",
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": false,
+                "stateSave": false,
+                //"order": [[1, 'asc']],
+                "language": {
+                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+                    "sLoadingRecords": "جارٍ التحميل...",
+                    "sProcessing": "جارٍ التحميل...",
+                    "sLengthMenu": "أظهر _MENU_ مدخلات",
+                    "sZeroRecords": "لم يعثر على أية سجلات",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ابحث:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+                    }
+                },
+                "columns": [
+                    {
+                        "data": "id",
+                        "autoWidth": true,
+                        "searchable": true
+                    }
+                ]
+            });
+        //$(".dataTables_filter").hide();
+        //$(".dataTables_length").hide();
+    }
+
+    $(document).ready(function () {
+       
+            $('#example').DataTable({
+                "sAjaxSource": "/Home/getDocuments",
+                serverSide: true,
+                ordering: false,
+                searching: false,
+                scrollY: 200,
+                scroller: {
+                    loadingIndicator: true
+                },
+                "columns": [
+                    {
+                        "data": "id",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+
+                ]
+            });
+     
+    });
+       // $(".dataTables_filter").hide();
+
+
+        //$("#search_button").click(function () {
+        //    debugger
+        //    $("#tblStudent").dataTable().fnDestroy();
+        //    var model = $("#searchForm").serialize();
+        //    var gov = $("#govId").val();
+        //    var section = $("#sectionId").val();
+        //    var school = $("#schoolId").val();
+        //    var level = $("#levelId").val();
+        //    var year = $("#yearId").val();
+        //    var sho3ba = $("#sho3baId").val();
+        //    var cert = $("#certId").val();
+        //    var control = $("#controlId").val();
+        //    var seatNo = $("#seatNo").val();
+
+        //    var datatable = $('#tblStudent')
+        //        .DataTable({
+        //            "sAjaxSource": "/Home/getMainData?gov=" + gov + "&section=" + section + "&school=" + school + "&level=" + level + "&year=" + year + "&cert=" + cert + "&control=" + control + "&seatNo=" + seatNo,
+        //            "bServerSide": true,
+        //            "bProcessing": true,
+        //            "bSearchable": true,
+        //            "stateSave": false,
+        //            //"order": [[1, 'asc']],
+        //            "language": {
+        //                "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+        //                "sLoadingRecords": "جارٍ التحميل...",
+        //                "sProcessing": "جارٍ التحميل...",
+        //                "sLengthMenu": "أظهر _MENU_ مدخلات",
+        //                "sZeroRecords": "لم يعثر على أية سجلات",
+        //                "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+        //                "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+        //                "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+        //                "sInfoPostFix": "",
+        //                "sSearch": "ابحث:",
+        //                "sUrl": "",
+        //                "oPaginate": {
+        //                    "sFirst": "الأول",
+        //                    "sPrevious": "السابق",
+        //                    "sNext": "التالي",
+        //                    "sLast": "الأخير"
+        //                },
+        //                "oAria": {
+        //                    "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+        //                    "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+        //                }
+        //            },
+        //            "columns": [
+        //                {
+        //                    "data": "id",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                {
+        //                    "data": "eegov",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                {
+        //                    "data": "eedusection",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                {
+        //                    "data": "eschool",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                {
+        //                    "data": "elevel",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                //{
+        //                //    "data": "estatus",
+        //                //    "autoWidth": true,
+        //                //    "searchable": true
+        //                //},
+        //                {
+        //                    "data": "eyear",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                {
+        //                    "data": "eeduppx0",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                //{
+        //                //    "data": "edocref",
+        //                //    "autoWidth": true,
+        //                //    "searchable": true
+        //                //},
+        //                //{
+        //                //    "data": "epage",
+        //                //    "autoWidth": true,
+        //                //    "searchable": true
+        //                //},
+        //                //{
+        //                //    "data": "erowref",
+        //                //    "autoWidth": true,
+        //                //    "searchable": true
+        //                //},
+        //                {
+        //                    "data": "estudentfrom",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                {
+        //                    "data": "estudentto",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                {
+        //                    "data": "eedulictype",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                {
+        //                    "data": "eeCount",
+        //                    "autoWidth": true,
+        //                    "searchable": true
+        //                },
+        //                {
+        //                    "data": "id", "name": "id",
+        //                    fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+        //                        var html = "<a href='/Home/displayPdf?fileName=" + oData.edocref + "&page=" + oData.epage + "' target='_blank' title='عرض الملف'><span class='fa fa-file'></span></a> ";
+        //                        html += "<a title='تفاصيل' href='javascript:void(0);' class='anchorDetail' data-id='" + oData.id + "' ><span class='fa fa-eye' ></span></a>";
+        //                        html += "<a title='تعديل' href='/Home/uploadFiles?fileName=" + oData.edocref + "'  ><span class='fa fa-edit' ></span></a>";
+        //                        if (seatNo != "")
+        //                            html += "<a href='/Home/makeRequest?id=" + oData.id + "&seatNo=" + seatNo + "' target='_blank' title='تقديم طلب'><span class='fa fa-print'></span></a>";
+        //                        $(nTd).html("<span class='action-column'>" + html + "</span>");
+        //                    }
+        //                },
+        //            ]
+        //        });
+        //    $(".dataTables_filter").hide();
+        //});
+        //function resetDropDownSelectizeValue(id, selectedValue) {
+        //    $(id).val('');
+        //    var $select = $(id).selectize();
+        //    var selectize = $select[0].selectize;
+        //    selectize.setValue(selectize.search(selectedValue));
+        //}
+        //$("#reset_button").click(function () {
+
+        //    $("#govId").val("").change();
+        //    $("#sectionId").val("").change();
+        //    $("#schoolId").val("").change();
+        //    $("#levelId").val("").change();
+        //    $("#yearId").val("").change();
+        //    $("#sho3baId").val("").change();
+        //    $("#certId").val("").change();
+        //    $("#controlId").val("").change();
+        //    $("#seatNo").val("");
+        //    $('#search_button').trigger('click');
+
+        //});
+        //$(".js-example-responsive").select2({
+        //    width: 'resolve' // need to override the changed default
+        //});
+
+        //$(document).on("click", ".anchorDetail", function () {
+        //    var TeamDetailPostBackURL = '/Home/Details';
+        //    $(function () {
+        //        $(".anchorDetail").click(function () {
+        //            debugger;
+        //            var $buttonClicked = $(this);
+        //            var id = $buttonClicked.attr('data-id');
+        //            var options = { "backdrop": "static", keyboard: true };
+        //            $.ajax({
+        //                type: "GET",
+        //                url: TeamDetailPostBackURL,
+        //                contentType: "application/json; charset=utf-8",
+        //                data: { "Id": id },
+        //                datatype: "json",
+        //                success: function (data) {
+        //                    debugger;
+        //                    $('#myModalContent').html(data);
+        //                    $('#myModal').modal(options);
+        //                    $('#myModal').modal('show');
+
+        //                },
+        //                error: function () {
+        //                    alert("Dynamic content load failed.");
+        //                }
+        //            });
+        //        });
+
+        //        //$("#closebtn").on('click',function(){
+        //        //    $('#myModal').modal('hide');
+
+
+        //    });
+
+        //});
+
+
+   // });
+
+</script>
+
+

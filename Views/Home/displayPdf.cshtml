@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "displayPdf";
+    string filePath=ViewBag.file+ ".pdf#page="+ViewBag.page+"&toolbar=1&scrollbar=1";
+}
+
+
+<iframe src="~/Scripts/web/viewer.html?file=@filePath"
+        frameBorder="0"
+        scrolling="auto"
+        height="442px"
+        width="1349px">
+</iframe>
+
+

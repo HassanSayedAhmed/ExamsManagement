@@ -1,0 +1,436 @@
+﻿
+@{
+    ViewBag.Title = "إدارة المواد";
+    string filePath = ViewBag.fileName + ".pdf#page=" + ViewBag.pageNo + "&toolbar=1&scrollbar=1";
+    int size = 12;
+}
+@*<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css" rel="stylesheet" />*@
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/chosen.css" rel="stylesheet" />
+<!-- Chosen Select CSS -->
+<style>
+   /* .modal-dialog {
+        position: fixed;
+        margin: auto;
+        width: 320px;
+        height: 100%;
+        right: 0px;
+    }
+
+    .modal-content {
+        height: 100%;
+    }*/
+    .custom-modal {
+        /*Places modal center of the page*/
+        position: fixed;
+        top: 0;
+        left: 50%;
+        /*transform: translate(-50%, -50%);*/
+        width: fit-content;
+        height: fit-content;
+        padding: 0 !important;
+        /* end */
+    }
+
+    .modal-dialog {
+        right: 0px;
+        width: 320px;
+        height: 100%;
+        margin: auto;
+    }
+</style>
+<link href="~/Content/selectize.css" rel="stylesheet" />
+@*<div class='modal fade' id='adduser_modal' tabindex='-1' role='dialog' aria-labelledby='addpayments_modal' aria-hidden='true'>
+
+        <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 class='modal-title' id='addpayments_modal'>
+                        بيانات المواد
+                    </h3>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </div>
+                <div class='modal-body'>
+                    <div class="form-group">
+                        <span style="display: block; margin-bottom: 7px;">أسم المادة <span style="color:red;">*</span></span>
+                        <input required type="text" class="form-control" id="name" name="name" placeholder="أسم المادة">
+                    </div>
+                    <div class="form-group">
+                        <span style="display: block; margin-bottom: 7px;">النهاية الكبرى<span style="color:red;">*</span></span>
+                        <input required type="text" class="form-control" id="max_grade" name="max_grade" placeholder="النهاية الكبرى">
+                    </div>
+                    <div class="form-group">
+                        <span style="display: block; margin-bottom: 7px;">النهاية الصغرى<span style="color:red;">*</span></span>
+                        <input required type="text" class="form-control" id="min_grade" name="min_grade" placeholder="النهاية الصغرى">
+                    </div>
+
+                </div>
+                <div>
+                    <div id='progress_bar' style="background-color: green; width: 0%; height: 2px;"></div>
+                </div>
+                <div class='modal-footer'>
+                    <button class='btn btn-primary' id='action'>حفظ <span id="progress_text"></span></button>
+                    <button type='button' class='btn btn-light' id='close' data-dismiss='modal'>الغاء</button>
+                </div>
+            </div>
+        </div>
+
+    </div>*@
+
+<div id='myModal' class='modal custom-modal fade'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+@if (ViewBag.fileName != null)
+{
+    size = 6;
+}
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="page-content-inner">
+            <div class="row">
+                <div class="col-md-@size">
+                    <div class="portlet light">
+                        <div class="portlet-title">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="caption font-red-sunglo">
+                                        <i class="icon-settings font-red-sunglo"></i>
+                                        <span class="caption-subject bold uppercase"> إدارة المواد</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary" id="add_course"><i title="أضافة" class="fa fa-plus"></i>أضافة</button>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="portlet-body form">
+                            <div class="form-body">
+                               
+                                <div class="form-horizontal">
+
+                                    <input type="hidden" id="eexmaster_id" name="eexmaster" value="@ViewBag.eexmaster_id" />
+                                    <input type="hidden" id="seatNo" name="seatNo" value="@ViewBag.seatNo" />
+
+                                    <input type="hidden" id="eeduppx0" name="eeduppx0" value="@ViewBag.eeduppx0" />
+                                    <input type="hidden" id="eyear" name="eyear" value="@ViewBag.eyear" />
+                                    <input type="hidden" id="eedulictype" name="eedulictype" value="@ViewBag.eedulictype" />
+
+
+                                    <div class="portlet-body">
+                                        <table id="data_table" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>الشهادة</th>
+                                                    <th>السنة</th>
+                                                    <th>الشعبة</th>
+                                                    <th>أسم المادة</th>
+                                                    <th>النهاية العظمى</th>
+                                                    <th>النهاية الصغرى</th>
+                                                    <th>أساسية</th>
+                                                    <th></th>
+
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @if (ViewBag.fileName != null)
+                {
+                    <div class="col-md-6">
+
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="caption font-red-sunglo">
+                                    <i class="icon-settings font-red-sunglo"></i>
+                                    <span class="caption-subject bold uppercase"> عرض الملف</span>
+                                    @if (ViewBag.fileName != null)
+                                    {
+                                        <a href="~/Scripts/web/viewer.html?file=@filePath" target="_blank" title="عرض بحجم الشاشة"> <i class="fa fa-eye"></i></a>
+                                    }
+                                </div>
+
+                            </div>
+
+                            <div class="portlet-body form">
+                                <div class="form-body">
+
+                                    @if (ViewBag.fileName != null)
+                                    {
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <iframe id="fileIndex" class="left" src="~/Scripts/web/viewer.html?file=@filePath"
+                                                        frameBorder="0"
+                                                        scrolling="auto"
+                                                        height="400"
+                                                        width="100%">
+                                                </iframe>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="~/Scripts/chosen.jquery.js"></script>
+<!-- Selectize JS -->
+<script src="~/Scripts/selectize.js"></script>
+<script src="~/Scripts/sweetalert2@10.js"></script>
+<script>
+    var datatable;
+
+    $(document).ready(function () {
+        debugger
+        var id = $("#eexmaster_id").val();
+        var seatNo = $("#seatNo").val();
+
+        datatable = $('#data_table')
+            .DataTable({
+                "sAjaxSource": "/Courses/Index?id=" + id + "&seatNo=" + seatNo,
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "stateSave": false,
+                //"order": [[1, 'asc']],
+                "language": {
+                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+                    "sLoadingRecords": "جارٍ التحميل...",
+                    "sProcessing": "جارٍ التحميل...",
+                    "sLengthMenu": "أظهر _MENU_ مدخلات",
+                    "sZeroRecords": "لم يعثر على أية سجلات",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ابحث:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+                    }
+                },
+                "columns": [
+                    {
+                        "data": "id",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "cert",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "year",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "sho3ba",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "course_name",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "max_grade",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "min_grade",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "is_main", "name": "is_main",
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+
+                            var html = "<p>";
+                            if (oData.is_main == true)
+                                html += "<span class='badge badge-info'>نعم</span>";
+                            else
+                                html += "<span class='badge badge-warning'>لا</span>";
+                            html += "</p>";
+                            $(nTd).html("<span >" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "id", "name": "id",
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "<a title='تفاصيل' href='javascript:void(0);' class='edit' data-id='" + oData.id + "' ><span class='fa fa-edit' ></span></a>&nbsp;";
+                            html += "<a title='حذف' href='javascript:void(0);' class='delete' data-id='" + oData.id + "'  ><span class='fa fa-trash' ></span></a>";
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+
+                ]
+            });
+
+        $(".dataTables_filter").hide();
+        $(".dataTables_length").hide();
+
+        $(document).on("click", "#action", function () {
+
+            var TeamDetailPostBackURL = '/Courses/saveUser';
+            var course = {};
+            //var id = $('#id').val();
+            course.name = $('#name').val();
+            course.min_grade = $('#min_grade').val();
+            course.max_grade = $('#max_grade').val();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("saveCourse", "Courses")',
+            contenttype: "application/json; charset=utf-8",
+            data: course ,
+            datatype: "json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (json) {
+                datatable.draw();
+                //drawtable();
+                $('#adduser_modal').modal('hide');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+        });
+
+        $(document).on("click", ".delete", function () {
+        var $buttonClicked = $(this);
+        var id = $buttonClicked.attr('data-id');
+        var options = { "backdrop": "static", keyboard: true };
+        Swal.fire({
+            title: 'هل أنت متأكد؟',
+            text: "البيانات المحذوفة لا يمكن أسترجاعها!",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'لا!',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'نعم!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("deleteCourse", "Courses")',
+                    contentType: "application/json; charset=utf-8",
+                    data: { "id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        datatable.draw();
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+
+            }
+        })
+        });
+
+        function showModal(id=0,eexmasterId=0) {
+            var TeamDetailPostBackURL = '/Courses/manageCourse';
+            var options = { "backdrop": "static", keyboard: true };
+
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "id": id, "eexmasterId": eexmasterId},
+                datatype: "json",
+                success: function (data) {
+                    debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                    $('.modal-backdrop').removeClass("modal-backdrop");
+                    //
+                    $('.modal-content').draggable().resizable();
+
+                    $('.modal-content').draggable().resizable();
+                    $(".modal-content").on("dragstop", function (event, ui) {
+                        $(".custom-modal").css({
+                            top: ' calc( ' + $(".custom-modal").css("top") + ' + ' + $(".modal-content").css("top") + ')',
+                            left: ' calc( ' + $(".custom-modal").css("left") + ' + ' + $(".modal-content").css("left") + ')'
+                        });
+                        $(".modal-content").css({
+                            top: '0px',
+                            left: '0px'
+                        });
+                    });
+                    $("#myModal").on('shown.bs.modal', function () {
+                        $("body").removeClass("modal-open");
+                        $(".custom-modal").removeClass("modal");
+                    });
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        }
+
+        $(document).on("click", ".edit", function () {
+
+            var TeamDetailPostBackURL = '/Courses/manageUser';
+
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            showModal(id,0);
+
+        });
+
+        $(document).on("click", "#add_course", function () {
+            // $("#adduser_modal").modal('show');
+            var eexmasterId = $("#eexmaster_id").val();
+            showModal(0,eexmasterId);
+        });
+
+    });
+</script>
+
+
+
+

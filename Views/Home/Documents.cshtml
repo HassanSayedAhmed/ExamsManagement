@@ -1,0 +1,907 @@
+﻿
+@{
+    ViewBag.Title = "Main";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+@*<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />*@
+@*<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css" rel="stylesheet" />*@
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/chosen.css" rel="stylesheet" />
+<!-- Chosen Select CSS -->
+
+<link href="~/Content/selectize.css" rel="stylesheet" />
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+<div class="page-content">
+    <div class="page-content-inner">
+        <!-- Edit Modal -->
+        <div class='modal fade' id='attachment_modal' tabindex='-1' role='dialog' aria-labelledby='edit_modal' aria-hidden='true'>
+            <form method="post" id='edit_form' enctype="multipart/form-data">
+                <input type="hidden" id="eexmaster_id" name="eexmaster_id">
+                <input type="hidden" id="student_seat_number" name="student_seat_number">
+                <div class='modal-dialog modal-lg' role='document'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h5 class='modal-title' id='modal_label'>إرفاق ملف</h5>
+                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                            </button>
+                        </div>
+
+                        <div class='modal-body'>
+                            <div class="form-row">
+                                <div id='field_div' class="form-group col">
+                                    <label id='label'>الملف</label>
+                                    <input id="file" name="file" placeholder="" type="file" class="form-control">
+                                </div>
+                                <div id='field_div' class="form-group col">
+                                    <label id='label'>الوصف</label>
+                                    <input type="text" id="description" name="description" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div id='progress_bar' style="background-color: green; width: 0%; height: 2px;"></div>
+                        </div>
+                        <div class='modal-footer'>
+                            <input type="button" id='file_save' class="btn btn-primary" value="حفظ">
+                            @*<button id='file_save' class='btn btn-primary'>حفظ<span id="progress_text"></span></button>*@
+                            <button type='button' class='btn btn-light' id='close' data-dismiss='modal'>إلغاء</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class='modal fade' id='show_attachment_modal' tabindex='-1' role='dialog' aria-labelledby='edit_modal' aria-hidden='true'>
+            <form method="post" id='edit_form' enctype="multipart/form-data">
+                <input type="hidden" id="eexmaster_id" name="eexmaster_id">
+                <input type="hidden" id="student_seat_number" name="student_seat_number">
+                <div class='modal-dialog modal-lg' role='document'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h5 class='modal-title' id='modal_label'>عرض الملف المرفق</h5>
+                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                            </button>
+                        </div>
+
+                        <div class='modal-body'>
+                            <div class="form-row">
+                                <img src="" alt="لا يوجد محضر مرفق" class="image-carousel" width="800" height="500" id="attach" />
+                                <div id='field_div' class="form-group col">
+                                    <label id='label'>الوصف</label>
+                                    <label name="descriptionShow" id="descriptionShow" class="form-control">
+
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div id='progress_bar' style="background-color: green; width: 0%; height: 2px;"></div>
+                        </div>
+                        <div class='modal-footer'>
+                            @*<input type="submit" class="btn btn-primary" value="حفظ">*@
+                            @*<button id='file_save' class='btn btn-primary'>حفظ<span id="progress_text"></span></button>*@
+                            <button type='button' class='btn btn-light' id='close' data-dismiss='modal'>إلغاء</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption font-red-sunglo">
+                            <i class="icon-settings font-red-sunglo"></i>
+                            <span class="caption-subject bold uppercase">بحث عن ملف</span>
+                            @if (Session["userType"].ToString() == "2" || Session["userType"].ToString() == "3")
+                            {
+                                <a href="@Url.Action("uploadFiles", "Home")"> (اضافه ملف جديد)</a>
+                            }
+
+                        </div>
+
+                    </div>
+                    <div class="portlet-body">
+
+                        <form id="searchForm" class="form-inline" method="get" style="margin-bottom:10px;">
+
+                            <input type="hidden" name="iColumns" value="12" />
+                            <input type="hidden" name="iDisplayLength" value="10" />
+                            <input type="hidden" name="iDisplayStart" value="0" />
+                            <input type="hidden" name="iSortCol_0" value="0" />
+                            <input type="hidden" name="iSortingCols" value="1" />
+                            <input type="hidden" name="sColumns" value=",,,,,,,,id" />
+                            <input type="hidden" name="sEcho" value="1" />
+                            <input type="hidden" name="sSortDir_0" value="asc" />
+                            <div class="form-group">
+                                <label class="col-form-label">الشهادة</label>
+                                <div>
+                                    @Html.DropDownList("cert", new SelectList(ViewBag.cert, "Master", "Master"), "أختر الشهادة", new { @class = "selectize", @name = "state", @style = "width:150px", @id = "certId" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">السنة</label>
+                                <div id="yearDiv">
+                                    @Html.DropDownList("year", new SelectList(ViewBag.year, "iyear", "iyear"), "أختر السنة", new { @class = "selectize", @name = "state", @style = "width:150px", @id = "yearId" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">المدرسة</label>
+                                <div id="schoolDiv">
+                                    @Html.DropDownList("school", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "selectize", @name = "state", @style = "width:150px", @id = "schoolId" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">المحافظة</label>
+                                <div>
+                                    @Html.DropDownList("gov", new SelectList(ViewBag.gov, "egovname", "egovname"), "أختر المحافظة", new { @class = "selectize", @name = "state", @style = "width:150px", @id = "govId" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label">الإدارة التعليمية</label>
+                                <div>
+                                    @Html.DropDownList("section", new SelectList(ViewBag.section, "eedusection1", "eedusection1"), "أختر الإدارة التعليمية", new { @class = "selectize", @name = "state", @style = "width:150px", @id = "sectionId" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label">الدور</label>
+                                <div>
+                                    @Html.DropDownList("section", new SelectList(ViewBag.level, "Value", "Text"), "أختر الدور", new { @class = "selectize", @name = "state", @style = "width:150px", @id = "levelId" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div id="append_sho3ba">
+
+                                </div>
+                                @* @Html.DropDownList("sho3ba", new SelectList(ViewBag.sho3ba, "eedupp0", "eedupp0"), "أختر الشعبة", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "sho3baId" })*@
+                            </div>
+                            @*<div class="form-group">
+                <label class="col-form-label">الشعبة</label>
+                <div>
+                    @Html.DropDownList("sho3ba", new SelectList(ViewBag.sho3ba, "eedupp0", "eedupp0"), "أختر الشعبة", new { @class = "selectize", @name = "state", @style = "width:150px", @id = "sho3baId" })
+                </div>
+            </div>*@
+                            <div class="form-group" style="display: none;" id="controlDiv">
+                                <label class="col-form-label">الكنترول</label>
+                                <div>
+                                    @Html.DropDownList("control", new SelectList(ViewBag.control, "educon", "educon"), "أختر الكنترول", new { @class = "selectize", @name = "state", @style = "width:150px;", @id = "controlId" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">رقم الجلوس</label>
+                                <div>
+                                    <input style="width:150px" type="text" class="form-control" id="seatNo" name="pageNumber" placeholder="رقم الجلوس" />
+                                </div>
+                            </div>
+                            @*<div class="form-group">
+                                <input style="width:150px" type="text" class="form-control" id="studentName" name="studentName" placeholder="أسم الطالب" />
+                            </div>*@
+                            <div class="form-group">
+                                <label class="col-form-label">رقم القومى</label>
+                                <div>
+                                    <input style="width:150px" type="text" class="form-control" id="id_no14" name="id_no14" placeholder="رقم القومى" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">&nbsp;</label>
+                                <div>
+                                    <input type="button" id="search_button" value="بحث" class="btn btn-primary" />
+                                    <input type="button" id="reset_button" value="اعاده تعيين" class="btn btn-danger" />
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row form-inline">
+                            <div class="col-6">
+                                @if (Session["userType"].ToString() == "3")
+                                {
+
+                                        <div class="form-group col-3">
+                                            <label class="col-form-label">المستخدم</label>
+                                            <div>
+                                                @Html.DropDownList("UserID", new SelectList(ViewBag.users, "id", "IUser_Name"), "أختر المستخدم", new { @class = "selectize", @name = "state", @style = "width:150px", @id = "UserID" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-3">
+                                            <label class="col-form-label">تاريخ من</label>
+                                            <div>
+                                                <input style="width:150px" type="date" class="form-control" id="date_from_report" name="date_from_report" placeholder=" تاريخ من" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-3">
+                                            <label class="col-form-label">تاريخ إلى</label>
+                                            <div>
+                                                <input style="width:150px" type="date" class="form-control" id="date_to_report" name="date_to_report" placeholder=" تاريخ إلى" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <label class="col-form-label">&nbsp;</label>
+                                            <div>
+                                                <input type="button" id="report" value="بحث" class="btn btn-primary" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-3">
+                                            <label class="col-form-label">عدد الورق</label>
+
+                                            <label id="pageCount"></label>
+
+                                        </div>
+
+                                }
+                            </div>
+                            <div class="col-6" id="student_div" style="float:left; padding-left:20px;display:none;">
+                                <p class="btn btn-primary fs-10 pb-5" >إسم الطالب : <span id="student_name"> </span></p>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped table-hover" id="example">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>المحافظة</th>
+                                    <th>الإدارة التعليمية</th>
+                                    <th>المدرسة</th>
+                                    <th>الدور</th>
+                                    @*<th>الحالة</th>*@
+                                    <th>السنه</th>
+                                    <th>الشعبة</th>
+                                    @*<th>الرقم المرجعى للملف</th>*@
+                                    @*<th>الصفحه</th>*@
+                                    @*<th>الرقم المرجعى للصفحة</th>*@
+                                    <th>من رقم جلوس</th>
+                                    <th>الي رقم جلوس</th>
+                                    <th>الشهادة</th>
+                                    <th>الكنترول</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <link href="~/Scripts/select2.min.css" rel="stylesheet" />
+    <script src="~/Scripts/select2.min.js"></script>
+    <script src="~/Scripts/chosen.jquery.js"></script>
+    <!-- Selectize JS -->
+    <script src="~/Scripts/selectize.js"></script>
+    <script src="~/Scripts/factory.js"></script>
+    @*<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>*@
+<script>
+
+        $('#govId').selectize({
+            plugins: ['remove_button'],
+        });
+        $('#sectionId').selectize({
+            plugins: ['remove_button'],
+        });
+        $('#schoolId').selectize({
+            plugins: ['remove_button'],
+        });
+        $('#levelId').selectize({
+            plugins: ['remove_button'],
+        });
+        $('#statusId').selectize({
+            plugins: ['remove_button'],
+        });
+        $('#yearId').selectize({
+            plugins: ['remove_button'],
+        });
+        $('#certId').selectize({
+            plugins: ['remove_button'],
+        });
+        $('#sho3baId').selectize({
+            plugins: ['remove_button'],
+        });
+        $('#controlId').selectize({
+            plugins: ['remove_button'],
+        });
+        $('#UserID').selectize({
+            plugins: ['remove_button'],
+        });
+
+        function drawTable(url = "/Home/getDocuments", isSeaech = false) {
+            debugger
+            $("#example").dataTable().fnDestroy();
+            $('#example').DataTable({
+                "sAjaxSource": url,
+                serverSide: true,
+                ordering: false,
+                searching: false,
+
+                scroller: {
+                    loadingIndicator: true
+                },
+                "language": {
+                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+                    "sLoadingRecords": "جارٍ التحميل...",
+                    "sProcessing": "جارٍ التحميل...",
+                    "sLengthMenu": "أظهر _MENU_ مدخلات",
+                    "sZeroRecords": "لم يعثر على أية سجلات",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ابحث:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+                    }
+                },
+                "columns": [
+                    {
+                        "data": "id",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eegov",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eedusection",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eschool",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "elevel",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    //{
+                    //    "data": "estatus",
+                    //    "autoWidth": true,
+                    //    "searchable": true
+                    //},
+                    {
+                        "data": "eyear",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eeduppx0",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    //{
+                    //    "data": "edocref",
+                    //    "autoWidth": true,
+                    //    "searchable": true
+                    //},
+                    //{
+                    //    "data": "epage",
+                    //    "autoWidth": true,
+                    //    "searchable": true
+                    //},
+                    //{
+                    //    "data": "erowref",
+                    //    "autoWidth": true,
+                    //    "searchable": true
+                    //},
+                    {
+                        "data": "estudentfrom",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "estudentto",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eedulictype",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eeCount",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "id", "name": "id",
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "<a href='/Home/displayPdf?fileName=" + oData.edocref + "&page=" + oData.epage + "' target='_blank' title='عرض الملف'><span class='fa fa-file'></span></a>&nbsp;";
+                            html += "<a title='تفاصيل' href='javascript:void(0);' class='anchorDetail' data-id='" + oData.id + "' ><span class='fa fa-eye' ></span></a>&nbsp;";
+
+                            if (@Session["userType"].ToString() == "2" || @Session["userType"].ToString() == "3") {
+                                html += "<a title='تعديل' target='_blank' href='/Home/uploadFiles?id=" + oData.id + "'><span class='fa fa-edit' ></span></a>&nbsp;";
+                            }
+                            if (@Session["userType"].ToString() == "2" || @Session["userType"].ToString() == "3") {
+                                html += "<a title='DataEntry' target='_blank' href='/Home/uploadFilesDataEntry?id=" + oData.id + "'><span class='fa fa-edit' ></span></a>&nbsp;";
+
+                            }
+                            var seat = 0;
+
+                            if (oData.estudentfrom == oData.estudentto || isSeaech) {
+                                if (oData.estudentfrom == oData.estudentto) {
+                                    seat = oData.estudentto;
+                                }
+                                else if ($("#seatNo").val() > 0) {
+                                    seat = $("#seatNo").val();
+                                }
+                                else if ($("#id_no14").val().length!=0) {
+                                    console.log($("#id_no14").val());
+                                    console.log(oData);
+                                    seat = oData.seat_number;
+                                }
+
+                                if (seat > 0) {
+                                    if (@Session["userType"].ToString() == "1" || @Session["userType"].ToString() == "3") {
+                                        html += "<a href='/Home/checkIfExist?id=" + oData.id + "&seatNo=" + seat + "' target='_blank' title='كشف درجات'><span class='fa fa-table'></span></a>&nbsp;";
+                                        html += "<a href='/Home/printTotal?id=" + oData.id + "&seatNo=" + seat + "' target='_blank' title='بيان نجاح'><span class='fa fa-user'></span></a>&nbsp;";
+                                    }
+                                    if (@Session["userType"].ToString() == "2" || @Session["userType"].ToString() == "3") {
+                                        html += "<a title='ملف' href='javascript:void(0)' id='" + oData.id + "_" + seat + "'  class='attachment'><i class='fa fa-paperclip'></i></a>&nbsp;";
+                                    }
+                                    html += "<a title='عرض المحضر' href='javascript:void(0)' id='show_" + oData.id + "_" + seat + "'  class='showAttachment'><i class='fa fa-eye'></i></a>";
+                                }
+
+                            }
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                ]
+            });
+            $(".dataTables_filter").hide();
+            $(".dataTables_info").hide();
+            $(".dataTables_length").hide();
+        }
+
+        $("#report").click(function () {
+            var UserID = $("#UserID").val();
+            var IUserDateTimeFrom = $("#date_from_report").val();
+            var IUserDateTimeTo = $("#date_to_report").val();
+            var TeamDetailPostBackURL = '/Home/calcPages';
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: {
+                    "UserID": UserID, "IUserDateTimeFrom": IUserDateTimeFrom, "IUserDateTimeTo": IUserDateTimeTo
+                },
+                datatype: "json",
+                success: function (data) {
+                    console.log(data);
+                    $("#pageCount").text(data.data);
+                    //attach
+                },
+                error: function () {
+                    // alert("Dynamic content load failed.");
+                }
+            });
+        });
+        $(document).ready(function () {
+            drawTable();
+
+            $(document).on("click", ".showAttachment", function () {
+                $('#show_attachment_modal').modal('show');
+                $('.modal-backdrop').removeClass("modal-backdrop");
+                var str = $(this).attr("id");
+                var res = str.split("_");
+                var id = res[1];
+                var seat_number = res[2];
+                //$("#eexmaster_id").val(id);
+                //$("#student_seat_number").val(seat_number);
+                var TeamDetailPostBackURL = '/Home/showUploadedAttachment';
+                $.ajax({
+                    type: "GET",
+                    url: TeamDetailPostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: {
+                        "eexmaster_id": id, "seat_number": seat_number },
+                    datatype: "json",
+                    success: function (data) {
+                        console.log(data);
+                        $("#attach").attr("src", data.data);
+                        $("#descriptionShow").text(data.description);
+                        //attach
+                    },
+                    error: function () {
+                        // alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+            //Attach
+            $(document).on("click", ".attachment", function () {
+                var modal = $('#attachment_modal').modal('show');
+                $('.modal-backdrop').removeClass("modal-backdrop");
+                var str = $(this).attr("id");
+                var res = str.split("_");
+                var id = res[0];
+                var seat_number = res[1];
+                $("#eexmaster_id").val(id);
+                $("#student_seat_number").val(seat_number);
+
+            });
+
+            $(document).on("click", "#file_save", function () {
+                debugger
+                if (window.FormData !== undefined) {
+
+                    var fileUpload = $("#file").get(0);
+                    var files = fileUpload.files;
+
+                    var fileData = new FormData();
+
+                    fileData.append(files[0].name, files[0]);
+
+                    var attachment = {};
+                    attachment.eexmaster_id = $("#eexmaster_id").val();
+                    attachment.student_seat_number = $("#student_seat_number").val();
+                    attachment.description = $("#description").val();
+                    //attachment.filedata = filedata;
+                    $.ajax({
+                        url: '@Url.Action("uploadAttachment", "Home")',
+                        type: 'post',
+                        datatype: 'json',
+                        contentType: false,
+                        processData: false,
+                        async: false,
+                        data: fileData,
+                        success: function (response) {
+                            //alert(response.data);
+                            attachment.filedata = response.data;
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("saveAttachmentRow", "Home")',
+                                contenttype: "application/json; charset=utf-8",
+                                data: attachment,
+                                datatype: "json",
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (json) {
+                                    $("#attachment_modal").modal('hide');
+                                    $("#search_button").click();
+                                    //drawTable();
+                                }
+                            });
+
+                        }
+                    });
+
+                } else {
+                    alert("FormData is not supported.");
+                }
+
+            });
+
+            $(document).on("change", "#yearId", function () {
+                var year_id = $(this).val();
+                var cert_id = $("#certId").val();
+                var getYearsURL = '@Url.Action("getSchools", "Home")';
+
+                $.ajax({
+                    type: "GET",
+                    url: getYearsURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "year": year_id, "cert": cert_id },
+                    datatype: "json",
+                    success: function (data) {
+                        console.log(data.data)
+                        $("#schoolDiv").html("")
+
+                        var html = "";
+                        html += "<select id='schoolId' style='width: 150px' class='selectize'>";
+                        html += "<option value=''>أختر المدرسة</option>"
+                        if (data.data) {
+                            data.data.forEach(function (val) {
+                                console.log(val.eschool)
+                                html += "<option value='" + val.eschool + "'>" + val.eschool+"</option>"
+                            })
+                        }
+                        html += "</select>";
+                        $("#schoolDiv").append(html)
+                        $("#schoolId").selectize()
+
+                    },
+                    error: function () {
+                        // alert("Dynamic content load failed.");
+                    }
+                });
+            });
+
+            //append_sho3ba
+            $(document).on("change", "#certId", function () {
+                var cert_id = $(this).val();
+
+                $("#sho3baDiv").remove();
+                var TeamDetailPostBackURL = '@Url.Action("showSho3ba","Home")';
+                var getYearsURL = '@Url.Action("getYears","Home")';
+
+                $.ajax({
+                    type: "GET",
+                    url: TeamDetailPostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "cert": cert_id},
+                    datatype: "json",
+                    success: function (data) {
+
+                        var html = '<div id="sho3baDiv" class="form-group"> <label class="col-form-label"> الشعبة</label> <div>';
+                         html += "<select  id='sho3baId' name='sho3ba' class='selectize' style = 'width: 150px'>";
+                        html += "<option value=''> أختر الشعبة </option>";
+                        if (data.data) {
+                        data.data.forEach(function (el) {
+                            html += "<option value=" + el.eedupp0 + ">" + el.eedupp0+"</option>";
+                        });
+                        }
+                        html += "</div></div>";
+                        $("#append_sho3ba").append(html);
+                        $('#sho3baId').selectize({
+                            plugins: ['remove_button'],
+                        });
+                        if (cert_id == "الثانوية العامة") {
+                            $("#controlDiv").show();
+                        } else {
+                            $("#controlDiv").hide();
+                        }
+                    },
+                    error: function () {
+                       // alert("Dynamic content load failed.");
+                    }
+                });
+            
+                $.ajax({
+                    type: "GET",
+                    url: getYearsURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "cert": cert_id },
+                    datatype: "json",
+                    success: function (data) {
+                        $("#yearDiv").html("")
+
+                        var html = "";
+                        html += "<select id='yearId' style='width: 150px' class='selectize'>";
+                        html += "<option value=''>أختر السنة</option>"
+                        if (data.data) {
+                            data.data.forEach(function (val) {
+                                html += "<option value='" + val.eyear + "'>" + val.eyear + "</option>"
+                            })
+                        }
+                        html += "</select>";
+                        $("#yearDiv").append(html)
+                        $("#yearId").selectize()
+                    },
+                    error: function () {
+                        // alert("Dynamic content load failed.");
+                    }
+                });
+
+            });
+
+            //$(document).on("click", "#file_save", function () {
+            //    var TeamDetailPostBackURL = '/Home/uploadAttachment';
+            //    var eexmaster_id = $("#eexmaster_id").val();
+            //    var student_seat_number = $("#student_seat_number").val();
+            //    var file = $("#file").val();
+            //    $.ajax({
+            //        type: "GET",
+            //        url: TeamDetailPostBackURL,
+            //        contentType: "application/json; charset=utf-8",
+            //        data: {
+            //            "eexmaster_id": eexmaster_id, "student_seat_number": student_seat_number, "file": file },
+            //        datatype: "json",
+            //        success: function (data) {
+            //            debugger;
+            //            $('#attachment_modal').modal('hide');
+
+            //        },
+            //        error: function () {
+            //            alert("Dynamic content load failed.");
+            //        }
+            //    });
+
+            //});
+
+
+
+
+            $("#search_button").click(function () {
+                debugger
+                $(".dataTables_length").hide();
+                var model = $("#searchForm").serialize();
+                var gov = $("#govId").val();
+                var section = $("#sectionId").val();
+                var school = $("#schoolId").val();
+                var level = $("#levelId").val();
+                var year = $("#yearId").val();
+                //var sho3ba = $('#sho3baId').val();
+                var sho3ba = "";
+                var sho3ba_div = $('#sho3baId');
+                if (sho3ba_div.length) {
+                    if (sho3ba_div.val() != 0)
+                    sho3ba = sho3ba_div.val();
+                }
+                var cert = $("#certId").val();
+                var control = $("#controlId").val();
+                var seatNo = $("#seatNo").val();
+                //var studentName = $("#studentName").val();
+                var id_no14 = $("#id_no14").val();
+
+                //if (studentName) {
+                    //$.ajax({
+                    //    type: "GET",
+                    //    url: "/Home/getSeat",
+                    //    contentType: "application/json; charset=utf-8",
+                    //    data: { "studentName": studentName },
+                    //    datatype: "json",
+                    //    success: function (data) {
+                    //        debugger;
+                    //        $('#seatNo').val(data.data);
+                    //    },
+                    //    error: function () {
+                    //        alert("Dynamic content load failed.");
+                    //    }
+                    //});
+                //}
+
+                var url = "/Home/getDocuments?gov=" + gov + "&section=" + section + "&school=" + school + "&level=" + level + "&year=" + year + "&cert=" + cert + "&control=" + control + "&seatNo=" + seatNo + "&sho3ba=" + sho3ba + "&id_no14=" + id_no14;
+
+                if ($("#id_no14").val() != "" && $("#id_no14").val().length != 14)
+                    warningBox("برجاء أدخال الرقم القومى 14 رقم.");
+                else {
+                    if ($("#id_no14").val().length == 14) {
+                        $.ajax({
+                            type: "GET",
+                            url: "/Home/getName",
+                            contentType: "application/json; charset=utf-8",
+                            data: { "id_no14": id_no14 },
+                            datatype: "json",
+                            success: function (data) {
+                                debugger;
+                                $('#student_div').show();
+                                if (data.data)
+                                    $('#student_name').text(data.data);
+                                else {
+                                    $('#student_div').hide();
+                                    warningBox("الرقم القومى غير موجود.");
+                                }
+                                   
+
+                            },
+                            error: function () {
+                                alert("Dynamic content load failed.");
+                            }
+                        });
+                    }
+                    drawTable(url, true);
+
+                }
+
+                $(".dataTables_filter").hide();
+            });
+            $("#seatNo").keyup(function (event) {
+                if (event.keyCode === 13) {
+                    $("#search_button").click();
+                }
+            });
+            function resetDropDownSelectizeValue(id, selectedValue) {
+                $(id).val('');
+                var $select = $(id).selectize();
+                var selectize = $select[0].selectize;
+                selectize.setValue(selectize.search(selectedValue));
+            }
+            $("#reset_button").click(function () {
+                location.reload()
+                $("#govId").val("").change();
+                $("#sectionId").val("").change();
+                $("#schoolId").val("").change();
+                $("#levelId").val("").change();
+                $("#yearId").val("").change();
+
+                //if ($('#append_sho3ba').children().length > 0) {
+                //    //$('#sho3baId').val("").change();
+                //    resetDropDownSelectizeValue("#sho3baId", "أختر الشعبة");
+                //}
+                $("#certId").val("").change();
+                $("#sho3baId").val("").change();
+                $('#controlId').val("").change();
+                //var control_div = $('#controlId');
+                //if (control_div.length) {
+                //    control_div.val("").change();
+                //}
+                //$("#controlId").val("").change();
+                $("#seatNo").val("");
+                $("#id_no14").val("");
+                resetDropDownSelectizeValue("#govId", "أختر المحافظة");
+                resetDropDownSelectizeValue("#sectionId", "أختر الإدارة التعليمية");
+                resetDropDownSelectizeValue("#schoolId", "أختر المدرسة");
+                resetDropDownSelectizeValue("#levelId", "أختر الدور");
+                resetDropDownSelectizeValue("#yearId", "أختر السنة");
+                resetDropDownSelectizeValue("#certId", "أختر الشهادة");
+                resetDropDownSelectizeValue("#sho3baId", "أختر الشعبة");
+                resetDropDownSelectizeValue("#controlId", "أختر الكنترول");
+                $('#search_button').trigger('click');
+
+
+            });
+
+            //$("#id_no14").change(function () {
+            //    if ($("#id_no14").val().length != 14)
+            //        warningBox("برجاء أدخال الرقم القومى 14 رقم.");
+            //});
+
+            $(".js-example-responsive").select2({
+                width: 'resolve' // need to override the changed default
+            });
+
+            $(document).on("click", ".anchorDetail", function () {
+                var TeamDetailPostBackURL = '/Home/Details';
+                $(function () {
+                    $(".anchorDetail").click(function () {
+                        debugger;
+                        var $buttonClicked = $(this);
+                        var id = $buttonClicked.attr('data-id');
+                        var options = { "backdrop": "static", keyboard: true };
+                        $.ajax({
+                            type: "GET",
+                            url: TeamDetailPostBackURL,
+                            contentType: "application/json; charset=utf-8",
+                            data: { "Id": id },
+                            datatype: "json",
+                            success: function (data) {
+                                debugger;
+                                $('#myModalContent').html(data);
+                                $('#myModal').modal(options);
+                                $('#myModal').modal('show');
+
+                            },
+                            error: function () {
+                                alert("Dynamic content load failed.");
+                            }
+                        });
+                    });
+
+                    //$("#closebtn").on('click',function(){
+                    //    $('#myModal').modal('hide');
+
+
+                });
+
+            });
+
+
+        });
+
+</script>
+}
+

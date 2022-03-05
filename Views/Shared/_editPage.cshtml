@@ -1,0 +1,143 @@
+﻿@model ExamsManagement.Models.eexmmaster
+<link href="~/Content/multiselect/select2.min.css" rel="stylesheet" />
+<link href="~/Content/need/select2-bootstrap.min.css" rel="stylesheet" />
+<div class="modal-header">
+    @*<button type="button" data-dismiss="modal" aria-hidden="true" id="closbtn"><span style="float:left;" class="fa fa-close"></span></button>*@
+    <h4 class="modal-title"><b>بيانات الملف</b></h4>
+</div>
+
+<div class="modal-body">
+
+    <div class="form-row">
+        @*<input type="number" id="id" name="id" value="@Model.id" />*@
+        <div class="form-group col-md-12">
+            <label for="inputtext4">المدرسة</label>
+            @*@Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "school_name_edit" })*@
+            <input type="text" class="form-control" id="school_name_edit" name="school_name_edit" readonly>
+        </div>
+    </div>
+    <div class="form-row">
+        @*<input type="number" id="id" name="id" value="@Model.id" />*@
+        <div class="form-group col-md-12">
+            <label for="inputtext4">السنة</label>
+            @*@Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "school_name_edit" })*@
+            <input required type="text" class="form-control" readonly value="@Model.eyear" id="edityearShow" name="edityearShow" placeholder="السنة">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="inputtext4">الشهاده</label>
+            <input required type="text" class="form-control" readonly value="@Model.eedulictype" id="editcertShow" name="editcertShow" placeholder="الشهاده">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="inputtext4">الشعبه</label>
+            <input required type="text" class="form-control" readonly value="@Model.eeduppx0" id="editsho3baShow" name="editsho3baShow" placeholder="الشعبه">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="inputtext4">الصفحه</label>
+            <input type="text" class="form-control" id="currentPageId" value="@Model.epage">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="inputPassword4">من رقم الصفحه</label>
+            <input type="text" class="form-control" id="currentFromPageId" value="@Model.estudentfrom">
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="inputtext4">الي رقم الصفحه</label>
+            <input type="text" class="form-control" id="currentToPageId" value="@Model.estudentto">
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal-footer">
+    <div class="col-md-12">
+        <input class="btn blue" value="تحديث" type='button' id="saveBtn2" />
+        <input class="btn green" value="غلق" type='button' id="closeBtn2" />
+    </div>
+
+</div>
+
+<script>
+
+    $("#closeBtn2").click(function () {
+        $("#myModal").modal('hide');
+
+    });
+    //$(".js-example-responsive").select2({
+    //    width: 'resolve' // need to override the changed default
+    //});
+    
+    
+    $("#currentPageId").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#currentFromPageId").focus();
+        }
+    });
+    $("#currentFromPageId").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#currentToPageId").focus();
+        }
+    });
+    $("#currentToPageId").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#saveBtn2").click();
+        }
+    });
+    $("#saveBtn2").click(function () {
+        //debugger
+        var eexmmaster = { };
+        eexmmaster.id = $('#id').val();
+        eexmmaster.edocref = $('#docId').val();
+        eexmmaster.eegov = $('#govId').val();
+        eexmmaster.eedusection = $('#sectionId').val();
+        eexmmaster.eschool = $('#school_name_edit').val();
+        eexmmaster.elevel = $('#levelId').val();
+        eexmmaster.estatus = $('#statusId').val();
+        eexmmaster.eyear = $('#yearId').val();
+        eexmmaster.eedulictype = $('#certId').val();
+        eexmmaster.eeduppx0 = $('#sho3baId').val();
+        eexmmaster.eeCount = $('#controlId').val();
+        eexmmaster.epage = $('#currentPageId').val();
+        eexmmaster.estudentfrom = $('#currentFromPageId').val();
+        eexmmaster.estudentto = $('#currentToPageId').val();
+        //console.log();
+        $.ajax({
+            type: "post",
+            data: eexmmaster,
+
+            url: '@Url.Action("saveDftarRow","Home")',
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (json) {
+                if (json.refreshPage)
+                    location.reload();
+                $("#myModal").modal('hide');
+                var id = $('#id').val();
+                $("#data_table").dataTable().fnDestroy();
+                var isEdit = $("#isEdit").val();
+             
+                if (isEdit == 1)
+                    showTable($("#fileID").val(), id);
+                else
+                    showTable(json.data);
+                
+                //showTable(json.data);
+            }
+        });
+
+    });
+
+</script>
+

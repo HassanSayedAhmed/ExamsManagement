@@ -1,0 +1,459 @@
+﻿s@model ExamsManagement.Models.eexmmaster
+@{
+    ViewBag.Title = "uploadFiles";
+    string filePath = ViewBag.fileName + ".pdf#page=1&toolbar=1&scrollbar=1";
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<style>
+    .left {
+        left:105px;
+        top:auto;
+        height: 300px;
+        border: 1px solid;
+        overflow: auto;
+        position: relative;
+        position:fixed;
+    }
+</style>
+<div class="page-container">
+    @*<div class='modal fade' id='addstudents_modal' tabindex='-1' role='dialog' aria-labelledby='addpayments_modal' aria-hidden='true'>
+            <form action="" method="post" enctype='multipart/form-data'>
+                <div class='modal-dialog' role='document'>
+                    <div class='modal-content'>
+                        <div class='modal-header'>
+                            <h3 class='modal-title'  id='addpayments_modal'>
+                                بيانات الطلبة
+                            </h3>
+                            <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                <span aria-hidden='true'>&times;</span>
+                            </button>
+                        </div>
+                        <div class='modal-body'>
+                            <div class="form-group">
+                                <span style="display: block; margin-bottom: 7px;">أسم المدرسة <span style="color:red;">*</span></span>
+                                <input required type="text" class="form-control" id="school_name" name="school_name" placeholder="أسم المدرسة">
+                            </div>
+                            <div class="form-group">
+                                <span style="display: block; margin-bottom: 7px;">رقم الصفحة <span style="color:red;">*</span></span>
+                                <input required type="text" class="form-control" id="page_no" name="page_no" placeholder="رقم الصفحة">
+                            </div>
+                            <div class="form-group">
+                                <span style="display: block; margin-bottom: 7px;">من رقم جلوس <span style="color:red;">*</span></span>
+                                <input required type="text" class="form-control" id="seat_from" name="seat_from" placeholder="من رقم الصفحة">
+                            </div>
+                            <div class="form-group">
+                                <span style="display: block; margin-bottom: 7px;">الى رقم جلوس <span style="color:red;">*</span></span>
+                                <input required type="text" class="form-control" id="seat_to" name="seat_to" placeholder="الى رقم الصفحة">
+                            </div>
+                        </div>
+                        <div>
+                            <div id='progress_bar' style="background-color: green; width: 0%; height: 2px;"></div>
+                        </div>
+                        <div class='modal-footer'>
+                            <button type='submit' class='btn btn-primary' id='action'>حفظ <span id="progress_text"></span></button>
+                            <button type='button' class='btn btn-light' id='close' data-dismiss='modal'>الغاء</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>*@
+
+    <div class="page-content-wrapper">
+
+
+        <div class="page-content">
+            <div class="container">
+
+
+                <div class="page-content-inner">
+                    <div class="row">
+                        <div class="col-md-6" id="daftarInfoId" style="display:none">
+
+                            <div class="portlet light">
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                        <i class="icon-settings font-red-sunglo"></i>
+                                        <span class="caption-subject bold uppercase"> بيانات الدفتر</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="portlet-body form">
+                                    <div class="form-body">
+
+                                        <div class="form-horizontal">
+
+                                            @if (@ViewBag.AddError != null)
+                                            {
+                                                <div class="alert alert-danger bold" role="alert">
+                                                    @ViewBag.AddError
+                                                </div>
+                                            }
+
+                                            <div class="mt-checkbox-list">
+                                                <label class="mt-checkbox mt-checkbox-outline">
+                                                    اضافه مدرسه جديدة
+                                                    <input class="checkbox" type='checkbox' id="addNewSchoolCheckId" />
+                                                    <span></span>
+                                                </label>
+
+                                            </div>
+
+                                            <div class="form-group"  id="addSchoolDiv" style="display:none">
+                                                <div>
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>المدرسة</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="text" class="form-control" placeholder="اسم المدرسة" name="schoolName" id="schoolNameId">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button class="btn btn-info" id="addSchoolBtn">اضافه</button>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            @using (Html.BeginForm("uploadFiles", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                <input type="hidden" id="docId" name="edocref" value="@ViewBag.fileName" />
+                                                <div class="form-group">
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>المحافظة</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+
+                                                        @Html.DropDownList("eegov", new SelectList(ViewBag.gov, "egovname", "egovname"), "أختر المحافظة", new { @class = "js-example-responsive selectize form-control", @name = "state", @style = "width:100%;", @id = "govId" })
+                                                        @Html.ValidationMessage("المحافظة", "", new { @class = "text-danger" })
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>الإدارة التعليمية</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+
+                                                        @Html.DropDownList("eedusection", new SelectList(ViewBag.section, "eedusection1", "eedusection1"), "أختر المنطقة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "sectionId" })
+                                                        @Html.ValidationMessage("الأداره التعلميةي", "", new { @class = "text-danger" })
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>المدرسة</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        @Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "schoolId" })
+                                                        @Html.ValidationMessage("المدرسة", "", new { @class = "text-danger" })
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>الدور</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        @Html.DropDownList("elevel", new SelectList(ViewBag.level, "Value", "Text"), "أختر الدور", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "levelId" })
+                                                        @Html.ValidationMessage("الدور", "", new { @class = "text-danger" })
+                                                    </div>
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>حالة الطالب</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        @Html.DropDownList("estatus", new SelectList(ViewBag.status, "Value", "Text"), "أختر الحالة", new { @class = "js-example-responsive", @name = "state", @style = "width:150px", @id = "statusId" })
+                                                        @Html.ValidationMessage("الحالة", "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>السنة</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        @Html.DropDownList("eyear", new SelectList(ViewBag.year, "iyear", "iyear"), "أختر السنة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "yearId" })
+                                                        @Html.ValidationMessage("السنة", "", new { @class = "text-danger" })
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>الشهادة</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        @Html.DropDownList("eedulictype", new SelectList(ViewBag.cert, "Master", "Master"), "أختر الشهادة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "certId" })
+                                                        @Html.ValidationMessage("الشهادة", "", new { @class = "text-danger" })
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>الشعبة</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        @*@Html.TextBoxFor(m => m.eeduppx0, null ,new { @class = "form-control", @placeholder = "الشعبة",@style= "width:100%;" })*@
+                                                        <input type="text" id="eeduppx0" name="eeduppx0" placeholder="الشعبة" class = "form-control" style= "width:100%;" />
+                                                        @Html.ValidationMessage("الدور", "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <div class="col-md-2 labelleft">
+                                                        <label>الكنترول</label>
+                                                    </div>
+                                                    <div class="col-md-9">
+
+                                                        @Html.DropDownList("eeCount", new SelectList(ViewBag.control, "educon", "educon"), "أختر الكنترول", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "controlId" })
+                                                        @Html.ValidationMessage("الكنترول", "", new { @class = "text-danger" })
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="portlet light">
+
+                                                    <div class="portlet-title">
+                                                        <div class="row">
+                                                            <div class="caption font-red-sunglo">
+                                                                <div class="col-md-1">
+                                                                    <i class="icon-settings font-red-sunglo"></i>
+                                                                </div>
+                                                                <div class="col-md-9">
+                                                                    بيانات أرقام الجلوس
+                                                                </div>
+
+                                                                <div class="col-md-2">
+                                                                    <label><i id="add_student" title="أضافة" class="fa fa-plus"></i></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="portlet-body">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>أسم المدرسة</th>
+                                                                    <th>رقم الصفحة</th>
+                                                                    <th>من رقم جلوس</th>
+                                                                    <th>الى رقم جلوس</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="row_input">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <div class="form-actions">
+                                                            <button type="submit" class="btn blue">حفظ</button>
+                                                            <a href="@Url.Action("searchFiles","Home")" class="btn default">الغاء</a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" ">
+
+                            <div class="portlet light">
+                                <div class="portlet-title">
+                                    <div class="caption font-red-sunglo">
+                                        <i class="icon-settings font-red-sunglo"></i>
+                                        <span class="caption-subject bold uppercase"> عرض الملف</span>
+                                        @if (ViewBag.fileName != null)
+                                        {
+                                    <a href="~/Files/@filePath" target="_blank" title="عرض بحجم الشاشة"> <i class="fa fa-eye"></i></a>
+                                        }
+                                        </div>
+                                     
+                                </div>
+
+                                <div class="portlet-body form">
+                                    <div class="form-body">
+
+                                        <div class="form-horizontal" id="fileContainer">
+                                            @using (Html.BeginForm("saveDaftar", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>رفع الملف</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group ">
+                                                            <input type="file" name="file" />
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn blue form-control">حفظ \ عرض</button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        </div>
+                                        @if (ViewBag.fileName != null)
+                                        {
+                                            <a href="~/Files/@filePath" target="_blank">عرض بحجم الشاشه</a>
+                                            <iframe class="left" src="~/Files/@filePath"
+                                                    frameBorder="0"
+                                                    scrolling="auto"
+                                                    height="592"
+                                                    width="550">
+                                            </iframe>
+
+
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+  
+
+    $("#addSchoolBtn").click(function () {
+        var schoolName = $("#schoolNameId").val();
+
+        if (schoolName) {
+            $.ajax({
+                type: "post",
+                data: {
+                    'schoolName': schoolName,
+                },
+                url: '@Url.Action("saveSchool","Home")',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (json) {
+                    if (json.icon == "success") {
+                    var html = '<option selected value="' + json.schoolNameResult + '">' + json.schoolNameResult + '</option>'
+                        $("#schoolId").prepend(html);
+                    }
+                    Swal.fire({
+                        icon: json.icon,
+                        title: json.title,
+                        text: json.text
+                    })
+
+                }
+            });
+
+        }
+
+    });
+    $(document).ready(function () {
+        $("#addSchoolDiv").hide();
+        if ($("#docId").val())
+            $("#daftarInfoId").show();
+        else
+            $("#daftarInfoId").hide();
+
+        $("#addNewSchoolCheckId").click(function () {
+            $("#addSchoolDiv").toggle();
+        });
+    });
+
+    $(".js-example-responsive").select2({
+        width: 'resolve' // need to override the changed default
+    });
+    var counter = 1;
+    var trUniqueID = 1;
+    function deleteRow(id) {
+        $("#" + id).remove();
+    }
+    $('#add_student').click(function () {
+        //$('#addstudents_modal').modal('show');
+
+        var html = `<tr id="` + trUniqueID+`">
+                    <td><input required type="text" class="form-control" id="school_name" name="school_name[]" placeholder="أسم المدرسة" value="`+ $('#schoolId').val() +`"></td>
+                    <td><input required type="number" class="form-control" id="page_no" name="page_no[]" placeholder="رقم الصفحة" value="`+ counter +`"></td>
+                    <td><input required type="number" class="form-control" id="seat_from" name="seat_from[]" placeholder="من رقم جلوس"></td>
+                    <td><input required type="number" class="form-control" id="seat_to" name="seat_to[]" placeholder="الى رقم الصفحة"></td>
+                    <td><label><i id="delete_page" onClick=deleteRow(`+ trUniqueID+`) title="حذف" class="fa fa-trash caption font-red-sunglo"></i></label></td>
+                    </tr>`;
+        counter++;
+        trUniqueID++;
+        $("#row_input").append(html);
+
+    });
+    $('#pdf_file_id').change(function (event) {
+        var tmppath = URL.createObjectURL(event.target.files[0]);
+        console.log(tmppath);
+
+        $("#disp_tmp_path").html("Temporary Path(Copy it and try pasting it in browser address bar) --> <strong>[" + tmppath + "]</strong>");
+    }); 
+    //$('#pdf_file_id').change(function () {
+    //    var fileName = $('#pdf_file_id').val();
+    //    console.log(this.files[0].mozFullPath);
+    //        var filePath = fileName + ".pdf#page=1&toolbar=1&scrollbar=1";
+    //        var html = `<iframe id="fileFrame" src="` + filePath + `"
+    //        frameBorder="0"
+    //        scrolling="auto"
+    //        height="442"
+    //        width="530"></iframe>`;
+    //        $("#fileContainer").append(html);
+    //    });
+
+    $("#displayFileBtnId").click(function () {
+        $("#fileFrame").remove();
+        var fileName = $("#fileNameId").val();
+
+        var filePath = "https://localhost:44352/Files/" + fileName + ".pdf#page=1&toolbar=1&scrollbar=1";
+        var html = `<iframe id="fileFrame" src="` + filePath + `"
+            frameBorder="0"
+            scrolling="auto"
+            height="442"
+            width="530"></iframe>`;
+        $("#fileContainer").append(html);
+
+    });
+
+
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}
+
+
+
+

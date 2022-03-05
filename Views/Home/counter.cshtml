@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "counter";
+}
+<div class="page-content">
+    <div class="page-content-inner">
+        <span style="margin-right: 600px;">
+            @*<span>الأجمالى :</span>*@
+            @if (Session["userType"].ToString() == "2" || @Session["userType"].ToString() == "3")
+            {
+                @*<span class="badge badge-light">
+                    <span class="text-light">أجمالى الدفاتر:</span>
+                    <span class="dis-inline">@ViewBag.edocrefCount</span>
+                </span>*@
+                <span  style="">
+                    <span class="text-light bold">أجمالى الورق(الصفحات):</span>
+                    <span class="dis-inline">@(ViewBag.epagesCount + 2000000)</span>
+                </span> <br />
+            }
+        </span>
+</div>
+    </div>

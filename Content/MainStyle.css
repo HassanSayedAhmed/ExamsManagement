@@ -1,0 +1,77 @@
+﻿
+@font-face {
+    font-family: 'DroidArabicKufiBold';
+    src: url('Font/ArbFONTS-DroidKufi-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DroidArabicKufi';
+    src: url('Font/ArbFONTS-DroidKufi-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    font-family: 'DroidArabicKufi';
+}
+* {
+    font-family: 'DroidArabicKufi';
+}
+.page-header .page-header-top .page-logo .logo-default {
+    margin: 0;
+    height: 70px;
+    width: 150px;
+}
+.md-radio label > .check {
+ 
+    background: #666;
+
+}
+.page-header .page-header-menu .hor-menu .navbar-nav > li .dropdown-menu li > a {
+    font-family: 'DroidArabicKufi';
+}
+
+.form-control {
+    border-radius: 4px !important;
+    padding: 4px 12px;
+}
+.fileinputStyle {
+    width: 100% !important;
+    height: 150px !important;
+}
+    .fileinputStyle img {
+        width: 100% !important;
+        height: 150px !important;
+    }
+
+.labelleft {
+    text-align: left;
+}
+
+.mt-checkbox > span:after {
+    right: 4px;
+    top: 4px;
+    width: 10px;
+    height: 5px;
+    border: solid #666;
+    border-width: 0 0 2px 2px;
+    transform: rotate(-45deg);
+}
+
+.select2-container--bootstrap .select2-selection--single {
+   
+    border-radius: 4px !important;
+}
+
+.carouselownerSequence .carousel-inner > .item > a > img,
+.carouselownerSequence .carousel-inner > .item > img {
+    width: 100%;
+    max-width: 100%;
+    height: 400px;
+}
+.carouselPieceDocsPhotos .carousel-inner > .item > a > img,
+.carouselPieceDocsPhotos .carousel-inner > .item > img {
+    width: 100%;
+    max-width: 100%;
+    height: 400px;
+}

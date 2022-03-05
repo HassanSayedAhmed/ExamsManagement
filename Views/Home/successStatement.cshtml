@@ -1,0 +1,233 @@
+﻿@model ExamsManagement.Models.successStatement
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>وزارة التربية و التعليم</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="~/Content/need/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/need/bootstrap-rtl.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/need/bootstrap-switch-rtl.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/need/components-rtl.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="~/Content/need/plugins-rtl.min.css" rel="stylesheet" type="text/css" />
+    <!-- END THEME GLOBAL STYLES -->
+    <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="~/Content/need/layout-rtl.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/need/default-rtl.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="~/Content/need/custom-rtl.min.css" rel="stylesheet" type="text/css" />
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">*@
+    <link href="~/Scripts/jquery.dataTables.css" rel="stylesheet" />
+
+
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="~/Content/need/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/multiselect/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/need/select2-bootstrap.min.css" rel="stylesheet" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <script src="~/Scripts/jquery/jquery.min.js"></script>
+
+
+    <style type="text/css">
+        table {
+            border: 2px solid;
+            padding: 10px;
+            resize: both;
+        }
+
+        .circle {
+            border: 2px solid red;
+            background-color: #FFFFFF;
+            height: 50px;
+            border-radius: 50%;
+            width: 60px;
+        }
+
+        * {
+            font-family: 'DroidArabicKufi';
+        }
+    </style>
+    <link href="~/Content/MainStyle.css" rel="stylesheet" />
+</head>
+
+<body class="page-container-bg-solid page-md">
+
+    <div class="page-header">
+        <!-- BEGIN HEADER TOP -->
+        <div class="page-header-top">
+            <div class="container">
+                <div class="page-logo">
+                    <img title="وزارة التربية و التعليم" src="~/Images/ministryofeducation.jpg" alt="logo" class="logo-default"><br />
+                </div>
+                <table style="width:100%;font-size:15px;">
+                    <tr>
+                        <td class="bold" width="30%">
+                            وزارة التربية و التعليم<br />
+                            الإدارة العامة للإمتحانات<br />
+                            قسم السجلات
+                        </td>
+                        <td class="bold" width="40%" style="font-size: 25px;text-align: center;">
+                            <span style="padding: 5px;">مستخرج رسمي بيان نجاح</span>
+
+                        </td>
+                        <td class="bold" width="30%">
+                            <span class="bold">مسلسل</span>: @Model.unique_registration<br />
+                            <span class="bold">التاريخ</span>: @Model.date
+                        </td>
+                    </tr>
+
+                </table>
+
+
+                <a href="javascript:;" class="menu-toggler"></a>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="page-content">
+
+        <div class="page-content-inner">
+            <div class="row">
+                <div class="col-md-12">
+
+
+                    <div class="portlet-title">
+
+
+                        <table style="width:100%;font-size:17px;line-height: 2.5">
+
+                            <tr>
+                                <td colspan="3"><span class="bold">بالكشف في سجل الناجحين في امتحان</span>/ @Model.shahada</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><span class="bold">الشعبة</span>/ @Model.sho3ba</td>
+                            </tr>
+                            <tr>
+                                <td width="35%"><span class="bold">الدور</span>/ @Model.eldoor</td>
+                                <td width="35%"><span class="bold">عام</span>/ @Model.year</td>
+                                <td width="30%"><span class="bold">وجد الأتي</span>:</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><span class="bold">رقم جلوس الطالب في الأمتحان</span>/ @Model.seat_id</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><span class="bold">أسم الطالب كما ورد بالسجل</span>/ @Model.student_name</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><span class="bold">اسم المدرسة التي تقدم منها للأمتحان</span>/ @Model.school_name</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><span class="bold">إدارة - مديرية</span>/ @Model.section</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><span class="bold">مجموع الدرجات التي حصل عليها الطالب</span>/ @Model.student_total_grades</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><span class="bold">النهاية العظمى لمجموع درجات المواد</span>/ @Model.max_grades</td>
+                            </tr>
+                            @*<tr>
+            <td><span class="bold">و قد حصل فى هذا الأمتحان على الدرجات الأتيه</span>:-</td>
+            <td></td>
+            <td></td>
+        </tr>*@
+
+                        </table>
+                    
+                        <br />
+                        <div>
+                            <table style="width:100%;font-size:17px;line-height: 2.5">
+                                <tr>
+                                    <td colspan="3" width="100%">و قد أستخرج هذا البيان لتقديمه إلى: @Model.to_destination</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" width="100%"><span>بناء على طلب السيد</span>: @Model.student_name</td>
+
+                                </tr>
+                                <tr>
+                                    <td width="40%"><span>و قد سدد المطلوب وقدره</span>: @Model.price جنيه</td>
+                                    <td width="40%"><span> بالحواله الأميرية رقم</span>: @Model.transfer_number</td>
+                                    <td width="20%"><span>مسلسل</span>: @Model.unique_registration</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="3" width="100%"><span>و على الجهه المختصة التحقق من أن صاحب البيان هو الشخص المدون أسمه فيه</span> .</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" width="100%">
+                                        <span>تحريرا فى</span>: @Model.date
+                                    </td>
+
+
+                                </tr>
+
+                            </table>
+                        </div>
+                        <table style="width:100%;font-size:17px;margin-top:10px;">
+                            <tfoot>
+                                <tr style="text-align:center;">
+                                    <td width="35%">كتبه</td>
+                                    <td width="35%">راجعه</td>
+                                    <td width="35%">مدير إدارة السجلات</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">&nbsp;</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>*@
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Content/need/js.cookie.min.js" type="text/javascript"></script>
+    <script src="~/Content/need/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="~/Content/need/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="~/Content/need/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="~/Content/need/bootstrap-switch.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/multiselect/select2.min.js"></script>
+    <!-- END CORE PLUGINS -->
+    <script src="~/Content/need/moment.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    @*<script src="~/Content/need/app.min.js" type="text/javascript"></script>*@
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="~/Content/need/layout.min.js" type="text/javascript"></script>
+    <script src="~/Content/need/demo.min.js" type="text/javascript"></script>
+    <script src="~/Content/need/quick-sidebar.min.js" type="text/javascript"></script>
+    <!-- END THEME LAYOUT SCRIPTS -->
+</body>
+</html>

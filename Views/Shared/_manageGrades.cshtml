@@ -1,0 +1,68 @@
+﻿@model ExamsManagement.Models.grade
+<link href="~/Content/multiselect/select2.min.css" rel="stylesheet" />
+<link href="~/Content/need/select2-bootstrap.min.css" rel="stylesheet" />
+<div class="modal-header">
+    @*<button type="button" data-dismiss="modal" aria-hidden="true" id="closbtn"><span style="float:left;" class="fa fa-close"></span></button>*@
+    <h4 class="modal-title"><b>درجة الطالب</b></h4>
+</div>
+
+<div class="modal-body">
+    <input type="hidden" name="id" id="gradeId" value="@Model.id" />
+    <div class="form-group">
+        <span style="display: block; margin-bottom: 7px;"> المادة </span>
+        <input required type="text" readonly class="form-control" value="@ViewBag.courseName" placeholder="المادة">
+    </div>
+    <div class="form-group">
+        <span style="display: block; margin-bottom: 7px;">الدرجة <span style="color:red;">*</span></span>
+        <input required type="text" min="0" class="form-control" id="grade1" name="grade1" value="@Model.grade1" placeholder="الدرجة">
+    </div>
+
+
+</div>
+
+<div class="modal-footer">
+    <div class="col-md-12">
+        <input class="btn blue" value="حفظ" type='button' id="saveBtn" />
+        <input class="btn green" value="غلق" type='button' id="closeBtn" />
+    </div>
+
+</div>
+
+<script>
+
+    $("#closeBtn").click(function () {
+        $("#myModal").modal('hide');
+
+    });
+    $("#grade1").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#saveBtn").click();
+        }
+    });
+    $("#saveBtn").click(function () {
+        debugger;
+        var grade = {};
+        grade.id = $('#gradeId').val();
+        grade.grade1 = $('#grade1').val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("saveGrade", "Home")',
+            contenttype: "application/json; charset=utf-8",
+            data: grade,
+            datatype: "json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (json) {
+                if (json.showNext)
+                    $("#next").show();
+                $("#myModal").modal('hide');
+                
+                datatable.draw();
+            }
+        });
+
+    });
+
+</script>
+

@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "إدارة الجهات";
+}
+
+<link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="container">
+            <div class="page-content-inner">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="portlet light">
+                            <div class="portlet-title">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="caption font-red-sunglo">
+                                            <i class="icon-settings font-red-sunglo"></i>
+                                            <span class="caption-subject bold uppercase"> إدارة الجهات</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary" id="add_gov"><i title="أضافة" class="fa fa-plus"></i>أضافة</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portlet-body form">
+                                <div class="form-body">
+
+                                    <div class="form-horizontal">
+
+
+                                        <div class="portlet-body">
+                                            <table id="data_table" class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>أسم الجهه</th>
+                                                        <th></th>
+
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<script src="~/Scripts/sweetalert2@10.js"></script>
+<script>
+    var datatable;
+    $(document).ready(function () {
+        datatable = $('#data_table')
+            .DataTable({
+                "sAjaxSource": "/Destinations/Index",
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "stateSave": false,
+                //"order": [[1, 'asc']],
+                "language": {
+                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+                    "sLoadingRecords": "جارٍ التحميل...",
+                    "sProcessing": "جارٍ التحميل...",
+                    "sLengthMenu": "أظهر _MENU_ مدخلات",
+                    "sZeroRecords": "لم يعثر على أية سجلات",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ابحث:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+                    }
+                },
+                "columns": [
+                    {
+                        "data": "id",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "destination1",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "id", "name": "id",
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "<a title='تفاصيل' href='javascript:void(0);' class='edit' data-id='" + oData.id + "' ><span class='fa fa-edit' ></span></a>&nbsp;";
+                            html += "<a title='حذف' href='javascript:void(0);' class='delete' data-id='" + oData.id + "'  ><span class='fa fa-trash' ></span></a>";
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+
+                ]
+            });
+
+        $(".dataTables_filter").hide();
+        $(".dataTables_length").hide();
+
+        $(document).on("click", ".delete", function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            Swal.fire({
+                title: 'هل أنت متأكد؟',
+                text: "البيانات المحذوفة لا يمكن أسترجاعها!",
+                icon: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'لا!',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'نعم!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("deleteDestination", "Destinations")',
+                        contentType: "application/json; charset=utf-8",
+                        data: { "id": id },
+                        datatype: "json",
+                        success: function (data) {
+                            datatable.draw();
+
+                        },
+                        error: function () {
+                            alert("Dynamic content load failed.");
+                        }
+                    });
+
+                }
+            })
+        });
+
+        function showModal(id = 0)
+        {
+            var TeamDetailPostBackURL = '/Destinations/manageDestination';
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "id": id },
+                datatype: "json",
+                success: function (data) {
+                    debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        }
+
+        $(document).on("click", ".edit", function () {
+
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            showModal(id);
+        });
+
+        $(document).on("click", "#add_gov", function () {
+            showModal();
+        });
+
+    });
+</script>
+
+
+
+

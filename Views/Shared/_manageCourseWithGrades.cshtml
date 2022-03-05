@@ -1,0 +1,180 @@
+﻿@model ExamsManagement.Models.cours
+<link href="~/Content/multiselect/select2.min.css" rel="stylesheet" />
+<link href="~/Content/need/select2-bootstrap.min.css" rel="stylesheet" />
+<div class="modal-header">
+    @*<button type="button" data-dismiss="modal" aria-hidden="true" id="closbtn"><span style="float:left;" class="fa fa-close"></span></button>*@
+    <h4 class="modal-title"><b>بيانات المواد</b></h4>
+</div>
+
+<div class="modal-body">
+    @*<input type="hidden" name="id" id="id" value="@Model.id" />*@
+    <input type="hidden" id="eedSho3ba" name="eedSho3ba" value="@Model.sho3ba_id" />
+    <div class="form-group">
+        <span style="display: block; margin-bottom: 7px;">السنة <span style="color:red;">*</span></span>
+        @Html.DropDownListFor(s => s.year_id, new SelectList(ViewBag.year, "year_id", "year"), "أختر السنة", new { @class = " selectize", @name = "year_id", @style = "width:100%;", @id = "year_id" })
+    </div>
+    <div class="form-group">
+        <span style="display: block; margin-bottom: 7px;">الشهادة <span style="color:red;">*</span></span>
+        @Html.DropDownListFor(s => s.shada_id, new SelectList(ViewBag.cert, "cert_id", "cert_name"), "أختر الشهادة", new { @class = " selectize", @name = "shada_id", @style = "width:100%;", @id = "shada_id" })
+    </div>
+    <div class="form-group">
+        <div id="append_sho3ba">
+
+        </div>
+    </div>
+    <div class="form-group">
+        <span style="display: block; margin-bottom: 7px;">أسم المادة <span style="color:red;">*</span></span>
+        <input required type="text" class="form-control" id="name" name="name" value="@Model.name" placeholder="أسم المادة">
+    </div>
+    <div class="form-group">
+        <span style="display: block; margin-bottom: 7px;">النهاية الكبرى<span style="color:red;">*</span></span>
+        <input required type="text" class="form-control" id="max_grade" name="max_grade" value="@Model.max_grade" placeholder="النهاية الكبرى">
+    </div>
+    <div class="form-group">
+        <span style="display: block; margin-bottom: 7px;">النهاية الصغرى<span style="color:red;">*</span></span>
+        <input required type="text" class="form-control" id="min_grade" name="min_grade" value="@Model.min_grade" placeholder="النهاية الصغرى">
+    </div>
+    <div class="form-group">
+        <span >مادة أساسية<span style="color:red;">*</span></span>
+        <input required type="checkbox" checked id="is_main" name="is_main" >
+    </div>
+    @*<div class="form-group">
+            <span style="display: block; margin-bottom: 7px;">الدرجة<span style="color:red;">*</span></span>
+            <input required type="text" class="form-control" id="grade" name="grade" placeholder="النهاية الصغرى">
+        </div>*@
+</div>
+
+<div class="modal-footer">
+    <div class="col-md-12">
+        <input class="btn blue" value="حفظ" type='button' id="saveBtn2" />
+        <input class="btn green" value="غلق" type='button' id="closeBtn2" />
+    </div>
+
+</div>
+
+<script>
+
+    $('#year_id').selectize({
+        plugins: ['remove_button'],
+    });
+    $('#shada_id').selectize({
+        plugins: ['remove_button'],
+    });
+    $('#sho3ba_id').selectize({
+        plugins: ['remove_button'],
+    });
+
+
+
+    $("#closeBtn2").click(function () {
+        $("#myModalCourse").modal('hide');
+
+    });
+
+
+
+    $("#name").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#max_grade").focus();
+        }
+    });
+
+    $("#max_grade").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#min_grade").focus();
+        }
+    });
+
+    $("#min_grade").keyup(function (event) {
+        if (event.keyCode === 13) {
+            $("#saveBtn2").click();
+        }
+    });
+    function showSho3ba(cert_id) {
+        $("#sho3baDiv").remove();
+        var TeamDetailPostBackURL = '/Home/showSho3baInCourses';
+        $.ajax({
+            type: "GET",
+            url: TeamDetailPostBackURL,
+            contentType: "application/json; charset=utf-8",
+            data: { "cert": cert_id },
+            datatype: "json",
+            success: function (data) {
+
+                var html = '<div id="sho3baDiv" class="form-group"> <label class="col-form-label"> الشعبة</label> <div>';
+                html += "<select  id='sho3ba_id' name='sho3ba_id' class='selectize' style = 'width: 100%'>";
+                html += "<option value='0'> أختر الشعبة </option>";
+
+                data.data.forEach(function (el) {
+                    console.log(el)
+                    if (el.id == $("#eedSho3ba").val())
+                        html += "<option selected value='" + el.id + "' >" + el.eedupp0 + "</option>";
+                    else
+                        html += "<option value='" + el.id + "' >" + el.eedupp0 + "</option>";
+                });
+                html += "</div></div>";
+                $("#append_sho3ba").append(html);
+                $('#sho3ba_id').selectize({
+                    plugins: ['remove_button'],
+                });
+
+            },
+            error: function () {
+                // alert("Dynamic content load failed.");
+            }
+        });
+    }
+    //$(".js-example-responsive").select2({
+    //    width: 'resolve' // need to override the changed default
+    //});
+    //$('#sho3ba_id').val($('#eeduppx0').val());
+    //$('#year_id').val($('#eyear').val());
+    //$('#shada_id').val($('#eedulictype').val());
+    $(document).ready(function () {
+        var cert_id = $("#shada_id").val();
+        showSho3ba(cert_id);
+    });
+    $(document).on("change", "#shada_id", function () {
+
+        var cert_id = $(this).val();
+        showSho3ba(cert_id);
+    });
+    $("#saveBtn2").click(function () {
+        debugger
+        var course = {};
+        //course.id = $('#id').val();
+        course.year_id = $('#year_id').val();
+        course.shada_id = $('#shada_id').val();
+        course.sho3ba_id = $('#sho3ba_id').val();
+        course.name = $('#name').val();
+        course.min_grade = $('#min_grade').val(); 
+        course.max_grade = $('#max_grade').val();
+        course.is_main = $('#is_main').is(":checked");
+
+        var grade = $('#grade').val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("saveCourseWithGrade", "Courses")',
+            contenttype: "application/json; charset=utf-8",
+            data: course,
+            datatype: "json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (json) {
+                //$("#myModal").modal('hide');
+                datatable.draw();
+
+                $('#name').val("");
+                $('#min_grade').val("");
+                $('#max_grade').val("");
+
+                $("#name").focus();
+
+            }
+        });
+
+    });
+
+</script>
+

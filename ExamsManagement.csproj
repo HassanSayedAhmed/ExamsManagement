@@ -1,0 +1,953 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8DEF3944-2B62-48D9-83C2-46A3795EF784}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExamsManagement</RootNamespace>
+    <AssemblyName>ExamsManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44393</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Auth\CustomAuthenticationFilter.cs" />
+    <Compile Include="Controllers\AreasController.cs" />
+    <Compile Include="Controllers\CertificatesController.cs" />
+    <Compile Include="Controllers\ControlsController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\DestinationsController.cs" />
+    <Compile Include="Controllers\GovernmentsController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SchoolsController.cs" />
+    <Compile Include="Controllers\Sho3baController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\YearsController.cs" />
+    <Compile Include="dataTable\DatatableParam.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\attachment.cs" />
+    <Compile Include="Models\cours.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\coursesWithGrades.cs" />
+    <Compile Include="Models\destination.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\edducyear.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\eeducon.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\eeduecert.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\eeduecesub.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\eeduppx0.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\eedusection.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\eexmmaster.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\egov.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\eschool.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\grade.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\indexViewModel.cs" />
+    <Compile Include="Models\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\request.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\student.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\gradesInDetails.cs" />
+    <Compile Include="Models\successStatement.cs" />
+    <Compile Include="Models\Table_1.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserSecuirtyTable.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User_Log_Table.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DocumentViewModel.cs" />
+    <Compile Include="ViewModels\pageViewModel.cs" />
+    <Compile Include="ViewModels\RequestsViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\pages\img\login\bg0.jpg" />
+    <Content Include="assets\pages\img\login\bg1.jpg" />
+    <Content Include="assets\pages\img\login\bg2.jpg" />
+    <Content Include="assets\pages\img\login\bg3.jpg" />
+    <Content Include="assets\pages\img\login\bg4.jpg" />
+    <Content Include="assets\pages\img\login\login-invert.png" />
+    <Content Include="assets\pages\img\login\login-invertثث.png" />
+    <Content Include="assets\pages\img\login\logo.png" />
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\ExamsManagement.dll" />
+    <Content Include="bin\ExamsManagement.pdb" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen.css" />
+    <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Login\css\main.css" />
+    <Content Include="Content\Login\css\util.css" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\Login\fonts\JosefinSans\OFL.txt" />
+    <Content Include="Content\Login\fonts\Linearicons-Free-v1.0.0\icon-font.min.css" />
+    <Content Include="Content\Login\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.svg" />
+    <Content Include="Content\Login\images\bg-01.jpg" />
+    <Content Include="Content\Login\images\icons\favicon.ico" />
+    <Content Include="Content\Login\images\icons\map-marker.png" />
+    <Content Include="Content\Login\images\img-01.png" />
+    <Content Include="Content\Login\js\main.js" />
+    <Content Include="Content\Login\js\map-custom.js" />
+    <Content Include="Content\Login\vendor\animate\animate.css" />
+    <Content Include="Content\Login\vendor\animsition\css\animsition.css" />
+    <Content Include="Content\Login\vendor\animsition\css\animsition.min.css" />
+    <Content Include="Content\Login\vendor\animsition\js\animsition.js" />
+    <Content Include="Content\Login\vendor\animsition\js\animsition.min.js" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\Login\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\Login\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\Login\vendor\bootstrap\js\popper.js" />
+    <Content Include="Content\Login\vendor\bootstrap\js\popper.min.js" />
+    <Content Include="Content\Login\vendor\bootstrap\js\tooltip.js" />
+    <Content Include="Content\Login\vendor\countdowntime\countdowntime.js" />
+    <Content Include="Content\Login\vendor\css-hamburgers\hamburgers.css" />
+    <Content Include="Content\Login\vendor\css-hamburgers\hamburgers.min.css" />
+    <Content Include="Content\Login\vendor\daterangepicker\daterangepicker.css" />
+    <Content Include="Content\Login\vendor\daterangepicker\daterangepicker.js" />
+    <Content Include="Content\Login\vendor\daterangepicker\moment.js" />
+    <Content Include="Content\Login\vendor\daterangepicker\moment.min.js" />
+    <Content Include="Content\Login\vendor\jquery\jquery-3.2.1.min.js" />
+    <Content Include="Content\Login\vendor\perfect-scrollbar\perfect-scrollbar.css" />
+    <Content Include="Content\Login\vendor\perfect-scrollbar\perfect-scrollbar.min.js" />
+    <Content Include="Content\Login\vendor\select2\select2.css" />
+    <Content Include="Content\Login\vendor\select2\select2.js" />
+    <Content Include="Content\Login\vendor\select2\select2.min.css" />
+    <Content Include="Content\Login\vendor\select2\select2.min.js" />
+    <Content Include="Content\MainStyle.css" />
+    <Content Include="Content\multiselect\select2.min.css" />
+    <Content Include="Content\need\additional-methods.min.js" />
+    <Content Include="Content\need\app.min.js" />
+    <Content Include="Content\need\bootstrap-hover-dropdown.min.js" />
+    <Content Include="Content\need\bootstrap-rtl.min.css" />
+    <Content Include="Content\need\bootstrap-select-rtl.min.css" />
+    <Content Include="Content\need\bootstrap-select.min.css" />
+    <Content Include="Content\need\bootstrap-select.min.js" />
+    <Content Include="Content\need\bootstrap-switch-rtl.min.css" />
+    <Content Include="Content\need\bootstrap-switch.min.js" />
+    <Content Include="Content\need\bootstrap.min.js" />
+    <Content Include="Content\need\components-rtl.min.css" />
+    <Content Include="Content\need\custom-rtl.min.css" />
+    <Content Include="Content\need\datatables.bootstrap-rtl.css" />
+    <Content Include="Content\need\datatables.min.css" />
+    <Content Include="Content\need\default-rtl.css" />
+    <Content Include="Content\need\demo.min.js" />
+    <Content Include="Content\need\font-awesome.min.css" />
+    <Content Include="Content\need\jquery.backstretch.min.js" />
+    <Content Include="Content\need\jquery.blockui.min.js" />
+    <Content Include="Content\need\jquery.min.js" />
+    <Content Include="Content\need\jquery.slimscroll.min.js" />
+    <Content Include="Content\need\jquery.validate.min.js" />
+    <Content Include="Content\need\js.cookie.min.js" />
+    <Content Include="Content\need\layout-rtl.min.css" />
+    <Content Include="Content\need\layout.min.js" />
+    <Content Include="Content\need\login-5-rtl.min.css" />
+    <Content Include="Content\need\login-5.min.js" />
+    <Content Include="Content\need\moment.min.js" />
+    <Content Include="Content\need\plugins-rtl.min.css" />
+    <Content Include="Content\need\quick-sidebar.min.js" />
+    <Content Include="Content\need\select2-bootstrap.min.css" />
+    <Content Include="Content\need\select2.full.min.js" />
+    <Content Include="Content\need\select2.min.css" />
+    <Content Include="Content\need\simple-line-icons.min.css" />
+    <Content Include="Content\selectize.css" />
+    <Content Include="Content\Slider\bootstrap.min.css" />
+    <Content Include="Content\Slider\bootstrap.min.js" />
+    <Content Include="Content\Slider\jquery-3.2.1.slim.min.js" />
+    <Content Include="Content\Slider\popper.min.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Images\logo.jpg" />
+    <Content Include="Images\logoo.jpg" />
+    <Content Include="Images\logooo.jpg" />
+    <Content Include="Images\ministryofeducation.jpg" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\build\pdf.js" />
+    <Content Include="Scripts\build\pdf.sandbox.js" />
+    <Content Include="Scripts\build\pdf.worker.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\editableDatatable\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\editableDatatable\jquery-ui.js" />
+    <Content Include="Scripts\editableDatatable\jquery.dataTables.editable.js" />
+    <Content Include="Scripts\editableDatatable\jquery.dataTables.min.js" />
+    <Content Include="Scripts\editableDatatable\jquery.jeditable.js" />
+    <Content Include="Scripts\editableDatatable\jquery.validate.js" />
+    <Content Include="Scripts\factory.js" />
+    <Content Include="Scripts\selectize.js" />
+    <Content Include="Scripts\web\debugger.js" />
+    <Content Include="Scripts\web\images\annotation-check.svg" />
+    <Content Include="Scripts\web\images\annotation-comment.svg" />
+    <Content Include="Scripts\web\images\annotation-help.svg" />
+    <Content Include="Scripts\web\images\annotation-insert.svg" />
+    <Content Include="Scripts\web\images\annotation-key.svg" />
+    <Content Include="Scripts\web\images\annotation-newparagraph.svg" />
+    <Content Include="Scripts\web\images\annotation-noicon.svg" />
+    <Content Include="Scripts\web\images\annotation-note.svg" />
+    <Content Include="Scripts\web\images\annotation-paragraph.svg" />
+    <Content Include="Scripts\web\images\findbarButton-next.svg" />
+    <Content Include="Scripts\web\images\findbarButton-previous.svg" />
+    <Content Include="Scripts\web\images\grab.cur" />
+    <Content Include="Scripts\web\images\grabbing.cur" />
+    <Content Include="Scripts\web\images\loading-dark.svg" />
+    <Content Include="Scripts\web\images\loading-icon.gif" />
+    <Content Include="Scripts\web\images\loading.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-documentProperties.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-firstPage.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-handTool.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-lastPage.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-rotateCcw.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-rotateCw.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-scrollHorizontal.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-scrollVertical.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-scrollWrapped.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-selectTool.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-spreadEven.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-spreadNone.svg" />
+    <Content Include="Scripts\web\images\secondaryToolbarButton-spreadOdd.svg" />
+    <Content Include="Scripts\web\images\shadow.png" />
+    <Content Include="Scripts\web\images\toolbarButton-bookmark.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-currentOutlineItem.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-download.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-menuArrow.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-openFile.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-pageDown.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-pageUp.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-presentationMode.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-print.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-search.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-secondaryToolbarToggle.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-sidebarToggle.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-viewAttachments.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-viewLayers.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-viewOutline.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-viewThumbnail.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-zoomIn.svg" />
+    <Content Include="Scripts\web\images\toolbarButton-zoomOut.svg" />
+    <Content Include="Scripts\web\images\treeitem-collapsed.svg" />
+    <Content Include="Scripts\web\images\treeitem-expanded.svg" />
+    <Content Include="Scripts\web\viewer.css" />
+    <Content Include="Scripts\web\viewer.html" />
+    <Content Include="Scripts\web\viewer.js" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\Font\ArbFONTS-Droid Arabic Kufi Bold.ttf" />
+    <Content Include="Content\Font\ArbFONTS-Droid Arabic Kufi.ttf" />
+    <Content Include="Content\Font\ArbFONTS-Droid-Arabic-Kufi-Bold.ttf" />
+    <Content Include="Content\Font\ArbFONTS-Droid-Arabic-Kufi.ttf" />
+    <Content Include="Content\Font\ArbFONTS-Droid.Arabic.Kufi_.Bold_DownloadSoftware.iR_.ttf" />
+    <Content Include="Content\Font\ArbFONTS-Droid.Arabic.Kufi_DownloadSoftware.iR_.ttf" />
+    <Content Include="Content\Font\ArbFONTS-DroidKufi-Bold.ttf" />
+    <Content Include="Content\Font\ArbFONTS-DroidKufi-Regular.ttf" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\Login\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-Bold.ttf" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-BoldItalic.ttf" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-Italic.ttf" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-Light.ttf" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-LightItalic.ttf" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-Regular.ttf" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-SemiBold.ttf" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-SemiBoldItalic.ttf" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-Thin.ttf" />
+    <Content Include="Content\Login\fonts\JosefinSans\JosefinSans-ThinItalic.ttf" />
+    <Content Include="Content\Login\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.eot" />
+    <Content Include="Content\Login\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.ttf" />
+    <Content Include="Content\Login\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.woff" />
+    <Content Include="Content\Login\fonts\Linearicons-Free-v1.0.0\WebFont\Linearicons-Free.woff2" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-Bold.ttf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-BoldItalic.ttf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-ExtraBold.ttf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-ExtraBoldItalic.ttf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-Italic.ttf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-Light.ttf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-LightItalic.ttf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-Regular.otf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-Regular.ttf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-SemiBold.ttf" />
+    <Content Include="Content\Login\fonts\OpenSans\OpenSans-SemiBoldItalic.ttf" />
+    <Content Include="Content\Login\fonts\oswald\Oswald-Bold.ttf" />
+    <Content Include="Content\Login\fonts\oswald\Oswald-ExtraLight.ttf" />
+    <Content Include="Content\Login\fonts\oswald\Oswald-Light.ttf" />
+    <Content Include="Content\Login\fonts\oswald\Oswald-Medium.ttf" />
+    <Content Include="Content\Login\fonts\oswald\Oswald-Regular.ttf" />
+    <Content Include="Content\Login\fonts\oswald\Oswald-SemiBold.ttf" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\Login\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Content\need\fonts\Simple-Line-Icons.woff" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Scripts\build\pdf.js.map" />
+    <Content Include="Scripts\build\pdf.sandbox.js.map" />
+    <Content Include="Scripts\build\pdf.worker.js.map" />
+    <Content Include="Scripts\web\cmaps\78-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\78-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\78-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\78-RKSJ-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\78-RKSJ-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\78-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\78ms-RKSJ-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\78ms-RKSJ-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\83pv-RKSJ-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\90ms-RKSJ-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\90ms-RKSJ-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\90msp-RKSJ-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\90msp-RKSJ-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\90pv-RKSJ-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\90pv-RKSJ-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\Add-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\Add-RKSJ-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\Add-RKSJ-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\Add-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-CNS1-0.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-CNS1-1.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-CNS1-2.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-CNS1-3.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-CNS1-4.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-CNS1-5.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-CNS1-6.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-CNS1-UCS2.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-GB1-0.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-GB1-1.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-GB1-2.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-GB1-3.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-GB1-4.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-GB1-5.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-GB1-UCS2.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Japan1-0.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Japan1-1.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Japan1-2.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Japan1-3.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Japan1-4.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Japan1-5.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Japan1-6.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Japan1-UCS2.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Korea1-0.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Korea1-1.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Korea1-2.bcmap" />
+    <Content Include="Scripts\web\cmaps\Adobe-Korea1-UCS2.bcmap" />
+    <Content Include="Scripts\web\cmaps\B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\B5pc-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\B5pc-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\CNS-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\CNS-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\CNS1-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\CNS1-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\CNS2-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\CNS2-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\ETen-B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\ETen-B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\ETenms-B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\ETenms-B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\ETHK-B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\ETHK-B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\Ext-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\Ext-RKSJ-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\Ext-RKSJ-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\Ext-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\GB-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\GB-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\GB-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\GB-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBK-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBK-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBK2K-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBK2K-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBKp-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBKp-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBpc-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBpc-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBT-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBT-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBT-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBT-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBTpc-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\GBTpc-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\H.bcmap" />
+    <Content Include="Scripts\web\cmaps\Hankaku.bcmap" />
+    <Content Include="Scripts\web\cmaps\Hiragana.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKdla-B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKdla-B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKdlb-B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKdlb-B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKgccs-B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKgccs-B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKm314-B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKm314-B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKm471-B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKm471-B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKscs-B5-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\HKscs-B5-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\Katakana.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSC-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSC-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSC-Johab-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSC-Johab-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSCms-UHC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSCms-UHC-HW-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSCms-UHC-HW-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSCms-UHC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSCpc-EUC-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\KSCpc-EUC-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\LICENSE" />
+    <Content Include="Scripts\web\cmaps\NWP-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\NWP-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\RKSJ-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\RKSJ-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\Roman.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniCNS-UCS2-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniCNS-UCS2-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniCNS-UTF16-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniCNS-UTF16-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniCNS-UTF32-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniCNS-UTF32-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniCNS-UTF8-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniCNS-UTF8-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniGB-UCS2-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniGB-UCS2-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniGB-UTF16-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniGB-UTF16-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniGB-UTF32-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniGB-UTF32-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniGB-UTF8-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniGB-UTF8-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UCS2-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UCS2-HW-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UCS2-HW-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UCS2-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UTF16-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UTF16-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UTF32-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UTF32-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UTF8-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS-UTF8-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS2004-UTF16-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS2004-UTF16-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS2004-UTF32-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS2004-UTF32-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS2004-UTF8-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJIS2004-UTF8-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJISPro-UCS2-HW-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJISPro-UCS2-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJISPro-UTF8-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJISX0213-UTF32-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJISX0213-UTF32-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJISX02132004-UTF32-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniJISX02132004-UTF32-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniKS-UCS2-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniKS-UCS2-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniKS-UTF16-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniKS-UTF16-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniKS-UTF32-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniKS-UTF32-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniKS-UTF8-H.bcmap" />
+    <Content Include="Scripts\web\cmaps\UniKS-UTF8-V.bcmap" />
+    <Content Include="Scripts\web\cmaps\V.bcmap" />
+    <Content Include="Scripts\web\cmaps\WP-Symbol.bcmap" />
+    <Content Include="Scripts\web\compressed.tracemonkey-pldi-09.pdf" />
+    <Content Include="Scripts\web\locale\ach\viewer.properties" />
+    <Content Include="Scripts\web\locale\af\viewer.properties" />
+    <Content Include="Scripts\web\locale\an\viewer.properties" />
+    <Content Include="Scripts\web\locale\ar\viewer.properties" />
+    <Content Include="Scripts\web\locale\ast\viewer.properties" />
+    <Content Include="Scripts\web\locale\az\viewer.properties" />
+    <Content Include="Scripts\web\locale\be\viewer.properties" />
+    <Content Include="Scripts\web\locale\bg\viewer.properties" />
+    <Content Include="Scripts\web\locale\bn\viewer.properties" />
+    <Content Include="Scripts\web\locale\bo\viewer.properties" />
+    <Content Include="Scripts\web\locale\brx\viewer.properties" />
+    <Content Include="Scripts\web\locale\br\viewer.properties" />
+    <Content Include="Scripts\web\locale\bs\viewer.properties" />
+    <Content Include="Scripts\web\locale\cak\viewer.properties" />
+    <Content Include="Scripts\web\locale\ca\viewer.properties" />
+    <Content Include="Scripts\web\locale\ckb\viewer.properties" />
+    <Content Include="Scripts\web\locale\cs\viewer.properties" />
+    <Content Include="Scripts\web\locale\cy\viewer.properties" />
+    <Content Include="Scripts\web\locale\da\viewer.properties" />
+    <Content Include="Scripts\web\locale\de\viewer.properties" />
+    <Content Include="Scripts\web\locale\dsb\viewer.properties" />
+    <Content Include="Scripts\web\locale\el\viewer.properties" />
+    <Content Include="Scripts\web\locale\en-CA\viewer.properties" />
+    <Content Include="Scripts\web\locale\en-GB\viewer.properties" />
+    <Content Include="Scripts\web\locale\en-US\viewer.properties" />
+    <Content Include="Scripts\web\locale\eo\viewer.properties" />
+    <Content Include="Scripts\web\locale\es-AR\viewer.properties" />
+    <Content Include="Scripts\web\locale\es-CL\viewer.properties" />
+    <Content Include="Scripts\web\locale\es-ES\viewer.properties" />
+    <Content Include="Scripts\web\locale\es-MX\viewer.properties" />
+    <Content Include="Scripts\web\locale\et\viewer.properties" />
+    <Content Include="Scripts\web\locale\eu\viewer.properties" />
+    <Content Include="Scripts\web\locale\fa\viewer.properties" />
+    <Content Include="Scripts\web\locale\ff\viewer.properties" />
+    <Content Include="Scripts\web\locale\fi\viewer.properties" />
+    <Content Include="Scripts\web\locale\fr\viewer.properties" />
+    <Content Include="Scripts\web\locale\fy-NL\viewer.properties" />
+    <Content Include="Scripts\web\locale\ga-IE\viewer.properties" />
+    <Content Include="Scripts\web\locale\gd\viewer.properties" />
+    <Content Include="Scripts\web\locale\gl\viewer.properties" />
+    <Content Include="Scripts\web\locale\gn\viewer.properties" />
+    <Content Include="Scripts\web\locale\gu-IN\viewer.properties" />
+    <Content Include="Scripts\web\locale\he\viewer.properties" />
+    <Content Include="Scripts\web\locale\hi-IN\viewer.properties" />
+    <Content Include="Scripts\web\locale\hr\viewer.properties" />
+    <Content Include="Scripts\web\locale\hsb\viewer.properties" />
+    <Content Include="Scripts\web\locale\hu\viewer.properties" />
+    <Content Include="Scripts\web\locale\hy-AM\viewer.properties" />
+    <Content Include="Scripts\web\locale\hye\viewer.properties" />
+    <Content Include="Scripts\web\locale\ia\viewer.properties" />
+    <Content Include="Scripts\web\locale\id\viewer.properties" />
+    <Content Include="Scripts\web\locale\is\viewer.properties" />
+    <Content Include="Scripts\web\locale\it\viewer.properties" />
+    <Content Include="Scripts\web\locale\ja\viewer.properties" />
+    <Content Include="Scripts\web\locale\kab\viewer.properties" />
+    <Content Include="Scripts\web\locale\ka\viewer.properties" />
+    <Content Include="Scripts\web\locale\kk\viewer.properties" />
+    <Content Include="Scripts\web\locale\km\viewer.properties" />
+    <Content Include="Scripts\web\locale\kn\viewer.properties" />
+    <Content Include="Scripts\web\locale\ko\viewer.properties" />
+    <Content Include="Scripts\web\locale\lij\viewer.properties" />
+    <Content Include="Scripts\web\locale\locale.properties" />
+    <Content Include="Scripts\web\locale\lo\viewer.properties" />
+    <Content Include="Scripts\web\locale\ltg\viewer.properties" />
+    <Content Include="Scripts\web\locale\lt\viewer.properties" />
+    <Content Include="Scripts\web\locale\lv\viewer.properties" />
+    <Content Include="Scripts\web\locale\meh\viewer.properties" />
+    <Content Include="Scripts\web\locale\mk\viewer.properties" />
+    <Content Include="Scripts\web\locale\mr\viewer.properties" />
+    <Content Include="Scripts\web\locale\ms\viewer.properties" />
+    <Content Include="Scripts\web\locale\my\viewer.properties" />
+    <Content Include="Scripts\web\locale\nb-NO\viewer.properties" />
+    <Content Include="Scripts\web\locale\ne-NP\viewer.properties" />
+    <Content Include="Scripts\web\locale\nl\viewer.properties" />
+    <Content Include="Scripts\web\locale\nn-NO\viewer.properties" />
+    <Content Include="Scripts\web\locale\oc\viewer.properties" />
+    <Content Include="Scripts\web\locale\pa-IN\viewer.properties" />
+    <Content Include="Scripts\web\locale\pl\viewer.properties" />
+    <Content Include="Scripts\web\locale\pt-BR\viewer.properties" />
+    <Content Include="Scripts\web\locale\pt-PT\viewer.properties" />
+    <Content Include="Scripts\web\locale\rm\viewer.properties" />
+    <Content Include="Scripts\web\locale\ro\viewer.properties" />
+    <Content Include="Scripts\web\locale\ru\viewer.properties" />
+    <Content Include="Scripts\web\locale\scn\viewer.properties" />
+    <Content Include="Scripts\web\locale\si\viewer.properties" />
+    <Content Include="Scripts\web\locale\sk\viewer.properties" />
+    <Content Include="Scripts\web\locale\sl\viewer.properties" />
+    <Content Include="Scripts\web\locale\son\viewer.properties" />
+    <Content Include="Scripts\web\locale\sq\viewer.properties" />
+    <Content Include="Scripts\web\locale\sr\viewer.properties" />
+    <Content Include="Scripts\web\locale\sv-SE\viewer.properties" />
+    <Content Include="Scripts\web\locale\szl\viewer.properties" />
+    <Content Include="Scripts\web\locale\ta\viewer.properties" />
+    <Content Include="Scripts\web\locale\te\viewer.properties" />
+    <Content Include="Scripts\web\locale\th\viewer.properties" />
+    <Content Include="Scripts\web\locale\tl\viewer.properties" />
+    <Content Include="Scripts\web\locale\trs\viewer.properties" />
+    <Content Include="Scripts\web\locale\tr\viewer.properties" />
+    <Content Include="Scripts\web\locale\uk\viewer.properties" />
+    <Content Include="Scripts\web\locale\ur\viewer.properties" />
+    <Content Include="Scripts\web\locale\uz\viewer.properties" />
+    <Content Include="Scripts\web\locale\vi\viewer.properties" />
+    <Content Include="Scripts\web\locale\wo\viewer.properties" />
+    <Content Include="Scripts\web\locale\xh\viewer.properties" />
+    <Content Include="Scripts\web\locale\zh-CN\viewer.properties" />
+    <Content Include="Scripts\web\locale\zh-TW\viewer.properties" />
+    <Content Include="Scripts\web\Pdf2.pdf" />
+    <Content Include="Scripts\web\Pdf3.pdf" />
+    <Content Include="Scripts\web\viewer.js.map" />
+    <Content Include="Scripts\web\doc20042021103119PM.pdf" />
+    <Content Include="Scripts\web\doc20042021102600PM.pdf" />
+    <Content Include="Scripts\web\doc20042021102431PM.pdf" />
+    <Content Include="Home\Pdf1.pdf" />
+    <Content Include="Attachments\attachment_09042021071608PM.pdf" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\grab-to-pan.css" />
+    <Content Include="Scripts\grab-to-pan.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.css" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\select2.min.css" />
+    <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\sweet-alert.min.js" />
+    <Content Include="Scripts\sweetalert2%4010.js" />
+    <Content Include="Views\Shared\_Details.cshtml" />
+    <Content Include="Views\Shared\_editPage.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\uploadFilesOld.cshtml" />
+    <Content Include="Views\Home\displayPdf.cshtml" />
+    <Content Include="Views\Home\Documents.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Main.cshtml" />
+    <Content Include="Views\Home\makeRequest.cshtml" />
+    <Content Include="Views\Home\uploadFiles.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Shared\_editUser.cshtml" />
+    <Content Include="Views\Governments\Index.cshtml" />
+    <Content Include="Views\Shared\_editGovernments.cshtml" />
+    <Content Include="Views\Areas\Index.cshtml" />
+    <Content Include="Views\Shared\_manageArea.cshtml" />
+    <Content Include="Views\Sho3ba\Index.cshtml" />
+    <Content Include="Views\Shared\_manageSho3ba.cshtml" />
+    <Content Include="Views\Shared\_manageSchool.cshtml" />
+    <Content Include="Views\Schools\Index.cshtml" />
+    <Content Include="Views\Certificates\Index.cshtml" />
+    <Content Include="Views\Shared\_manageCertificate.cshtml" />
+    <Content Include="Views\Controls\Index.cshtml" />
+    <Content Include="Views\Shared\_manageControl.cshtml" />
+    <Content Include="Views\Shared\_manageYear.cshtml" />
+    <Content Include="Views\Years\Index.cshtml" />
+    <Content Include="Views\Home\saveStudentGrade.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Shared\_manageCourse.cshtml" />
+    <Content Include="Views\Home\printTotal.cshtml" />
+    <Content Include="Views\Home\studentGrade.cshtml" />
+    <Content Include="Views\Shared\_manageGrades.cshtml" />
+    <Content Include="Views\Home\printSuccessStatement.cshtml" />
+    <Content Include="Views\Home\successStatement.cshtml" />
+    <Content Include="Views\Home\gradesInDetails.cshtml" />
+    <Content Include="Views\Home\counter.cshtml" />
+    <Content Include="Scripts\web\_pdfViewer.cshtml" />
+    <Content Include="Views\Shared\_pdfViewer.cshtml" />
+    <Content Include="Views\Shared\_manageCourseWithGrades.cshtml" />
+    <Content Include="Views\Home\uploadFilesDataEntry.cshtml" />
+    <Content Include="Views\Destinations\Index.cshtml" />
+    <Content Include="Views\Shared\_manageDestination.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
+    <Folder Include="pdfJs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>65117</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44393/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

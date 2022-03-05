@@ -1,0 +1,57 @@
+﻿@model ExamsManagement.Models.eeducon
+<link href="~/Content/multiselect/select2.min.css" rel="stylesheet" />
+<link href="~/Content/need/select2-bootstrap.min.css" rel="stylesheet" />
+<div class="modal-header">
+    @*<button type="button" data-dismiss="modal" aria-hidden="true" id="closbtn"><span style="float:left;" class="fa fa-close"></span></button>*@
+    <h4 class="modal-title"><b>بيانات الكنترول</b></h4>
+</div>
+
+<div class="modal-body">
+    <input type="hidden" name="id" id="id" value="@Model.id" />
+    <div class="form-group">
+        <span style="display: block; margin-bottom: 7px;">أسم الكنترول <span style="color:red;">*</span></span>
+        <input required type="text" class="form-control" id="educon" name="educon" value="@Model.educon" placeholder="أسم الكنترول">
+    </div>
+    
+
+</div>
+
+<div class="modal-footer">
+    <div class="col-md-12">
+        <input class="btn blue" value="حفظ" type='button' id="saveBtn" />
+        <input class="btn green" value="غلق" type='button' id="closeBtn" />
+    </div>
+
+</div>
+
+<script>
+
+    $("#closeBtn").click(function () {
+        $("#myModal").modal('hide');
+
+    });
+
+    $("#saveBtn").click(function () {
+        debugger;
+        var control = {};
+        control.id = $('#id').val();
+        control.educon = $('#educon').val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("saveControl", "Controls")',
+            contenttype: "application/json; charset=utf-8",
+            data: control,
+            datatype: "json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (json) {
+                $("#myModal").modal('hide');
+                datatable.draw();
+            }
+        });
+
+    });
+
+</script>
+

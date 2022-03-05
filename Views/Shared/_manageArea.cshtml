@@ -1,0 +1,60 @@
+﻿@model ExamsManagement.Models.eedusection
+<link href="~/Content/multiselect/select2.min.css" rel="stylesheet" />
+<link href="~/Content/need/select2-bootstrap.min.css" rel="stylesheet" />
+<div class="modal-header">
+    @*<button type="button" data-dismiss="modal" aria-hidden="true" id="closbtn"><span style="float:left;" class="fa fa-close"></span></button>*@
+    <h4 class="modal-title"><b>بيانات المنطقة</b></h4>
+</div>
+
+<div class="modal-body">
+    <input type="hidden" name="id" id="id" value="@Model.id" />
+    <div class="form-group">
+        <span style="display: block; margin-bottom: 7px;">أسم المنطقة <span style="color:red;">*</span></span>
+        <input required type="text" class="form-control" id="eedusection1" name="eedusection1" value="@Model.eedusection1" placeholder="أسم المنطقة">
+    </div>
+    
+
+</div>
+
+<div class="modal-footer">
+    <div class="col-md-12">
+        <input class="btn blue" value="حفظ" type='button' id="saveBtn2" />
+        <input class="btn green" value="غلق" type='button' id="closeBtn2" />
+    </div>
+
+</div>
+
+<script>
+
+    $("#closeBtn2").click(function () {
+        $("#myModal").modal('hide');
+
+    });
+    //$(".js-example-responsive").select2({
+    //    width: 'resolve' // need to override the changed default
+    //});
+
+    $("#saveBtn2").click(function () {
+        debugger;
+        var section = {};
+        section.id = $('#id').val();
+        section.eedusection1 = $('#eedusection1').val();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("saveArea", "Areas")',
+            contenttype: "application/json; charset=utf-8",
+            data: section,
+            datatype: "json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (json) {
+                $("#myModal").modal('hide');
+                datatable.draw();
+            }
+        });
+
+    });
+
+</script>
+

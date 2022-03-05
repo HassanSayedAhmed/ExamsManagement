@@ -1,0 +1,567 @@
+﻿@model ExamsManagement.Models.student
+
+@{
+    ViewBag.Title = "تسجيل طلب مستخرج";
+    string filePath = ViewBag.fileName + ".pdf#page=" + ViewBag.pageNo + "&toolbar=1&scrollbar=1";
+
+}
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+
+        <div class="page-content-inner">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-xl-4">
+
+                    <div class="portlet light">
+                        <div class="portlet-title">
+                            <div class="caption font-red-sunglo">
+                                <i class="icon-settings font-red-sunglo"></i>
+                                <span class="caption-subject bold uppercase"> بيانات المستخرج</span>
+                            </div>
+
+                        </div>
+
+                        <div class="portlet-body form">
+                            <div class="form-body">
+
+                                <div class="form-horizontal">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="mt-checkbox mt-checkbox-outline">
+                                                اضافه جهه جديده
+                                                <input class="checkbox" type='checkbox' id="addNewDestinationId" />
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 mt-checkbox-list">
+                                            <div class="form-group col-md-12" id="addDestinationDiv" style="display:none">
+
+                                                <div class="col-md-2 labelleft">
+                                                    <label>الجهه</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input type="text" class="form-control" placeholder="اسم الجهه" name="destinationName" id="destinationNameId">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-info" id="addDestinationBtn">اضافه</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (@ViewBag.AddError != null)
+                                    {
+                                        <div class="alert alert-danger bold" role="alert">
+                                            @ViewBag.AddError
+                                        </div>
+                                    }
+
+
+                                    <input type="hidden" id="id" name="id" value="@Model.eexmaster_id" />
+                                    <input type="hidden" id="seat_number" name="seat_number" value="@Model.seat_number" />
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="col-md-7">
+                                                <label>رقم الجلوس</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <span class='badge badge-light'>@Model.seat_number</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="col-md-4">
+                                                <label>الشهادة</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <span class='badge badge-light'>@ViewBag.cert</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="col-md-3">
+                                                <label>السنة</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <span class='badge badge-light'>@ViewBag.year</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="col-md-3">
+                                                <label>الشعبة</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <span class='badge badge-light'>@ViewBag.sho3ba</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="col-md-3">
+                                                <label>المدرسة</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <span class='badge badge-light'>@ViewBag.school</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="col-md-5">
+                                                <label>المحافظة</label>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <span class='badge badge-light'>@(ViewBag.eegov == null?"-": ViewBag.eegov)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="col-md-3">
+                                                <label>الاسم</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" required id="name" name="name" value="@Model.name" class="form-control" />
+                                            </div>
+                                        </div>
+                                        @*<div class="col-md-6">
+                <div class="col-md-3 labelleft">
+                    <label>مجموع الدرجات</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="number" required id="total_grade" name="total_grade" class="form-control" value="@ViewBag.total_grade" />
+                </div>
+            </div>*@
+                                        <div class="col-md-6">
+                                            <div class="col-md-3">
+                                                <label>رقم القومى</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" required id="id_no14" name="id_no14" value="@Model.id_no14" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="col-md-3">
+                                                <label>عدد المستخرجات</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" id="count" name="count" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-3">
+                                                <label>التاريخ</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="datetime-local" required id="date" name="date" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="col-md-3">
+                                                <label>الجهه </label>
+                                            </div>
+                                            <div class="col-md-9" id="append_destination_new">
+                                                <span id="destinationDivNew">
+                                                    @Html.DropDownList("destination", new SelectList(ViewBag.destinations, "id", "destination1"), "أختر الجهه", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "destination" })
+
+                                                    @*<input type="text" required id="destination" name="destination" class="form-control" />*@
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-3">
+                                                <label>مسلسل</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" id="registrationNumber" name="registrationNumber" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="col-md-3">
+                                                <label>الرسوم</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="number" required id="amount" name="amount" class="form-control" value="@ViewBag.amount" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-3">
+                                                <label>رقم الحوالة</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" required id="transfer_number" name="transfer_number" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="col-md-12">
+                                                <button id="save" class="btn blue"> حفظ </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="col-md-12">
+                                                <a href="@Url.Action("Documents", "Home")" id="close" class="btn green">إلغاء </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+
+                                        <div class="portlet light">
+
+                                            <div class="portlet-title">
+                                                <div class="row">
+                                                    <div class="caption font-red-sunglo">
+                                                        <div class="col-md-1">
+                                                            <i class="icon-settings font-red-sunglo"></i>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            المستخرجات السابقة
+                                                        </div>
+
+                                                        <div class="col-md-2">
+                                                            @*<label><i id="add_student_id" title="أضافة" class="fa fa-plus"></i></label>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="portlet-body">
+                                                <table id="data_table" class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>رقم الجلوس</th>
+                                                            <th>الأسم</th>
+                                                            <th>المدرسة</th>
+                                                            <th>عدد المستخرجات</th>
+                                                            <th>الجهه</th>
+                                                            <th>رقم الحوالة</th>
+                                                            <th>تاريخ الطلب</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <div class="form-actions">
+                                                    @*<button type="submit" class="btn blue">حفظ</button>*@
+                                                    @*<a href="@Url.Action("searchFiles","Home")" class="btn default">إنهاء</a>*@
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-lg-8 col-xl-8">
+
+                    <div class="portlet light">
+                        <div class="portlet-title">
+                            <div class="caption font-red-sunglo">
+                                <i class="icon-settings font-red-sunglo"></i>
+                                <span class="caption-subject bold uppercase"> عرض الملف</span>
+                                @if (ViewBag.fileName != null)
+                                {
+                                    <a href="~/Scripts/web/viewer.html?file=@filePath" target="_blank" title="عرض بحجم الشاشة"> <i class="fa fa-eye"></i></a>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="portlet-body form">
+                            <div class="form-body">
+
+
+                                @if (ViewBag.fileName != null)
+                                {
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <iframe id="fileIndex" class="left" src="~/Scripts/web/viewer.html?file=@filePath"
+                                                    frameBorder="0"
+                                                    scrolling="auto"
+                                                    height="400"
+                                                    width="100%">
+                                            </iframe>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/sweetalert2@10.js"></script>
+<script src="~/Scripts/factory.js"></script>
+<script src="~/Scripts/selectize.js"></script>
+@*<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>*@
+<script>
+
+    $('#destination').selectize({
+        plugins: ['remove_button'],
+    });
+    $("#addDestinationDiv").hide();
+    $("#addNewDestinationId").click(function () {
+        $("#addDestinationDiv").toggle();
+    });
+    $("#addDestinationBtn").click(function () {
+        var destination = {};
+        destination.destination1 = $("#destinationNameId").val();
+
+        if (destination) {
+            $.ajax({
+                type: "post",
+                data: destination,
+                url: '@Url.Action("saveDestination", "Destinations")',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (json) {
+                    if (json.icon == "success") {
+                        //var html = '<option selected value="' + json.destinationID + '">' + json.destinationNameResult + '</option>';
+                        //var o = new Option(json.schoolNameResult, json.schoolNameResult);
+                        /// jquerify the DOM object 'o' so we can use the html method
+                        //$(o).html(html);
+                        //$("#destinationId").prepend(html);
+                        //alert(json.schoolNameResult);
+
+                       // console.log(json.allSchools);
+                        $("#destinationDivNew").remove();
+                        var html = '<span id="destinationDivNew">';
+                        html += "<select  id='destination' name='destination' class='selectize' >";
+                        html += "<option value='0'> أختر الجهه </option>";
+                        console.log(json.destinationID);
+                        json.allDestinations.forEach(function (el) {
+                            //console.log(json.destinationNameResult == el.destination1);
+                            if (el.id == json.destinationID)
+                                html += "<option value='" + el.id + "' selected>" + el.destination1 + "</option>";
+                            else
+                                html += "<option value='" + el.id + "' >" + el.destination1 + "</option>";
+                        });
+                        html += "</select></span>";
+                        $("#append_destination_new").append(html);
+                        $('#destination').selectize({
+                            plugins: ['remove_button'],
+                        });
+                        //$("#destinationId").val(json.destinationID).attr("selected", "selected");
+                        //$("#schoolId").get(0).selectedIndex = json.schoolNameResult;
+
+                        $("#addDestinationDiv").toggle();
+                        $('#destinationNameId').val("");
+                        $('#addNewDestinationId').prop('checked', false);
+                    }
+
+                }
+            });
+
+        }
+
+    });
+
+
+    function drawTable(eexmasterID, seatNumber) {
+        var datatable = $('#data_table')
+            .DataTable({
+                "sAjaxSource": "/Home/showRequests?eexmasterID=" + eexmasterID + "&seatNumber=" + seatNumber,
+                "bServerSide": true,
+                "bProcessing": true,
+                "bSearchable": true,
+                "stateSave": false,
+                "pageLength": 5,
+                //"order": [[1, 'asc']],
+                "language": {
+                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+                    "sLoadingRecords": "جارٍ التحميل...",
+                    "sProcessing": "جارٍ التحميل...",
+                    "sLengthMenu": "أظهر _MENU_ مدخلات",
+                    "sZeroRecords": "لم يعثر على أية سجلات",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ابحث:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+                    }
+                },
+                "columns": [
+                    {
+                        "data": "seat_number",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "name",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eschool",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "count",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "destination1",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "transfer_number",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "date", "name": "date",
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var num = parseInt(oData.date.replace(/[^0-9]/g, ""));
+                            var date = new Date(num);
+
+                            var html = new Date(date).toUTCString();
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                    {
+                        "data": "id", "name": "id",
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "<a href='/Home/gradesInDetails?eexmaster_id=" + oData.eexmaster_id + "&student_id=" + oData.student_id + "&request_id=" + oData.id + "' target='_blank' title='كشف درجات'><span class='fa fa-print'></span></a>&nbsp;";
+                            html += "<a title='حذف' href='javascript:void(0);' class='delete' data-id='" + oData.id + "'  ><span class='fa fa-trash' ></span></a>";
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    }
+
+                ]
+            });
+        $(".dataTables_length").hide();
+        $(".dataTables_filter").hide();
+    }
+    $(document).ready(function () {
+        var id = $("#id").val();
+        var seat = $("#seat_number").val();
+        drawTable(id, seat);
+    });
+
+     $(document).on("click", ".delete", function () {
+        var $buttonClicked = $(this);
+        var id = $buttonClicked.attr('data-id');
+        var options = { "backdrop": "static", keyboard: true };
+        Swal.fire({
+            title: 'هل أنت متأكد؟',
+            text: "البيانات المحذوفة لا يمكن أسترجاعها!",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'لا!',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'نعم!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("deleteRequest","Home")',
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        $("#data_table").dataTable().fnDestroy();
+                        drawTable(data.eexmasterID, data.seatNumber);
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+
+            }
+        })
+    });
+
+
+    $(document).on("click", "#save", function () {
+
+        var TeamDetailPostBackURL = '/Home/makeRequest';
+        debugger
+        var id = $('#id').val();
+        var seat_number = $('#seat_number').val();
+        var id_no14 = $('#id_no14').val();
+        var total_grade = $('#total_grade').val();
+        var date = $('#date').val();
+        var name = $('#name').val();
+        var count = $('#count').val();
+        var destination = $('#destination').val();
+        var registration_number = $('#registrationNumber').val();
+        var amount = $('#amount').val();
+        var transfer_number = $('#transfer_number').val();
+
+        if ($("#id_no14").val() != "" && $("#id_no14").val().length != 14)
+            warningBox("برجاء أدخال الرقم القومى 14 رقم.");
+        else {
+            $.ajax({
+                type: "POST",
+                url: TeamDetailPostBackURL,
+                //contentType: "application/json; charset=utf-8",
+                data: {
+                    "Id": id, "seat_number": seat_number, "name": name, "count": count, "destination_id": destination, "id_no14": id_no14, "date": date, "registration_number": registration_number, "amount": amount, "transfer_number": transfer_number, "total_grade": total_grade
+                },
+                datatype: "json",
+                success: function (json) {
+                    //console.log(json);
+                    Swal.fire({
+                        icon: json.icon,
+                        title: json.title,
+                        text: json.text
+                    });
+                    $("#data_table").dataTable().fnDestroy();
+                    drawTable(json.eexmasterID, json.seatNumber);
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        }
+        //$(document).ready(function () {
+        //    var exmasterId = $('#id').val();
+        //    var seat_number = $('#seat_number').val();
+        //    $("#data_table").dataTable().fnDestroy();
+        //    drawTable(exmasterId, seat_number);
+        //});
+    });
+
+</script>
