@@ -2,6 +2,18 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function addCommas(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
+
 function initSelectize(element, url) {
     var users = element.selectize({
         valueField: 'id',
@@ -363,23 +375,23 @@ function messageBox(options, done, cancel) {
     if(options.confirm) {
         if(options.danger){
             var html = "\
-            <button type='button' class='btn btn-danger' id='action'>OK</button>\
-            <button type='button' class='btn btn-secondary' id='close'>Cancel</button>";
+            <button type='button' class='btn btn-danger' id='action'>نعم</button>\
+            <button type='button' class='btn btn-secondary' id='close'>لا</button>";
             dialog.find('.modal-footer').html(html);
         } else {
             var html = "\
-            <button type='button' class='btn btn-primary' id='action'>OK</button>\
-            <button type='button' class='btn btn btn-light' id='close'>Cancel</button>";
+            <button type='button' class='btn btn-primary' id='action'>نعم</button>\
+            <button type='button' class='btn btn btn-light' id='close'>لا</button>";
             dialog.find('.modal-footer').html(html);
         }
     } else {
         if(options.danger){
             var html = "\
-            <button type='button' class='btn btn-danger' id='action'>Close</button>";
+            <button type='button' class='btn btn-danger' id='action'>الغاء</button>";
             dialog.find('.modal-footer').html(html);
         } else {
             var html = "\
-            <button type='button' class='btn btn-success' id='action'>Close</button>";
+            <button type='button' class='btn btn-success' id='action'>الغاء</button>";
             dialog.find('.modal-footer').html(html);
         }
     }
@@ -426,7 +438,7 @@ function errorBox(body, done) {
 }
 
 function warningBox(body, done) {
-    messageBox({'title':'تحذير!', 'body':body, danger: true, confirm: true}, done);
+    messageBox({ 'title':'تحذير', 'body':body, danger: true, confirm: true}, done);
 }
 
 (function ( $ ) {
@@ -469,7 +481,7 @@ function warningBox(body, done) {
         });
     }
 
-    $.fn.autoFill = function(slaveSelectObj, updateURL, updateToken, initialSlaveValue, secondaryObj = null, thirdObj = null) {
+    $.fn.autoFill = function(slaveSelectObj, updateURL, updateToken, initialSlaveValue, secondaryObj = null, thirdObj = null, fourthObj = null) {
         var masterSelectObj = $(this);
         if(secondaryObj!=null) {
             secondaryObj.on('change', function(){
@@ -481,13 +493,19 @@ function warningBox(body, done) {
                     masterSelectObj.trigger('change');
                 });
         }
+        if(fourthObj!=null) {
+            fourthObj.on('change', function(){
+                    masterSelectObj.trigger('change');
+                });
+        }
+
         masterSelectObj.on('change', function(){
             var emptyOptionText = slaveSelectObj.find("option[value='']").text();
             if(emptyOptionText)
                 slaveSelectObj.find('option').remove().end().append($('<option>', {value:'', text:emptyOptionText})).val('');
             else
                 slaveSelectObj.find('option').remove();
-            var url = updateURL.replace('#id', $(this).val()).replace('#sid', (secondaryObj)?secondaryObj.val():"").replace('#tid', (thirdObj)?thirdObj.val():"");
+            var url = updateURL.replace('#id', $(this).val()).replace('#sid', (secondaryObj)?secondaryObj.val():"").replace('#tid', (thirdObj)?thirdObj.val():"").replace('#fid', (fourthObj)?fourthObj.val():"");
             $.post(url,  {
                 "_token": updateToken
             }, function(response) {

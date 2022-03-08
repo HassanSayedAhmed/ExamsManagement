@@ -148,10 +148,28 @@ namespace ExamsManagement.Controllers
             var data = db.eeduppx0.Where(c => c.cert_id == cert).Select(s => new { s.id,s.eedupp0 }).ToList();
             return Json(new { data = data }, JsonRequestBehavior.AllowGet);
         }
-
+       
         public ActionResult getDocuments(DatatableParam param)
         {
-       
+
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
+            var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+            var gov = Request.Form.GetValues("columns[0][search][value]")[0];
+            var section = Request.Form.GetValues("columns[1][search][value]")[0];
+            var school = Request.Form.GetValues("columns[2][search][value]")[0];
+            var level = Request.Form.GetValues("columns[3][search][value]")[0];
+            var year = Request.Form.GetValues("columns[4][search][value]")[0];
+            var sho3ba = Request.Form.GetValues("columns[5][search][value]")[0];
+            var cert = Request.Form.GetValues("columns[6][search][value]")[0];
+            var control = Request.Form.GetValues("columns[7][search][value]")[0];
+            var seatNo = Request.Form.GetValues("columns[8][search][value]")[0];
+            var id_no14 = Request.Form.GetValues("columns[9][search][value]")[0];
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+
             //IQueryable<eexmmaster> employees = db.eexmmasters;
             var employees = (from e in db.eexmmasters
                              //join s in db.students on e.id equals s.eexmaster_id into certJoin
@@ -177,57 +195,58 @@ namespace ExamsManagement.Controllers
                                  //seat_number = std.seat_number
                              });
 
-            if (!string.IsNullOrEmpty(param.sSearch))
+            if (!string.IsNullOrEmpty(searchValue))
             {
-                employees = employees.Where(x => x.eegov.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.eschool.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.estatus.ToLower().Contains(param.sSearch.ToLower())
-                                              || x.eyear.ToString().Contains(param.sSearch.ToLower())
-                                              || x.edocref.ToString().Contains(param.sSearch.ToLower()));
+                employees = employees.Where(x => x.eegov.ToLower().Contains(searchValue.ToLower())
+                                              || x.eschool.ToLower().Contains(searchValue.ToLower())
+                                              || x.estatus.ToLower().Contains(searchValue.ToLower())
+                                              || x.eyear.ToString().Contains(searchValue.ToLower())
+                                              || x.edocref.ToString().Contains(searchValue.ToLower()));
             }
-            if (!string.IsNullOrEmpty(param.gov))
+            if (!string.IsNullOrEmpty(gov))
             {
-                employees = employees.Where(x => x.eegov == param.gov);
+                employees = employees.Where(x => x.eegov == gov);
             }
-            if (!string.IsNullOrEmpty(param.section))
+            if (!string.IsNullOrEmpty(section))
             {
-                employees = employees.Where(x => x.eedusection == param.section);
+                employees = employees.Where(x => x.eedusection == section);
             }
-            if (!string.IsNullOrEmpty(param.school))
+            if (!string.IsNullOrEmpty(school))
             {
-                employees = employees.Where(x => x.eschool == param.school);
+                employees = employees.Where(x => x.eschool == school);
             }
-            if (!string.IsNullOrEmpty(param.level))
+            if (!string.IsNullOrEmpty(level))
             {
-                employees = employees.Where(x => x.elevel == param.level);
+                employees = employees.Where(x => x.elevel == level);
             }
-            if (!string.IsNullOrEmpty(param.year))
+            if (!string.IsNullOrEmpty(year))
             {
-                employees = employees.Where(x => x.eyear == param.year);
+                employees = employees.Where(x => x.eyear == year);
             }
-            if (!string.IsNullOrEmpty(param.sho3ba))
+            if (!string.IsNullOrEmpty(sho3ba))
             {
-                employees = employees.Where(x => x.eeduppx0 == param.sho3ba);
+                employees = employees.Where(x => x.eeduppx0 == sho3ba);
             }
-            if (!string.IsNullOrEmpty(param.cert))
+            if (!string.IsNullOrEmpty(cert))
             {
-                employees = employees.Where(x => x.eedulictype == param.cert);
+                employees = employees.Where(x => x.eedulictype == cert);
             }
-            if (!string.IsNullOrEmpty(param.control))
+            if (!string.IsNullOrEmpty(control))
             {
-                employees = employees.Where(x => x.eeCount == param.control);
+                employees = employees.Where(x => x.eeCount == control);
             }
-            if (param.seatNo > 0)
+            if (!string.IsNullOrEmpty(seatNo))
             {
-                employees = employees.Where(x => x.estudentfrom <= param.seatNo && x.estudentto >= param.seatNo);
+                int seat = int.Parse(seatNo);
+                employees = employees.Where(x => x.estudentfrom <= seat && x.estudentto >= seat);
             }
             //if (!string.IsNullOrEmpty(param.studentName))
             //{
             //    employees = employees.Where(x => x.studentName.Contains(param.studentName));
             //}
-            if (!string.IsNullOrEmpty(param.id_no14))
+            if (!string.IsNullOrEmpty(id_no14))
             {
-                student student = db.students.Where(s => s.id_no14 == param.id_no14).FirstOrDefault();
+                student student = db.students.Where(s => s.id_no14 == id_no14).FirstOrDefault();
                 if(student!=null)
                     employees = employees.Where(x => x.id == student.eexmaster_id);
                 else
@@ -235,19 +254,20 @@ namespace ExamsManagement.Controllers
             }
             var data = employees.OrderByDescending(r => r.id);
             var sortColumnIndex = Convert.ToInt32(HttpContext.Request.QueryString["iSortCol_0"]);
-            var displayResult = data.Skip(param.iDisplayStart)
-                .Take(10).ToList();
+            var displayResult = data.Skip(skip)
+                     .Take(pageSize).ToList();
             //List<DocumentViewModel> Documents = new List<DocumentViewModel>();
             //Documents = AutoMapper.Mapper.Map<List<indexViewModel>, List<DocumentViewModel>>(displayResult);
             var totalRecords = data.Count();
-
             return Json(new
             {
-                param.sEcho,
-                iTotalRecords = totalRecords,
-                iTotalDisplayRecords = totalRecords,
-                aaData = displayResult
+                draw = draw,
+                recordsTotal = totalRecords,
+                recordsFiltered = totalRecords,
+                data = displayResult
+
             }, JsonRequestBehavior.AllowGet);
+          
 
         }
 

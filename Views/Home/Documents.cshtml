@@ -242,10 +242,14 @@
 
                                 }
                             </div>
-                            <div class="col-6" id="student_div" style="float:left; padding-left:20px;display:none;">
+                            <div class="col-3" style="float:center;">
+                                <input type="number" class="form-control" style="float:left;" step="1" min="0" placeholder="رقم الصفحة" id="page" />
+                            </div>
+                            <div class="col-3" id="student_div" style="float:left; padding-left:20px;display:none;">
                                 <p class="btn btn-primary fs-10 pb-5" >إسم الطالب : <span id="student_name"> </span></p>
                             </div>
                         </div>
+
                         <table class="table table-bordered table-striped table-hover" id="example">
                             <thead>
                                 <tr>
@@ -324,14 +328,30 @@
         });
 
         function drawTable(url = "/Home/getDocuments", isSeaech = false) {
-            debugger
-            $("#example").dataTable().fnDestroy();
-            $('#example').DataTable({
-                "sAjaxSource": url,
-                serverSide: true,
-                ordering: false,
-                searching: false,
+            //debugger
+            //$("#example").dataTable().fnDestroy();
+            $('#example').dataTable({
+                "processing": true,
+                "serverSide": true,
+                "stateSave": true,
+                "lengthChange": false,
+                "dom": 'Bfrtip',
 
+                "buttons": ['copy', 'excel', 'pdf', 'print'],
+                "pageLength": 10,
+                "rowId": 'id',
+                "ajax": {
+                        "url": "@Url.Action("getDocuments", "Home")",
+                        "type": "POST",
+                        "datatype": "json",
+                        "dataSrc": "data"
+                },
+                "fnStateSave": function (oSettings, oData) {
+                    localStorage.setItem('DataTables', JSON.stringify(oData));
+                },
+                "fnStateLoad": function (oSettings) {
+                    return JSON.parse(localStorage.getItem('DataTables'));
+                },
                 scroller: {
                     loadingIndicator: true
                 },
@@ -457,8 +477,8 @@
                                     seat = $("#seatNo").val();
                                 }
                                 else if ($("#id_no14").val().length!=0) {
-                                    console.log($("#id_no14").val());
-                                    console.log(oData);
+                                    //console.log($("#id_no14").val());
+                                    //console.log(oData);
                                     seat = oData.seat_number;
                                 }
 
@@ -499,7 +519,7 @@
                 },
                 datatype: "json",
                 success: function (data) {
-                    console.log(data);
+                    //console.log(data);
                     $("#pageCount").text(data.data);
                     //attach
                 },
@@ -509,7 +529,184 @@
             });
         });
         $(document).ready(function () {
-            drawTable();
+
+            //start datatable
+            var datatable = $('#example').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "scrollX": false,
+                "stateSave": false,
+                "lengthChange": false,
+                "dom": 'Bfrtip',
+
+                "buttons": ['copy', 'excel', 'pdf', 'print'],
+                "pageLength": 10,
+                "rowId": 'id',
+                "language": {
+                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+                    "sLoadingRecords": "جارٍ التحميل...",
+                    "sProcessing": "جارٍ التحميل...",
+                    "sLengthMenu": "أظهر _MENU_ مدخلات",
+                    "sZeroRecords": "لم يعثر على أية سجلات",
+                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+                    "sInfoPostFix": "",
+                    "sSearch": "ابحث:",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "الأول",
+                        "sPrevious": "السابق",
+                        "sNext": "التالي",
+                        "sLast": "الأخير"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+                    }
+                },
+                "ajax": {
+                        "url": "@Url.Action("getDocuments", "Home")",
+                        "type": "POST",
+                        "datatype": "json",
+                        "dataSrc": "data"
+                },
+                "fnStateSave": function (oSettings, oData) {
+                    localStorage.setItem('DataTables', JSON.stringify(oData));
+                },
+                "fnStateLoad": function (oSettings) {
+                    return JSON.parse(localStorage.getItem('DataTables'));
+                },
+                scroller: {
+                    loadingIndicator: true
+                },
+                "columns": [
+                    {
+                        "data": "id",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eegov",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eedusection",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eschool",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "elevel",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    //{
+                    //    "data": "estatus",
+                    //    "autoWidth": true,
+                    //    "searchable": true
+                    //},
+                    {
+                        "data": "eyear",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eeduppx0",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    //{
+                    //    "data": "edocref",
+                    //    "autoWidth": true,
+                    //    "searchable": true
+                    //},
+                    //{
+                    //    "data": "epage",
+                    //    "autoWidth": true,
+                    //    "searchable": true
+                    //},
+                    //{
+                    //    "data": "erowref",
+                    //    "autoWidth": true,
+                    //    "searchable": true
+                    //},
+                    {
+                        "data": "estudentfrom",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "estudentto",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eedulictype",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "eeCount",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "id", "name": "id",
+                        fnCreatedCell: function (nTd, sData, oData, iRow, iCol) {
+                            var html = "<a href='/Home/displayPdf?fileName=" + oData.edocref + "&page=" + oData.epage + "' target='_blank' title='عرض الملف'><span class='fa fa-file'></span></a>&nbsp;";
+                            html += "<a title='تفاصيل' href='javascript:void(0);' class='anchorDetail' data-id='" + oData.id + "' ><span class='fa fa-eye' ></span></a>&nbsp;";
+
+                            if (@Session["userType"].ToString() == "2" || @Session["userType"].ToString() == "3") {
+                                html += "<a title='تعديل' target='_blank' href='/Home/uploadFiles?id=" + oData.id + "'><span class='fa fa-edit' ></span></a>&nbsp;";
+                            }
+                            if (@Session["userType"].ToString() == "2" || @Session["userType"].ToString() == "3") {
+                                html += "<a title='DataEntry' target='_blank' href='/Home/uploadFilesDataEntry?id=" + oData.id + "'><span class='fa fa-edit' ></span></a>&nbsp;";
+
+                            }
+                            var seat = 0;
+
+                            if (oData.estudentfrom == oData.estudentto || $("#seatNo").val().length > 0) {
+                                if (oData.estudentfrom == oData.estudentto) {
+                                    seat = oData.estudentto;
+                                }
+                                else if ($("#seatNo").val() > 0) {
+                                    seat = $("#seatNo").val();
+                                }
+                                else if ($("#id_no14").val().length!=0) {
+                                    //console.log($("#id_no14").val());
+                                    //console.log(oData);
+                                    seat = oData.seat_number;
+                                }
+
+                                if (seat > 0) {
+                                    if (@Session["userType"].ToString() == "1" || @Session["userType"].ToString() == "3") {
+                                        html += "<a href='/Home/checkIfExist?id=" + oData.id + "&seatNo=" + seat + "' target='_blank' title='كشف درجات'><span class='fa fa-table'></span></a>&nbsp;";
+                                        html += "<a href='/Home/printTotal?id=" + oData.id + "&seatNo=" + seat + "' target='_blank' title='بيان نجاح'><span class='fa fa-user'></span></a>&nbsp;";
+                                    }
+                                    if (@Session["userType"].ToString() == "2" || @Session["userType"].ToString() == "3") {
+                                        html += "<a title='ملف' href='javascript:void(0)' id='" + oData.id + "_" + seat + "'  class='attachment'><i class='fa fa-paperclip'></i></a>&nbsp;";
+                                    }
+                                    html += "<a title='عرض المحضر' href='javascript:void(0)' id='show_" + oData.id + "_" + seat + "'  class='showAttachment'><i class='fa fa-eye'></i></a>";
+                                }
+
+                            }
+
+                            $(nTd).html("<span class='action-column'>" + html + "</span>");
+                        }
+                    },
+                ]
+            });
+            $(".dataTables_filter").hide();
+            $(".dataTables_info").hide();
+            $(".dataTables_length").hide();
+
+            //end datatable
 
             $(document).on("click", ".showAttachment", function () {
                 $('#show_attachment_modal').modal('show');
@@ -529,7 +726,7 @@
                         "eexmaster_id": id, "seat_number": seat_number },
                     datatype: "json",
                     success: function (data) {
-                        console.log(data);
+                        //console.log(data);
                         $("#attach").attr("src", data.data);
                         $("#descriptionShow").text(data.description);
                         //attach
@@ -554,7 +751,7 @@
             });
 
             $(document).on("click", "#file_save", function () {
-                debugger
+                //debugger
                 if (window.FormData !== undefined) {
 
                     var fileUpload = $("#file").get(0);
@@ -617,7 +814,7 @@
                     data: { "year": year_id, "cert": cert_id },
                     datatype: "json",
                     success: function (data) {
-                        console.log(data.data)
+                        //console.log(data.data)
                         $("#schoolDiv").html("")
 
                         var html = "";
@@ -625,7 +822,7 @@
                         html += "<option value=''>أختر المدرسة</option>"
                         if (data.data) {
                             data.data.forEach(function (val) {
-                                console.log(val.eschool)
+                                //console.log(val.eschool)
                                 html += "<option value='" + val.eschool + "'>" + val.eschool+"</option>"
                             })
                         }
@@ -647,65 +844,67 @@
                 $("#sho3baDiv").remove();
                 var TeamDetailPostBackURL = '@Url.Action("showSho3ba","Home")';
                 var getYearsURL = '@Url.Action("getYears","Home")';
+                if (cert_id) {
+                    $.ajax({
+                        type: "GET",
+                        url: TeamDetailPostBackURL,
+                        contentType: "application/json; charset=utf-8",
+                        data: { "cert": cert_id },
+                        datatype: "json",
+                        success: function (data) {
 
-                $.ajax({
-                    type: "GET",
-                    url: TeamDetailPostBackURL,
-                    contentType: "application/json; charset=utf-8",
-                    data: { "cert": cert_id},
-                    datatype: "json",
-                    success: function (data) {
-
-                        var html = '<div id="sho3baDiv" class="form-group"> <label class="col-form-label"> الشعبة</label> <div>';
-                         html += "<select  id='sho3baId' name='sho3ba' class='selectize' style = 'width: 150px'>";
-                        html += "<option value=''> أختر الشعبة </option>";
-                        if (data.data) {
-                        data.data.forEach(function (el) {
-                            html += "<option value=" + el.eedupp0 + ">" + el.eedupp0+"</option>";
-                        });
+                            var html = '<div id="sho3baDiv" class="form-group"> <label class="col-form-label"> الشعبة</label> <div>';
+                            html += "<select  id='sho3baId' name='sho3ba' class='selectize' style = 'width: 150px'>";
+                            html += "<option value=''> أختر الشعبة </option>";
+                            if (data.data) {
+                                data.data.forEach(function (el) {
+                                    html += "<option value=" + el.eedupp0 + ">" + el.eedupp0 + "</option>";
+                                });
+                            }
+                            html += "</div></div>";
+                            $("#append_sho3ba").append(html);
+                            $('#sho3baId').selectize({
+                                plugins: ['remove_button'],
+                            });
+                            if (cert_id == "الثانوية العامة") {
+                                $("#controlDiv").show();
+                            } else {
+                                $("#controlDiv").hide();
+                            }
+                        },
+                        error: function () {
+                            // alert("Dynamic content load failed.");
                         }
-                        html += "</div></div>";
-                        $("#append_sho3ba").append(html);
-                        $('#sho3baId').selectize({
-                            plugins: ['remove_button'],
-                        });
-                        if (cert_id == "الثانوية العامة") {
-                            $("#controlDiv").show();
-                        } else {
-                            $("#controlDiv").hide();
-                        }
-                    },
-                    error: function () {
-                       // alert("Dynamic content load failed.");
-                    }
-                });
-            
-                $.ajax({
-                    type: "GET",
-                    url: getYearsURL,
-                    contentType: "application/json; charset=utf-8",
-                    data: { "cert": cert_id },
-                    datatype: "json",
-                    success: function (data) {
-                        $("#yearDiv").html("")
+                    });
 
-                        var html = "";
-                        html += "<select id='yearId' style='width: 150px' class='selectize'>";
-                        html += "<option value=''>أختر السنة</option>"
-                        if (data.data) {
-                            data.data.forEach(function (val) {
-                                html += "<option value='" + val.eyear + "'>" + val.eyear + "</option>"
-                            })
-                        }
-                        html += "</select>";
-                        $("#yearDiv").append(html)
-                        $("#yearId").selectize()
-                    },
-                    error: function () {
-                        // alert("Dynamic content load failed.");
-                    }
-                });
+                    $.ajax({
+                        type: "GET",
+                        url: getYearsURL,
+                        contentType: "application/json; charset=utf-8",
+                        data: { "cert": cert_id },
+                        datatype: "json",
+                        success: function (data) {
+                            $("#yearDiv").html("")
 
+                            var html = "";
+                            html += "<select id='yearId' style='width: 150px' class='selectize'>";
+                            html += "<option value=''>أختر السنة</option>"
+                            if (data.data) {
+                                data.data.forEach(function (val) {
+                                    html += "<option value='" + val.eyear + "'>" + val.eyear + "</option>"
+                                })
+                            }
+                            html += "</select>";
+                            $("#yearDiv").append(html)
+                            $("#yearId").selectize()
+                        },
+                        error: function () {
+                            // alert("Dynamic content load failed.");
+                        }
+                    });
+
+                }
+             
             });
 
             //$(document).on("click", "#file_save", function () {
@@ -732,11 +931,66 @@
 
             //});
 
+            $('#search_button').on('click', function () {
+                //datatable.search($("#text_search").val());
+                datatable.columns(0).search($("#govId").val());
+                datatable.columns(1).search($("#sectionId").val());
+                datatable.columns(2).search($("#schoolId").val());
+                datatable.columns(3).search($("#levelId").val());
+                datatable.columns(4).search($("#yearId").val());
+                datatable.columns(5).search($("#sho3baId").val());
+                datatable.columns(6).search($("#certId").val());
+                datatable.columns(7).search($("#controlId").val());
+                datatable.columns(8).search($("#seatNo").val());
+                datatable.columns(9).search($("#id_no14").val());
+                if ($("#id_no14").val() != "" && $("#id_no14").val().length != 14)
+                    warningBox("برجاء أدخال الرقم القومى 14 رقم.");
+                else {
+                    if ($("#id_no14").val().length == 14) {
+                        //alert($("#id_no14").val())
+                        $.ajax({
+                            type: "GET",
+                            url: "/Home/getName",
+                            contentType: "application/json; charset=utf-8",
+                            data: { "id_no14": $("#id_no14").val() },
+                            datatype: "json",
+                            success: function (data) {
+                                debugger;
+                                $('#student_div').show();
+                                if (data.data)
+                                    $('#student_name').text(data.data);
+                                else {
+                                    $('#student_div').hide();
+                                    warningBox("الرقم القومى غير موجود.");
+                                }
 
 
+                            },
+                            error: function () {
+                                alert("Dynamic content load failed.");
+                            }
+                        });
+                    }
+                    datatable.draw();
 
-            $("#search_button").click(function () {
-                debugger
+                }
+            });
+
+            //$('#text_search').on('keyup', function (e) {
+            //    if (e.keyCode == 13)
+            //        $('#search_button').trigger('click');
+            //});
+            $('#page').on('keyup', function (e) {
+                if (e.keyCode == 13) {
+                    var page = parseInt($(this).val())
+                    if (page)
+                        datatable.page(page).draw('page')
+                }
+                    
+            });
+
+            $("#search_button_old").click(function () {
+                //debugger
                 $(".dataTables_length").hide();
                 var model = $("#searchForm").serialize();
                 var gov = $("#govId").val();
@@ -795,7 +1049,7 @@
                                     $('#student_div').hide();
                                     warningBox("الرقم القومى غير موجود.");
                                 }
-                                   
+
 
                             },
                             error: function () {
@@ -803,12 +1057,13 @@
                             }
                         });
                     }
-                    drawTable(url, true);
-
+                    //drawTable(url, true);
+                    datatable.draw();
                 }
 
                 $(".dataTables_filter").hide();
             });
+
             $("#seatNo").keyup(function (event) {
                 if (event.keyCode === 13) {
                     $("#search_button").click();
@@ -848,10 +1103,11 @@
                 resetDropDownSelectizeValue("#levelId", "أختر الدور");
                 resetDropDownSelectizeValue("#yearId", "أختر السنة");
                 resetDropDownSelectizeValue("#certId", "أختر الشهادة");
-                resetDropDownSelectizeValue("#sho3baId", "أختر الشعبة");
-                resetDropDownSelectizeValue("#controlId", "أختر الكنترول");
+                //resetDropDownSelectizeValue("#sho3baId", "أختر الشعبة");
+                //resetDropDownSelectizeValue("#controlId", "أختر الكنترول");
+                //datatable.draw();
                 $('#search_button').trigger('click');
-
+                
 
             });
 
