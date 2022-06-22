@@ -314,6 +314,49 @@ namespace ExamsManagement.Controllers
             return View(Document);
         }
 
+        public ActionResult addStudentMissing(int? id = 0)
+        {
+            eexmmaster Document = new eexmmaster();
+            if (id != 0)
+            {
+                Document = db.eexmmasters.Find(id);
+                //ViewBag.fileName = Document.edocref;
+                //ViewBag.pageNo = Document.epage;
+                ViewBag.isEdit = 1;
+            }
+            else if (id > 0)
+            {
+                //ViewBag.fileName = fileName;
+                //ViewBag.pageNo = 1;
+                ViewBag.isEdit = 0;
+
+            }
+
+            //.fileName = Document.edocref;
+            ViewBag.gov = db.egovs.Select(s => new { s.Id, s.egovname }).ToList();
+            ViewBag.section = db.eedusections.Select(s => new { s.id, s.eedusection1 }).ToList();
+            ViewBag.school = db.eschools.Select(s => new { s.id, s.eschool1 }).ToList();
+            //ViewBag.Forcert sho3ba = db.eeduecerts.Select(c => new { cert_id = c.id, cert_name = c.Master }).ToList();
+
+            ViewBag.level = new List<SelectListItem>
+            {
+            new SelectListItem() {Text = "الأول", Value = " الأول"},
+            new SelectListItem() {Text = "الثانى", Value = "الثانى"}
+            };
+            ViewBag.status = new List<SelectListItem>
+            {
+            new SelectListItem() {Text = "ناجح", Value = "ناجح"},
+            new SelectListItem() {Text = "راسب", Value = "راسب"}
+            };
+            ViewBag.year = db.edducyears.Select(s => new { s.id, s.iyear }).ToList();
+            ViewBag.sho3ba = db.eeduppx0.Select(s => new { s.id, s.eedupp0 }).ToList();
+            ViewBag.cert = db.eeduecerts.Select(s => new { s.id, s.Master }).ToList();
+            ViewBag.control = db.eeducons.Select(s => new { s.id, s.educon }).ToList();
+
+            return View(Document);
+        }
+
+
         public ActionResult uploadFilesDataEntry(string fileName, int? id = 0)
         {
             eexmmaster Document = new eexmmaster();
@@ -421,11 +464,13 @@ namespace ExamsManagement.Controllers
                 eexmmaster.erowref = "page" + DateTime.Now.ToString("ddMMyyyyhhmmssttt");
                 eexmmaster.IUserDateTime = DateTime.Now;
                 eexmmaster.UserID = Convert.ToInt32(Session["id"].ToString());
+                
                 eexmmaster.DocThere = true;
                 db.eexmmasters.Add(eexmmaster);
                 db.SaveChanges();
                 return Json(new
                 {
+                    id = eexmmaster.id,
                     data = eexmmaster.edocref,
                     refreshPage = refreshPage
                 }, JsonRequestBehavior.AllowGet);
@@ -448,6 +493,7 @@ namespace ExamsManagement.Controllers
                 db.SaveChanges();
                 return Json(new
                 {
+                    id = eexmmaster.id,
                     data = eexmmaster.edocref,
                     refreshPage= refreshPage
                 }, JsonRequestBehavior.AllowGet);
@@ -455,12 +501,14 @@ namespace ExamsManagement.Controllers
           
         }
 
+
+
         public JsonResult showDftar(DatatableParam param)
         {
             
-              var data = db.eexmmasters.Where(e => (e.edocref == param.edocref || param.edocref == null) && (e.id == param.daftarRowID || param.daftarRowID == 0)).Select(e=>new pageViewModel
+              var data = db.eexmmasters.Where(e => (param.edocref == null) && (e.id == param.daftarRowID || param.daftarRowID == 0)).Select(e=>new pageViewModel
               { 
-              id=e.id,
+                  id=e.id,
                   estudentfrom=(int)e.estudentfrom,
                   estudentto=(int)e.estudentfrom,
                   epage=(int)e.epage,
@@ -480,6 +528,33 @@ namespace ExamsManagement.Controllers
                 aaData = displayResult
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult showMissingStudents(DatatableParam param)
+        {
+
+            var data = db.eexmmasters.Where(e => (param.edocref == null) && (e.id == param.daftarRowID || param.daftarRowID == 0)).Select(e => new pageViewModel
+            {
+                id = e.id,
+                estudentfrom = (int)e.estudentfrom,
+                estudentto = (int)e.estudentfrom,
+                epage = (int)e.epage,
+                eschool = e.eschool
+
+            }).OrderByDescending(o => o.id);
+
+            var displayResult = data.Skip(param.iDisplayStart)
+                .Take(5).ToList();
+            var totalRecords = data.Count();
+
+            return Json(new
+            {
+                param.sEcho,
+                iTotalRecords = totalRecords,
+                iTotalDisplayRecords = totalRecords,
+                aaData = displayResult
+            }, JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult showDftarDataEntry(DatatableParam param)
         {

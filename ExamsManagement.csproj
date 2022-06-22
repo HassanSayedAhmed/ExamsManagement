@@ -3277,6 +3277,7 @@
     <Content Include="Views\Home\uploadFilesDataEntry.cshtml" />
     <Content Include="Views\Destinations\Index.cshtml" />
     <Content Include="Views\Shared\_manageDestination.cshtml" />
+    <Content Include="Views\Home\addStudentMissing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
