@@ -506,7 +506,7 @@ namespace ExamsManagement.Controllers
         public JsonResult showDftar(DatatableParam param)
         {
             
-              var data = db.eexmmasters.Where(e => (param.edocref == null) && (e.id == param.daftarRowID || param.daftarRowID == 0)).Select(e=>new pageViewModel
+              var data = db.eexmmasters.Where(e => (e.edocref == param.edocref || param.edocref == null) && (e.id == param.daftarRowID || param.daftarRowID == 0)).Select(e=>new pageViewModel
               { 
                   id=e.id,
                   estudentfrom=(int)e.estudentfrom,

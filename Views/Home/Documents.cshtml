@@ -104,11 +104,11 @@
                         <div class="caption font-red-sunglo">
                             <i class="icon-settings font-red-sunglo"></i>
                             <span class="caption-subject bold uppercase">بحث عن ملف</span>
-                            @if (Session["userType"].ToString() == "2" || Session["userType"].ToString() == "3")
+                            @if (Session["userType"].ToString() == "3")
                             {
                                 <a href="@Url.Action("uploadFiles", "Home")"> (اضافه ملف جديد)</a>
                             }
-                            @if (Session["userType"].ToString() == "2" || Session["userType"].ToString() == "3")
+                            @if (Session["userType"].ToString() == "3")
                             {
                                 <a href="@Url.Action("addStudentMissing", "Home")"> (اضافه بيانات طالب لم يستدل عليه)</a>
                             }
