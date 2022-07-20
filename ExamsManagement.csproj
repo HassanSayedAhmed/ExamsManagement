@@ -906,6 +906,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chosen.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\factory.js" />
     <Content Include="Content\fontawesome\css\all.css" />
     <Content Include="Content\fontawesome\css\all.min.css" />
     <Content Include="Content\fontawesome\css\brands.css" />

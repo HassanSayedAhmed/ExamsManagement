@@ -490,6 +490,7 @@
                                         html += "<a href='/Home/checkIfExist?id=" + oData.id + "&seatNo=" + seat + "' target='_blank' title='كشف درجات'><span class='fa fa-table'></span></a>&nbsp;";
                                         html += "<a href='/Home/printTotal?id=" + oData.id + "&seatNo=" + seat + "' target='_blank' title='بيان نجاح'><span class='fa fa-user'></span></a>&nbsp;";
                                     }
+
                                     if (@Session["userType"].ToString() == "3") {
                                         html += "<a title='ملف' href='javascript:void(0)' id='" + oData.id + "_" + seat + "'  class='attachment'><i class='fa fa-paperclip'></i></a>&nbsp;";
                                         html += "<a title='عرض المحضر' href='javascript:void(0)' id='show_" + oData.id + "_" + seat + "'  class='showAttachment'><i class='fa fa-eye'></i></a>";
@@ -694,9 +695,12 @@
                                         html += "<a href='/Home/printTotal?id=" + oData.id + "&seatNo=" + seat + "' target='_blank' title='بيان نجاح'><span class='fa fa-user'></span></a>&nbsp;";
                                     }
                                     if (@Session["userType"].ToString() == "2" || @Session["userType"].ToString() == "3") {
-                                        html += "<a title='ملف' href='javascript:void(0)' id='" + oData.id + "_" + seat + "'  class='attachment'><i class='fa fa-paperclip'></i></a>&nbsp;";
                                     }
-                                    html += "<a title='عرض المحضر' href='javascript:void(0)' id='show_" + oData.id + "_" + seat + "'  class='showAttachment'><i class='fa fa-eye'></i></a>";
+                                    if (@Session["userType"].ToString() == "3") {
+
+                                        html += "<a title='ملف' href='javascript:void(0)' id='" + oData.id + "_" + seat + "'  class='attachment'><i class='fa fa-paperclip'></i></a>&nbsp;";
+                                        html += "<a title='عرض المحضر' href='javascript:void(0)' id='show_" + oData.id + "_" + seat + "'  class='showAttachment'><i class='fa fa-eye'></i></a>";
+                                    }
                                 }
 
                             }
@@ -908,7 +912,7 @@
                     });
 
                 }
-             
+
             });
 
             //$(document).on("click", "#file_save", function () {
@@ -990,7 +994,7 @@
                     if (page)
                         datatable.page(page).draw('page')
                 }
-                    
+
             });
 
             $("#search_button_old").click(function () {
@@ -1111,7 +1115,7 @@
                 //resetDropDownSelectizeValue("#controlId", "أختر الكنترول");
                 //datatable.draw();
                 $('#search_button').trigger('click');
-                
+
 
             });
 

@@ -943,18 +943,55 @@ namespace ExamsManagement.Controllers
                     ViewBag.amount = grade.amount;
                 }
             }
-            eexmmaster Document = new eexmmaster();
-          
-            Document = db.eexmmasters.Find(id);
-            
-            ViewBag.fileName = Document.edocref;
-            ViewBag.pageNo = Document.epage;
+            eexmmaster Document = db.eexmmasters.Find(id);
+
+            ViewBag.StudentId = seatNo;
+            ViewBag.eegov = Document.eegov;
+            ViewBag.elevel = Document.elevel;
+            ViewBag.estatus = Document.estatus;
+            ViewBag.eedusection = Document.eedusection;
+            ViewBag.eeCount = Document.eeCount;
             ViewBag.cert = Document.eedulictype;
             ViewBag.sho3ba = Document.eeduppx0;
             ViewBag.school = Document.eschool;
             ViewBag.year = Document.eyear;
-            ViewBag.section = Document.eedusection;
-                
+            ViewBag.StudentId = seatNo;
+            ViewBag.id = id;
+            ViewBag.year = Document.eyear;
+            ViewBag.fileName = Document.edocref;
+            ViewBag.pageNo = Document.epage;
+
+            ViewBag.eeduppx0 = Document.eeduppx0;
+            ViewBag.edocref = Document.edocref;
+            ViewBag.epage = Document.epage;
+            ViewBag.erowref = Document.erowref;
+            ViewBag.estudentfrom = Document.estudentfrom;
+            ViewBag.estudentto = Document.estudentto;
+            ViewBag.eebook = Document.eebook;
+            ViewBag.DocThere = Document.DocThere;
+            ViewBag.UserID = Document.UserID;
+            ViewBag.IUserDateTime = Document.IUserDateTime;
+
+            ViewBag.govs = db.egovs.Select(s => new { s.Id, s.egovname }).ToList();
+            ViewBag.sections = db.eedusections.Select(s => new { s.id, s.eedusection1 }).ToList();
+            ViewBag.schools = db.eschools.Select(s => new { s.id, s.eschool1 }).ToList();
+            //ViewBag.Forcert sho3ba = db.eeduecerts.Select(c => new { cert_id = c.id, cert_name = c.Master }).ToList();
+
+            ViewBag.levels = new List<SelectListItem>
+            {
+            new SelectListItem() {Text = "الأول", Value = " الأول"},
+            new SelectListItem() {Text = "الثانى", Value = "الثانى"}
+            };
+            ViewBag.statuses = new List<SelectListItem>
+            {
+            new SelectListItem() {Text = "ناجح", Value = "ناجح"},
+            new SelectListItem() {Text = "راسب", Value = "راسب"}
+            };
+            ViewBag.years = db.edducyears.Select(s => new { s.id, s.iyear }).ToList();
+            ViewBag.sho3bas = db.eeduppx0.Select(s => new { s.id, s.eedupp0 }).ToList();
+            ViewBag.certs = db.eeduecerts.Select(s => new { s.id, s.Master }).ToList();
+            ViewBag.controls = db.eeducons.Select(s => new { s.id, s.educon }).ToList();
+
             return View(Document);
         }
         [HttpPost]
@@ -995,20 +1032,57 @@ namespace ExamsManagement.Controllers
 
             ViewBag.StudentId = seatNo;
             ViewBag.eegov = Document.eegov;
+            ViewBag.elevel = Document.elevel;
+            ViewBag.estatus = Document.estatus;
+            ViewBag.eedusection = Document.eedusection;
+            ViewBag.eeCount = Document.eeCount;
             ViewBag.cert = Document.eedulictype;
             ViewBag.sho3ba = Document.eeduppx0;
             ViewBag.school = Document.eschool;
             ViewBag.year = Document.eyear;
             ViewBag.StudentId = seatNo;
             ViewBag.id = id;
+            ViewBag.year = Document.eyear;
             ViewBag.fileName = Document.edocref;
             ViewBag.pageNo = Document.epage;
+
+            ViewBag.eeduppx0 = Document.eeduppx0;
+            ViewBag.edocref = Document.edocref;
+            ViewBag.epage = Document.epage;
+            ViewBag.erowref = Document.erowref;
+            ViewBag.estudentfrom = Document.estudentfrom;
+            ViewBag.estudentto = Document.estudentto;
+            ViewBag.eebook = Document.eebook;
+            ViewBag.DocThere = Document.DocThere;
+            ViewBag.UserID = Document.UserID;
+            ViewBag.IUserDateTime = Document.IUserDateTime;
             ViewBag.destinations = db.destinations.Select(s => new { s.id, s.destination1 }).ToList();
 
             var student = db.students.Where(s => s.eexmaster_id == id && s.seat_number == seatNo).FirstOrDefault();
             var request = db.requests.Where(r => r.student_id == student.id && r.type == 2).OrderByDescending(r => r.id).FirstOrDefault();
             if(request != null)
             ViewBag.amount = request.amount;
+
+
+            ViewBag.govs = db.egovs.Select(s => new { s.Id, s.egovname }).ToList();
+            ViewBag.sections = db.eedusections.Select(s => new { s.id, s.eedusection1 }).ToList();
+            ViewBag.schools = db.eschools.Select(s => new { s.id, s.eschool1 }).ToList();
+            //ViewBag.Forcert sho3ba = db.eeduecerts.Select(c => new { cert_id = c.id, cert_name = c.Master }).ToList();
+
+            ViewBag.levels = new List<SelectListItem>
+            {
+            new SelectListItem() {Text = "الأول", Value = " الأول"},
+            new SelectListItem() {Text = "الثانى", Value = "الثانى"}
+            };
+            ViewBag.statuses = new List<SelectListItem>
+            {
+            new SelectListItem() {Text = "ناجح", Value = "ناجح"},
+            new SelectListItem() {Text = "راسب", Value = "راسب"}
+            };
+            ViewBag.years = db.edducyears.Select(s => new { s.id, s.iyear }).ToList();
+            ViewBag.sho3bas = db.eeduppx0.Select(s => new { s.id, s.eedupp0 }).ToList();
+            ViewBag.certs = db.eeduecerts.Select(s => new { s.id, s.Master }).ToList();
+            ViewBag.controls = db.eeducons.Select(s => new { s.id, s.educon }).ToList();
             return View(student);
         }
         [HttpPost]

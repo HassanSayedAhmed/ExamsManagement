@@ -6,6 +6,114 @@
 
 }
 
+<div class="modal fade" id="manage_eexmaster_data_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <form action="" method="post" enctype='multipart/form-data'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-body">
+                        <div class="form-row">
+                            <input type="hidden" name="id" id="id" value="0" />
+                            <input type="hidden" name="edocref" id="edocref" />
+                            <input type="hidden" name="epage" id="epage" />
+                            <input type="hidden" name="erowref" id="erowref" />
+                            <input type="hidden" name="estudentfrom" id="estudentfrom" />
+                            <input type="hidden" name="estudentto" id="estudentto" />
+                            <input type="hidden" name="eebook" id="eebook" />
+                            <input type="hidden" name="DocThere" id="DocThere" />
+                            <input type="hidden" name="UserID" id="UserID" />
+                            <input type="hidden" name="IUserDateTime" id="IUserDateTime" />
+                        </div>
+                        <div class="form-row">
+                            @*<input type="number" id="id" name="id" value="@Model.id" />*@
+                            <div class="form-group col-md-12">
+                                <label for="inputtext4">المحافظة</label>
+                                @*@Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "school_name_edit" })*@
+                                @Html.DropDownList("eegov", new SelectList(ViewBag.govs, "egovname", "egovname"), "أختر المحافظة", new { @class = "selectize", @name = "state", @style = "width:100%;", @id = "govId" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            @*<input type="number" id="id" name="id" value="@Model.id" />*@
+                            <div class="form-group col-md-12">
+                                <label for="inputtext4">الإدارة التعليمية</label>
+                                @*@Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "school_name_edit" })*@
+                                @Html.DropDownList("eedusection", new SelectList(ViewBag.sections, "eedusection1", "eedusection1"), "أختر المنطقة", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "sectionId" })@*js-example-responsive*@
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            @*<input type="number" id="id" name="id" value="@Model.id" />*@
+                            <div class="form-group col-md-12">
+                                <label for="inputtext4">المدرسة</label>
+                                @*@Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "school_name_edit" })*@
+                                @Html.DropDownList("eschool", new SelectList(ViewBag.schools, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "schoolId" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            @*<input type="number" id="id" name="id" value="@Model.id" />*@
+                            <div class="form-group col-md-12">
+                                <label for="inputtext4">الدور</label>
+                                @*@Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "school_name_edit" })*@
+                                @Html.DropDownList("elevel", new SelectList(ViewBag.levels, "Value", "Text"), "أختر الدور", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "levelId" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            @*<input type="number" id="id" name="id" value="@Model.id" />*@
+                            <div class="form-group col-md-12">
+                                <label for="inputtext4">حالة الطالب</label>
+                                @*@Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "school_name_edit" })*@
+                                @Html.DropDownList("estatus", new SelectList(ViewBag.statuses, "Value", "Text"), "أختر الحالة", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "statusId" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            @*<input type="number" id="id" name="id" value="@Model.id" />*@
+                            <div class="form-group col-md-12">
+                                <label for="inputtext4">السنة</label>
+                                @*@Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "school_name_edit" })*@
+                                @Html.DropDownList("eyear", new SelectList(ViewBag.years, "iyear", "iyear"), "أختر السنة", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "yearId" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputtext4">الشهاده</label>
+                                @Html.DropDownList("eedulictype", new SelectList(ViewBag.certs, "Master", "Master"), "أختر الشهادة", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "certId" })
+                            </div>
+                        </div>
+                         <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputtext4">الشعبة</label>
+                                <select class="form-control" id="sho3baId" name="eeduppx0">
+                                    <option value="">أختر شعبة</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row" id="controlDiv">
+                            <div class="form-group col-md-12">
+                                <label for="inputtext4">الكنترول</label>
+                                @Html.DropDownList("eeCount", new SelectList(ViewBag.controls, "educon", "educon"), "أختر الكنترول", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "controlId" })
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal">الغاء</button>
+                    <button type="submit" class="btn btn-primary">حفظ</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
 <div class="page-content-wrapper">
     <div class="page-content">
 
@@ -124,13 +232,13 @@
                                             </div>
                                         </div>
                                         @*<div class="col-md-6">
-                <div class="col-md-3 labelleft">
-                    <label>مجموع الدرجات</label>
-                </div>
-                <div class="col-md-9">
-                    <input type="number" required id="total_grade" name="total_grade" class="form-control" value="@ViewBag.total_grade" />
-                </div>
-            </div>*@
+                                                <div class="col-md-3 labelleft">
+                                                    <label>مجموع الدرجات</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="number" required id="total_grade" name="total_grade" class="form-control" value="@ViewBag.total_grade" />
+                                                </div>
+                                            </div>*@
                                         <div class="col-md-6">
                                             <div class="col-md-3">
                                                 <label>رقم القومى</label>
@@ -211,64 +319,64 @@
                                         </div>
                                         <div class="col-md-2">
                                             <div class="col-md-12">
-                                                <a target="_blank" href="@Url.Action("uploadFiles", "Home",new { id = ViewBag.id})" id="close" class="btn btn-info">تعديل البيانات </a>
+                                                <a href="javascript:void(0)" id="edit_data" class="btn btn-info">تعديل البيانات </a>
                                             </div>
                                         </div>
                                     </div>
-                                  
 
-                                        <div class="portlet light">
 
-                                            <div class="portlet-title">
-                                                <div class="row">
-                                                    <div class="caption font-red-sunglo">
-                                                        <div class="col-md-1">
-                                                            <i class="icon-settings font-red-sunglo"></i>
-                                                        </div>
-                                                        <div class="col-md-9">
-                                                            المستخرجات السابقة
-                                                        </div>
+                                    <div class="portlet light">
 
-                                                        <div class="col-md-2">
-                                                            @*<label><i id="add_student_id" title="أضافة" class="fa fa-plus"></i></label>*@
-                                                        </div>
+                                        <div class="portlet-title">
+                                            <div class="row">
+                                                <div class="caption font-red-sunglo">
+                                                    <div class="col-md-1">
+                                                        <i class="icon-settings font-red-sunglo"></i>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        المستخرجات السابقة
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        @*<label><i id="add_student_id" title="أضافة" class="fa fa-plus"></i></label>*@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="portlet-body">
-                                                <table id="data_table" class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>رقم الجلوس</th>
-                                                            <th>الأسم</th>
-                                                            <th>المدرسة</th>
-                                                            <th>عدد المستخرجات</th>
-                                                            <th>الجهه</th>
-                                                            <th>رقم الحوالة</th>
-                                                            <th>تاريخ الطلب</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-
-                                                </table>
-                                            </div>
                                         </div>
+                                        <div class="portlet-body">
+                                            <table id="data_table" class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>رقم الجلوس</th>
+                                                        <th>الأسم</th>
+                                                        <th>المدرسة</th>
+                                                        <th>عدد المستخرجات</th>
+                                                        <th>الجهه</th>
+                                                        <th>رقم الحوالة</th>
+                                                        <th>تاريخ الطلب</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
 
-                                        <div class="form-group">
-                                            <div class="col-md-12">
-                                                <div class="form-actions">
-                                                    @*<button type="submit" class="btn blue">حفظ</button>*@
-                                                    @*<a href="@Url.Action("searchFiles","Home")" class="btn default">إنهاء</a>*@
-
-                                                </div>
-                                            </div>
+                                            </table>
                                         </div>
-
-
-
-
                                     </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="form-actions">
+                                                @*<button type="submit" class="btn blue">حفظ</button>*@
+                                                @*<a href="@Url.Action("searchFiles","Home")" class="btn default">إنهاء</a>*@
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -567,6 +675,133 @@
         //    $("#data_table").dataTable().fnDestroy();
         //    drawTable(exmasterId, seat_number);
         //});
+    });
+
+    function showSho3ba(dialog, cert_id) {
+       
+
+        dialog.find("#sho3baId").empty();
+        //var cert_id = $(this).val();
+        var TeamDetailPostBackURL = '/Home/showSho3ba';
+        $.ajax({
+            type: "GET",
+            url: TeamDetailPostBackURL,
+            contentType: "application/json; charset=utf-8",
+            data: { "cert": cert_id },
+            datatype: "json",
+            success: function (data) {
+
+                var html = '';
+                console.log(data);
+                html += "<option value=''> أختر الشعبة </option>";
+                data.data.forEach(function (el) {
+
+                    if (el.eedupp0 == '@ViewBag.sho3ba')
+                        html += "<option value='" + el.eedupp0 + "' selected>" + el.eedupp0 + "</option>";
+                    else
+                        html += "<option value='" + el.eedupp0 + "' >" + el.eedupp0 + "</option>";
+                });
+                console.log(html);
+                dialog.find("#sho3baId").append(html);
+                //dialog.find('#sho3baId').selectize({
+                //    plugins: ['remove_button'],
+                //});
+
+                if (cert_id == "الثانوية العامة") {
+                    dialog.find("#controlDiv").show();
+                } else {
+                    dialog.find("#controlDiv").hide();
+                }
+            },
+            error: function () {
+                // alert("Dynamic content load failed.");
+            }
+        });
+    }
+
+    $("#edit_data").click(function () {
+
+        var modal = $('#manage_eexmaster_data_modal').clone();
+                var action = '@Url.Action("saveDftarRow", "Home")';
+                modal.find('form').attr('action', action);
+               modal.find('#modal_title').text('تعديل البيانات');
+                modal.execModal({
+                    progressBar: 'progress_bar',
+                    progressText: 'progress_text',
+                }, function (response) {
+
+                    location.reload();
+
+                }, function (response) {
+
+                }, function (dialog) {
+
+
+                    dialog.find("#id").val('@ViewBag.id')
+                    dialog.find("#eeduppx0").val('@ViewBag.eeduppx0')
+                    dialog.find("#edocref").val('@ViewBag.edocref')
+                    dialog.find("#epage").val('@ViewBag.epage')
+                    dialog.find("#erowref").val('@ViewBag.erowref')
+                    dialog.find("#estudentfrom").val('@ViewBag.estudentfrom')
+                    dialog.find("#estudentto").val('@ViewBag.estudentto')
+                    dialog.find("#eebook").val('@ViewBag.eebook')
+                    dialog.find("#DocThere").val('@ViewBag.DocThere')
+                    dialog.find("#UserID").val('@ViewBag.UserID')
+                    dialog.find("#IUserDateTime").val('@ViewBag.IUserDateTime')
+                    dialog.find("#govId option[value='@ViewBag.eegov']").attr('selected', 'selected');
+                    dialog.find("#sectionId option[value='@ViewBag.eedusection']").attr('selected', 'selected');
+                    dialog.find("#schoolId option[value='@ViewBag.school']").attr('selected', 'selected');
+                    dialog.find("#levelId option[value='@ViewBag.elevel']").attr('selected', 'selected');
+                    dialog.find("#statusId option[value='@ViewBag.estatus']").attr('selected', 'selected');
+                    dialog.find("#yearId option[value='@ViewBag.year']").attr('selected', 'selected');
+                    dialog.find("#certId option[value='@ViewBag.cert']").attr('selected', 'selected');
+                    dialog.find("#controlId option[value='@ViewBag.eeCount']").attr('selected', 'selected');
+
+
+                    dialog.find('#govId').selectize({
+                        plugins: ['remove_button'],
+                    });
+                    dialog.find('#sectionId').selectize({
+                        plugins: ['remove_button'],
+                    });
+                    dialog.find('#schoolId').selectize({
+                        plugins: ['remove_button'],
+                    });
+                    dialog.find('#levelId').selectize({
+                        plugins: ['remove_button'],
+                    });
+                    dialog.find('#statusId').selectize({
+                        plugins: ['remove_button'],
+                    });
+                    dialog.find('#yearId').selectize({
+                        plugins: ['remove_button'],
+                    });
+                    dialog.find('#certId').selectize({
+                        plugins: ['remove_button'],
+                    });
+
+                    dialog.find('#controlId').selectize({
+                        plugins: ['remove_button'],
+                    });
+                    dialog.find('#sho3ba_cert_id').selectize({
+                        plugins: ['remove_button'],
+                    });
+
+                    $(document).on("change", "#certId", function () {
+
+                        var cert_id = $(this).val();
+                        if (cert_id == "الثانوية العامة") {
+                            dialog.find("#controlDiv").show();
+                        } else {
+                            dialog.find("#controlDiv").hide();
+                        }
+                        showSho3ba(dialog,cert_id);
+
+                    });
+
+                    showSho3ba(dialog, '@ViewBag.cert');
+
+                });
     });
 
 </script>
