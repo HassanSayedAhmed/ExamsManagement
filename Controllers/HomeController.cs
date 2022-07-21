@@ -96,7 +96,8 @@ namespace ExamsManagement.Controllers
             ViewBag.level = new List<SelectListItem>
             {
             new SelectListItem() {Text = " الأول", Value = " الأول"},
-            new SelectListItem() {Text = "الثانى", Value = "الثانى"}
+            new SelectListItem() {Text = "الثانى", Value = "الثانى"},
+            new SelectListItem() {Text = "أغسطس", Value = "أغسطس"}
             };
 
             ViewBag.year = db.edducyears.Select(s => new { s.id, s.iyear }).ToList();
@@ -299,7 +300,8 @@ namespace ExamsManagement.Controllers
             ViewBag.level = new List<SelectListItem>
             {
             new SelectListItem() {Text = "الأول", Value = " الأول"},
-            new SelectListItem() {Text = "الثانى", Value = "الثانى"}
+            new SelectListItem() {Text = "الثانى", Value = "الثانى"},
+            new SelectListItem() {Text = "أغسطس", Value = "أغسطس"}
             };
             ViewBag.status = new List<SelectListItem>
             {
@@ -341,7 +343,8 @@ namespace ExamsManagement.Controllers
             ViewBag.level = new List<SelectListItem>
             {
             new SelectListItem() {Text = "الأول", Value = " الأول"},
-            new SelectListItem() {Text = "الثانى", Value = "الثانى"}
+            new SelectListItem() {Text = "الثانى", Value = "الثانى"},
+            new SelectListItem() {Text = "أغسطس", Value = "أغسطس"}
             };
             ViewBag.status = new List<SelectListItem>
             {
@@ -384,7 +387,8 @@ namespace ExamsManagement.Controllers
             ViewBag.level = new List<SelectListItem>
             {
             new SelectListItem() {Text = "الأول", Value = " الأول"},
-            new SelectListItem() {Text = "الثانى", Value = "الثانى"}
+            new SelectListItem() {Text = "الثانى", Value = "الثانى"},
+            new SelectListItem() {Text = "أغسطس", Value = "أغسطس"}
             };
             ViewBag.status = new List<SelectListItem>
             {
@@ -980,7 +984,8 @@ namespace ExamsManagement.Controllers
             ViewBag.levels = new List<SelectListItem>
             {
             new SelectListItem() {Text = "الأول", Value = " الأول"},
-            new SelectListItem() {Text = "الثانى", Value = "الثانى"}
+            new SelectListItem() {Text = "الثانى", Value = "الثانى"},
+            new SelectListItem() {Text = "أغسطس", Value = "أغسطس"}
             };
             ViewBag.statuses = new List<SelectListItem>
             {
@@ -1063,7 +1068,6 @@ namespace ExamsManagement.Controllers
             if(request != null)
             ViewBag.amount = request.amount;
 
-
             ViewBag.govs = db.egovs.Select(s => new { s.Id, s.egovname }).ToList();
             ViewBag.sections = db.eedusections.Select(s => new { s.id, s.eedusection1 }).ToList();
             ViewBag.schools = db.eschools.Select(s => new { s.id, s.eschool1 }).ToList();
@@ -1072,7 +1076,8 @@ namespace ExamsManagement.Controllers
             ViewBag.levels = new List<SelectListItem>
             {
             new SelectListItem() {Text = "الأول", Value = " الأول"},
-            new SelectListItem() {Text = "الثانى", Value = "الثانى"}
+            new SelectListItem() {Text = "الثانى", Value = "الثانى"},
+            new SelectListItem() {Text = "أغسطس", Value = "أغسطس"}
             };
             ViewBag.statuses = new List<SelectListItem>
             {
