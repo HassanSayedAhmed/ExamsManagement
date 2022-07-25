@@ -1005,7 +1005,7 @@ namespace ExamsManagement.Controllers
             var eexmasterRow = db.eexmmasters.Find(Id);
             var student = db.students.Where(s => s.eexmaster_id == Id && s.seat_number == seat_number).FirstOrDefault();
             if (student == null)
-            { 
+            {
                 student = new student();
                 student.name = name;
                 student.id_no14 = id_no14;

@@ -170,7 +170,7 @@
                                     }
 
 
-                                    <input type="hidden" id="id" name="id" value="@ViewBag.id" />
+                                    <input type="hidden" class="id" name="id" value="@ViewBag.id" />
                                     <input type="hidden" id="seat_number" name="seat_number" value="@ViewBag.StudentId" />
                                     <div class="row">
                                         <div class="col-md-4">
@@ -221,7 +221,7 @@
                                                 <label>الإدارة</label>
                                             </div>
                                             <div class="col-md-9">
-                                                <span class='badge badge-light'>@ViewBag.section</span>
+                                                <span class='badge badge-light'>@ViewBag.eedusection</span>
                                             </div>
                                         </div>
                                     </div>
@@ -468,7 +468,7 @@
                         var html = '<div id="destinationDivNew">';
                         html += "<select  id='destinationId' name='destination1' class='selectize' >";
                         html += "<option value='0'> أختر الجهه </option>";
-                        console.log(json.destinationID);
+                        //console.log(json.destinationID);
                         json.allDestinations.forEach(function (el) {
                             //console.log(json.destinationNameResult == el.destination1);
                             if (el.id == json.destinationID)
@@ -626,7 +626,7 @@
 
         var TeamDetailPostBackURL = '/Home/printTotal';
         debugger
-        var id = $('#id').val();
+        var id = $('.id').val();
         var seat_number = $('#seat_number').val();
         var id_no14 = $('#id_no14').val();
         var date = $('#date').val();
