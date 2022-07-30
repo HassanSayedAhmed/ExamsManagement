@@ -168,7 +168,7 @@
                                     }
 
 
-                                    <input type="hidden" id="id" name="id" value="@Model.eexmaster_id" />
+                                    <input type="hidden" class="id" name="id" value="@Model.eexmaster_id" />
                                     <input type="hidden" id="seat_number" name="seat_number" value="@Model.seat_number" />
                                     <div class="row">
                                         <div class="col-md-4">
@@ -631,7 +631,7 @@
 
         var TeamDetailPostBackURL = '/Home/makeRequest';
         debugger
-        var id = $('#id').val();
+        var id = $('.id').val();
         var seat_number = $('#seat_number').val();
         var id_no14 = $('#id_no14').val();
         var total_grade = $('#total_grade').val();
@@ -646,6 +646,9 @@
         if ($("#id_no14").val() != "" && $("#id_no14").val().length != 14)
             warningBox("برجاء أدخال الرقم القومى 14 رقم.");
         else {
+            console.log(id);
+            console.log(seat_number);
+
             $.ajax({
                 type: "POST",
                 url: TeamDetailPostBackURL,
