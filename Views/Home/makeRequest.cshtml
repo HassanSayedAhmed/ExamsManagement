@@ -50,8 +50,8 @@
                             @*<input type="number" id="id" name="id" value="@Model.id" />*@
                             <div class="form-group col-md-12">
                                 <label for="inputtext4">المدرسة</label>
-                                @*@Html.DropDownList("eschool", new SelectList(ViewBag.school, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "js-example-responsive", @name = "state", @style = "width:100%", @id = "school_name_edit" })*@
-                                @Html.DropDownList("eschool", new SelectList(ViewBag.schools, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "schoolId" })
+                                <input type="text" class="form-control" id="schoolId" name="eschool" value="" />
+@*                                @Html.DropDownList("eschool", new SelectList(ViewBag.schools, "eschool1", "eschool1"), "أختر المدرسة", new { @class = "selectize", @name = "state", @style = "width:100%", @id = "schoolId" })*@
                             </div>
                         </div>
                         <div class="form-row">
@@ -751,9 +751,10 @@
                     dialog.find("#DocThere").val('@ViewBag.DocThere')
                     dialog.find("#UserID").val('@ViewBag.UserID')
                     dialog.find("#IUserDateTime").val('@ViewBag.IUserDateTime')
+                    dialog.find("#schoolId").val('@ViewBag.school')
                     dialog.find("#govId option[value='@ViewBag.eegov']").attr('selected', 'selected');
                     dialog.find("#sectionId option[value='@ViewBag.eedusection']").attr('selected', 'selected');
-                    dialog.find("#schoolId option[value='@ViewBag.school']").attr('selected', 'selected');
+                    //dialog.find("#schoolId option[value='@ViewBag.school']").attr('selected', 'selected');
                     dialog.find("#levelId option[value='@ViewBag.elevel']").attr('selected', 'selected');
                     dialog.find("#statusId option[value='@ViewBag.estatus']").attr('selected', 'selected');
                     dialog.find("#yearId option[value='@ViewBag.year']").attr('selected', 'selected');
@@ -767,9 +768,9 @@
                     dialog.find('#sectionId').selectize({
                         plugins: ['remove_button'],
                     });
-                    dialog.find('#schoolId').selectize({
-                        plugins: ['remove_button'],
-                    });
+                    //dialog.find('#schoolId').selectize({
+                    //    plugins: ['remove_button'],
+                    //});
                     dialog.find('#levelId').selectize({
                         plugins: ['remove_button'],
                     });

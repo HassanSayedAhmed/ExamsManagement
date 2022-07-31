@@ -1027,6 +1027,7 @@ namespace ExamsManagement.Controllers
             req.type = 1;
             db.requests.Add(req);
             db.SaveChanges();
+
             var JsonResult = new { icon = "success", title = "تم الحفظ بنجاح...", text = ".تم حفظ الطلب بنجاح", eexmasterID = Id, seatNumber = student.seat_number, requestID = req.id };
             
             return Json(JsonResult, JsonRequestBehavior.AllowGet);
@@ -1175,7 +1176,7 @@ namespace ExamsManagement.Controllers
                               student_id=r.student_id,
                               id=r.id,
                               type=r.type
-                          }).Where(e => e.eexmaster_id == param.eexmasterID && e.seat_number==param.seatNumber && e.type == 1).OrderByDescending(r => r.date);
+                          }).Where(e => e.seat_number==param.seatNumber && e.type == 1).OrderByDescending(r => r.date);
 
             var displayResult = result.Skip(param.iDisplayStart)
                 .Take(param.iDisplayLength).ToList();
